@@ -13,8 +13,6 @@
                     <div class="row justify-content-center">
                         <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
-                            
-
                             <div class="card mb-3">
 
                                 <div class="card-body">
@@ -26,7 +24,12 @@
                                         </a>
                                     </div><!-- End Logo -->
 
-                                    <form class="row g-3 needs-validation" novalidate>
+                                    <form action="{{route('dashboard.login')}}" method="POST" class="row g-3 needs-validation" novalidate>
+                                        @csrf
+
+                                        @error('email')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
 
                                         <div class="col-12">
                                             <label for="yourUsername" class="form-label">Email</label>
@@ -43,10 +46,6 @@
 
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit">Login</button>
-                                        </div>
-                                        <div class="col-12">
-                                            <p class="small mb-0">Don't have account? <a
-                                                    href="pages-register.html">Create an account</a></p>
                                         </div>
                                     </form>
 
