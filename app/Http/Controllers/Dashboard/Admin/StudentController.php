@@ -21,7 +21,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view('web.dashboard.admin.students.create');
+        
     }
 
     /**

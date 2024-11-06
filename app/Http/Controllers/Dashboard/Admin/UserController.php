@@ -21,7 +21,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('web.dashboard.admin.users.create');
+        
     }
 
     /**
