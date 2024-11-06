@@ -1,6 +1,6 @@
 @extends('web.dashboard.master')
 
-@section('title','Admins')
+@section('title','Users')
 
 @section('content')
 <main id="main" class="main">
@@ -10,7 +10,7 @@
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
             <li class="breadcrumb-item ">Users</li>
-            <li class="breadcrumb-item "><a href="{{ route('dashboard.admin.home.index') }}">@yield('title')</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('dashboard.admin.users.index') }}">@yield('title')</a></li>
             <li class="breadcrumb-item active">Create</li>
           </ol>
         </nav>

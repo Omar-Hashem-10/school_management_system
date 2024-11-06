@@ -21,7 +21,8 @@ class LevelController extends Controller
      */
     public function create()
     {
-        //
+        return view('web.dashboard.admin.levels.create');
+        
     }
 
     /**

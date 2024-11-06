@@ -1,6 +1,4 @@
 @extends('web.dashboard.master')
-@section('parent','components')
-
 @section('title','Courses')
 
 @section('content')
