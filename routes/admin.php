@@ -1,16 +1,31 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\Admin\HomeController;
+use App\Http\Controllers\Dashboard\Admin\RoleController;
+use App\Http\Controllers\Dashboard\Admin\UserController;
+use App\Http\Controllers\dashboard\admin\AdminController;
+use App\Http\Controllers\Dashboard\Admin\LevelController;
+use App\Http\Controllers\Dashboard\Admin\AttendController;
+use App\Http\Controllers\Dashboard\Admin\CourseController;
+use App\Http\Controllers\Dashboard\Admin\StudentController;
+use App\Http\Controllers\Dashboard\Admin\TeacherController;
+use App\Http\Controllers\Dashboard\Admin\CourseCodeController;
+use App\Http\Controllers\Dashboard\Auth\LoginController;
+use App\Http\Controllers\Dashboard\ProfileController;
 
-
-    Route::view('home','web.admin.home.index')->name('home.index');
-    Route::view('profile','web.admin.profile.index')->name('profile.index');
-    Route::view('admins','web.admin.admins.index')->name('admins.index');
-    Route::view('teachers','web.admin.teachers.index')->name('teachers.index');
-    Route::view('students','web.admin.students.index')->name('students.index');
-    Route::view('users','web.admin.users.index')->name('users.index');
-    Route::view('roles','web.admin.roles.index')->name('roles.index');
-    Route::view('attends','web.admin.attends.index')->name('attends.index');
-    Route::view('subjects','web.admin.subjects.index')->name('subjects.index');
-    Route::view('levels','web.admin.levels.index')->name('levels.index');
-    Route::view('courses','web.admin.courses.index')->name('courses.index');
+Route::prefix('admin')->as('admin.')->group(function() {
+    Route::get('home',HomeController::class)->name('home.index');
+    Route::resource('admins', AdminController::class);
+    Route::resource('teachers', TeacherController::class);
+    Route::resource('students', StudentController::class);
+    Route::resource('users', UserController::class);
+    Route::resource('roles', RoleController::class);
+    Route::resource('attends', AttendController::class);
+    Route::resource('courses', CourseController::class);
+    Route::resource('courses_codes', CourseCodeController::class);
+    Route::resource('levels', LevelController::class);
+    Route::resource('admins', AdminController::class);
+});
+Route::get('admin/profile',[ProfileController::class,'index'])->name('profile.index');
+Route::get('login',[LoginController::class,'index'])->name('login.index'); 
