@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -12,7 +13,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        return view('web.dashboard.admin.roles.index');
+        $roles=Role::get()->all();
+        return view('web.dashboard.admin.roles.index',compact('roles'));
     }
 
     /**
@@ -29,7 +31,11 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->validate(
+            ['role_name' =>'required|string']
+        );
+        Role::create($data);
+        return redirect()->route('dashboard.admin.roles.index')->with('success', 'Role added successfully');
     }
 
     /**
@@ -43,25 +49,30 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role)
     {
-        return view('web.dashboard.admin.roles.edit');
+        return view('web.dashboard.admin.roles.edit',compact('role'));
         
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        $data=$request->validate(
+            ['role_name' =>'required|string']
+        );
+        Role::where('id',$role->id)->update($data);
+        return redirect()->route('dashboard.admin.roles.index')->with('success', 'Role Updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Role $role)
     {
-        //
+        Role::where('id',$role->id)->delete();
+        return redirect()->route('dashboard.admin.roles.index')->with('success', 'Role deleted successfully');
     }
 }

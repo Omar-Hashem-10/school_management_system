@@ -30,26 +30,31 @@
             <div class="card-body">
               <!-- Table with stripped rows -->
               <table class="table table-striped">
-               
+  
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
+                    <th scope="col">Role</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach ($roles as $role )
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                    <td></td>
+                    <th scope="row">{{ $loop->iteration }}</th>
+                    <td>{{ $role->role_name }}</td>
+                    <td>
+                      <a class="btn btn-warning" href="{{route('dashboard.admin.roles.edit',$role->id)}}">Edit</a>
+                      <div class="btn-group" role="group">
+                        <form class="d-inline" action="{{route('dashboard.admin.roles.destroy',$role->id)}}" method="post">
+                          @csrf
+                          @method('delete')
+                          <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                      </div>
+                    </td>
                   </tr>
+                  @endforeach
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->

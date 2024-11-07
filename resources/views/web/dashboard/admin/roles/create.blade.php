@@ -15,5 +15,27 @@
           </ol>
         </nav>
     </div>
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Create Role </h3>
+      </div>
+      <form action="{{route('dashboard.admin.roles.store')}}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="card-body">
+          <div class="form-group">
+            <label for="role_name">Name</label>
+            <input type="text" name="role_name" class="form-control" id="role_name" placeholder="Enter Name"
+              value="{{old('role_name')}}">
+            @error('role_name')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+  
+      </form>
+    </div>
 </main>
 @endsection

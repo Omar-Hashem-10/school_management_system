@@ -31,26 +31,39 @@
             <div class="card-body">
               <!-- Table with stripped rows -->
               <table class="table table-striped">
-               
+  
                 <thead>
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach ($students as $student )
                   <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                    <td></td>
+                    <th scope="row">{{ $loop->iteration }}</th>
+                    <td>{{ $student->student_name }}</td>
+                    <td>{{ $student->email }}</td>
+                    <td>{{ $student->phone }}</td>
+                    <td>
+                      <img src="{{FileHelper::get_file_path($student->image,'user')}}"  class="rounded-circle" width="100" height="100">
+                    </td>
+                    <td>
+                      <a class="btn btn-warning" href="{{route('dashboard.admin.students.edit',$student->id)}}">Edit</a>
+                      <div class="btn-group" role="group">
+                        <form class="d-inline" action="{{route('dashboard.admin.students.destroy',$student->id)}}" method="post">
+                          @csrf
+                          @method('delete')
+                          <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                      </div>
+                    </td>
                   </tr>
+                  @endforeach
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
