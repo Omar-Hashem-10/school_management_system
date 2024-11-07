@@ -51,7 +51,7 @@
             <label for="role_id">Role</label>
             <select class="form-select form-control" aria-label="Default select example" name="role_id"
               value="{{$student->role_id}}">
-              <option value="3" selected>student</option>
+              <option value="4" selected>student</option>
             </select>
             @error('role_id')
             <span class="text-danger">{{$message}}</span>
@@ -59,12 +59,13 @@
           </div>
           <div class="form-group">
             <label for="class_room_id">Class</label>
-            <select class="form-select form-control" aria-label="Default select example" name="class_room_id"
-              value="{{$student->class_room_id}}">
+            <select class="form-select form-control" aria-label="Default select example" name="class_room_id" value="{{$student->class_room_id}}">
               <option value="{{ $student->classRoom->id }}" selected>{{ $student->classRoom->class_name }}</option>
-              @foreach ($classs as $class)
+              @if($classes)
+              @foreach ($classes as $class)
               <option value="{{ $class->id }}">{{ $class->class_name }}</option>
               @endforeach
+              @endif
             </select>
             @error('class_room_id')
             <span class="text-danger">{{$message}}</span>
@@ -72,7 +73,7 @@
           </div>
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
+            <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password" value="{{ $student->user->password }}">
             @error('password')
             <span class="text-danger">{{$message}}</span>
             @enderror

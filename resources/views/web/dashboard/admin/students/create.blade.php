@@ -50,7 +50,7 @@
             <label for="role_id">Role</label>
             <select class="form-select form-control" aria-label="Default select example" name="role_id"
               value="{{old('role_id')}}">
-              <option value="3" selected>student</option>
+              <option value="4" selected>student</option>
             </select>
             @error('role_id')
             <span class="text-danger">{{$message}}</span>
@@ -60,10 +60,12 @@
             <label for="class_room_id">Class</label>
             <select class="form-select form-control" aria-label="Default select example" name="class_room_id"
               value="{{old('class_room_id')}}">
+              @if($class)
               <option value="{{ $class->id }}" selected>{{ $class->class_name }}</option>
-              @foreach ($classs as $class)
+              @foreach ($classes as $class)
               <option value="{{ $class->id }}">{{ $class->class_name }}</option>
               @endforeach
+              @endif
             </select>
             @error('class_room_id')
             <span class="text-danger">{{$message}}</span>

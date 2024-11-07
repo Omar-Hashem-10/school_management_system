@@ -58,7 +58,7 @@ public function employee()
 }
 public function manager()
 {
-    return $this->hasOne(Manager::class);
+    return $this->hasOne(Admin::class);
 }
 public function role()
 {
