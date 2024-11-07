@@ -27,7 +27,7 @@
           </a>
         </li>
         <li>
-          <a href="{{ route('dashboard.admin.courses_codes.index') }}">
+          <a href="{{ route('dashboard.admin.course_levels.index') }}">
             <i class="bi bi-circle"></i><span>Courses_codes</span>
           </a>
         </li>
