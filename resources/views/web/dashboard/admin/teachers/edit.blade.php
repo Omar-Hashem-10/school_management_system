@@ -15,5 +15,93 @@
           </ol>
         </nav>
     </div>
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Edit Teacher </h3>
+      </div>
+      <form action="{{route('dashboard.admin.teachers.update',$teacher->id)}}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PATCH')
+        <div class="card-body">
+          <div class="form-group">
+            <label for="teacher_name">Name</label>
+            <input type="text" name="teacher_name" class="form-control" id="teacher_name" placeholder="Enter Name"
+              value="{{$teacher->teacher_name}}">
+            @error('teacher_name')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email"
+              value="{{$teacher->email}}">
+            @error ('email')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone"
+              value="{{$teacher->phone}}">
+            @error('phone')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+          </div>
+          <div class="form-group">
+            <label for="role_id">Role</label>
+            <select class="form-select form-control" aria-label="Default select example" name="role_id"
+              value="{{$teacher->role_id}}">
+              <option value="3" selected>Teacher</option>
+            </select>
+            @error('role_id')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+          </div>
+          <div class="form-group">
+            <label for="course_id">Course</label>
+            <select class="form-select form-control" aria-label="Default select example" name="course_id"
+              value="{{old('course_id')}}">
+              <option value="{{$teacher->course_id}} " selected>{{$teacher->course->course_name}} </option>
+              @foreach ($courses as $course)
+              <option value="{{ $course->id }}">{{ $course->course_name }}</option>
+              @endforeach
+            </select>
+            @error('course_id')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+          </div>
+          <div class="form-group">
+            <label for="experience">Experience</label>
+            <textarea name="experience" id="experience" class="form-control" cols="30" rows="3"
+              placeholder="Enter experience" value="{{$teacher->experience}}"></textarea>
+            @error('password')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password" value="{{$teacher->user->password}}">
+            @error('password')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+          </div>
+          <div class="form-group">
+            <label for="exampleInputFile">Image</label>
+            <div class="input-group">
+              <div class="custom-file">
+                <input type="file" name="image" class="custom-file-input" id="Image">
+              </div>
+            </div>
+            @error('image')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+  
+      </form>
+    </div>
 </main>
 @endsection
