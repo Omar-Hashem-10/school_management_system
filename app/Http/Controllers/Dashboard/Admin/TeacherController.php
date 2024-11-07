@@ -12,7 +12,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('web.dashboard.admin.teachers.edit');
+        return view('web.dashboard.admin.teachers.index');
         
     }
 
@@ -21,7 +21,8 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        //
+        return view('web.dashboard.admin.teachers.create');
+        
     }
 
     /**

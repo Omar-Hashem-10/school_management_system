@@ -16,7 +16,7 @@ class Student extends Model
         'image',
         'class_id',
         'user_id',
-    ];
+]    ];
 
     public function classRoom()
     {
