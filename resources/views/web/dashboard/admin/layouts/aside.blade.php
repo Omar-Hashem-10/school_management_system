@@ -28,7 +28,12 @@
         </li>
         <li>
           <a href="{{ route('dashboard.admin.course_levels.index') }}">
-            <i class="bi bi-circle"></i><span>Courses_codes</span>
+            <i class="bi bi-circle"></i><span>Course levels</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('dashboard.admin.class_rooms.index') }}">
+            <i class="bi bi-circle"></i><span>Class room</span>
           </a>
         </li>
       </ul>
