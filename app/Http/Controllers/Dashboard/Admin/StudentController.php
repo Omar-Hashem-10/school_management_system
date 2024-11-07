@@ -97,7 +97,6 @@ class StudentController extends Controller
         } else {
             $userData['password'] = Hash::make($data['password']);
         }
-        
         $data = Arr::except($data, ['password', 'role_id']);
         if ($request->hasFile('image')) {
             if ($student->image) {
