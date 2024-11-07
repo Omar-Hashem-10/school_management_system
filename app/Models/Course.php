@@ -15,8 +15,10 @@ class Course extends Model
 
     public function levels()
     {
-        return $this->belongsToMany(Level::class, 'course_levels', 'course_id', 'level_id');
-    }
+        return $this->belongsToMany(Level::class, 'course_levels', 'course_id', 'level_id')
+        ->withPivot('course_code')
+        ->withTimestamps();
+        }
 
     public function teachers()
     {

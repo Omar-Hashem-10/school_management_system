@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Course;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CourseRequest;
 
 class CourseController extends Controller
 {
@@ -12,8 +14,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('web.dashboard.admin.courses.index');
-        
+        $courses = Course::paginate(5);
+        return view('web.dashboard.admin.courses.index', compact('courses'));
+
     }
 
     /**
@@ -21,47 +24,42 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('web.dashboard.admin.courses.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CourseRequest $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        Course::create($request->validated());
+        return redirect()->route('dashboard.admin.courses.create')->with('success','Created Course Successfully!');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Course $course)
     {
-        return view('web.dashboard.admin.courses.edit');
-        
+        return view('web.dashboard.admin.courses.edit', compact('course'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CourseRequest $request, Course $course)
     {
-        //
+        $course->update($request->validated());
+        return redirect()->route('dashboard.admin.courses.index')->with('success','Updated Course Successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Course $course)
     {
-        //
+        $course->delete();
+        return redirect()->route('dashboard.admin.courses.index')->with('success','Deleted Course Successfully!');
     }
 }

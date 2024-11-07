@@ -18,10 +18,10 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-  
+
           <div class="card">
             <div class="card-header border-transparent">
-              <a href="{{ route('dashboard.admin.levels.create') }}" class="btn btn-sm btn-info float-left">Place New level</a>
+              <a href="{{ route('dashboard.admin.levels.create') }}" class="btn btn-sm btn-info float-left">Create New level</a>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                   <i class="fas fa-minus"></i>
@@ -31,33 +31,40 @@
             <div class="card-body">
               <!-- Table with stripped rows -->
               <table class="table table-striped">
-               
+
                 <thead>
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Start Date</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Level Name</th>
+                    <th scope="col">Created at</th>
+                    <th scope="col">Updated at</th>
+                    <th scope="col">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                    <td></td>
-                  </tr>
+                    @foreach ($levels as $level)
+                    <tr>
+                        <th scope="row">{{$loop->iteration}}</th>
+                        <td>{{$level->level_name}}</td>
+                        <td>{{$level->created_at}}</td>
+                        <td>{{$level->updated_at}}</td>
+                        <td>
+                            <a href="{{route('dashboard.admin.levels.edit', $level->id)}}" class="btn btn-info d-inline">Edit</a>
+                            <form action="{{route('dashboard.admin.levels.destroy', $level->id)}}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
-  
+                {{$levels->links()}}
             </div>
           </div>
-  
+
         </div>
       </div>
     </div>
