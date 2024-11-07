@@ -4,16 +4,102 @@
 
 @section('content')
 <main id="main" class="main">
-    <div class="pagetitle">
-        <h1>Dashboard</h1>
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
-            <li class="breadcrumb-item ">Users</li>
-            <li class="breadcrumb-item "><a href="{{ route('dashboard.admin.teachers.index') }}">@yield('title')</a></li>
-            <li class="breadcrumb-item active">Create</li>
-          </ol>
-        </nav>
+  <div class="pagetitle">
+    <h1>Dashboard</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
+        <li class="breadcrumb-item ">Users</li>
+        <li class="breadcrumb-item "><a href="{{ route('dashboard.admin.teachers.index') }}">@yield('title')</a></li>
+        <li class="breadcrumb-item active">Create</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">Create Teacher </h3>
     </div>
+    <form action="{{route('dashboard.admin.teachers.store')}}" method="POST" enctype="multipart/form-data">
+      @csrf
+      <div class="card-body">
+        <div class="form-group">
+          <label for="teacher_name">Name</label>
+          <input type="text" name="teacher_name" class="form-control" id="teacher_name" placeholder="Enter Name"
+            value="{{old('teacher_name')}}">
+          @error('teacher_name')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email"
+            value="{{old('email')}}">
+          @error ('email')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone"
+            value="{{old('phone')}}">
+          @error('phone')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="role_id">Role</label>
+          <select class="form-select form-control" aria-label="Default select example" name="role_id"
+            value="{{old('role_id')}}">
+            <option value="3" selected>Teacher</option>
+          </select>
+          @error('role_id')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="course_id">Course</label>
+          <select class="form-select form-control" aria-label="Default select example" name="course_id"
+            value="{{old('course_id')}}">
+            <option value="{{ $course->id }}" selected>{{ $course->course_name }}</option>
+            @foreach ($courses as $course)
+            <option value="{{ $course->id }}">{{ $course->course_name }}</option>
+            @endforeach
+          </select>
+          @error('course_id')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="experience">Experience</label>
+          <input type="text" name="experience" class="form-control" id="experience" placeholder="Enter experience" value="{{old('experience')}}">
+          @error('experience')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
+          @error('password')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+        <div class="form-group">
+          <label for="exampleInputFile">Image</label>
+          <div class="input-group">
+            <div class="custom-file">
+              <input type="file" name="image" class="custom-file-input" id="Image">
+            </div>
+          </div>
+          @error('image')
+          <span class="text-danger">{{$message}}</span>
+          @enderror
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+
+    </form>
+  </div>
 </main>
 @endsection

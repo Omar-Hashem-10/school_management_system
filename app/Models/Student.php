@@ -14,9 +14,9 @@ class Student extends Model
         'email',
         'phone',
         'image',
-        'class_id',
+        'class_room_id',
         'user_id',
-]    ];
+      ];
 
     public function classRoom()
     {
@@ -48,4 +48,3 @@ public function contacts()
     return $this->hasMany(Contact::class, 'student_id', 'id');
 }
 }
-

@@ -13,8 +13,9 @@ class LoginController extends Controller
         return view('web.dashboard.login');
     }
 
-        public function authenticate(Request $request): RedirectResponse
+    public function authenticate(Request $request): RedirectResponse
     {
+        // التحقق من صحة المدخلات
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -23,12 +24,23 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/dashboard/admin/home');
+            $user = Auth::user();
+
+            if ($user->role && $user->role->role_name === 'admin') {
+                return redirect()->intended('/dashboard/admin/home');
+            }
+
+            if ($user->role && $user->role->role_name === 'teacher') {
+                return redirect()->intended('/dashboard/teacher/home');
+            }
+
+            return redirect()->intended('/home');
         }
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
     }
+
 
 }
