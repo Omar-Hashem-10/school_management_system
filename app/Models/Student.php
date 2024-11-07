@@ -14,7 +14,7 @@ class Student extends Model
         'email',
         'phone',
         'image',
-        'class_id',
+        'class_room_id',
         'user_id',
       ];
 

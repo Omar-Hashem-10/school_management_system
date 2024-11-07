@@ -29,7 +29,7 @@ class StudentRequest extends FormRequest
             'phone'               => 'nullable|string',
             'image'               => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'user_id'             => 'nullable|integer|exists:users,id',
-            'role_id'             => 'nullable|integer|exists:roles,id|in:4',
+            'role_id'             => 'nullable|integer|exists:roles,id',
             'class_room_id'       => 'nullable|integer|exists:class_rooms,id',
             'password'            => 'required|min:8',
         ];

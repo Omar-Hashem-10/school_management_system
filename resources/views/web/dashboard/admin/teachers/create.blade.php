@@ -71,9 +71,8 @@
         </div>
         <div class="form-group">
           <label for="experience">Experience</label>
-          <textarea name="experience" id="experience" class="form-control" cols="30" rows="3"
-            placeholder="Enter experience" value="{{old('experience')}}"></textarea>
-          @error('password')
+          <input type="text" name="experience" class="form-control" id="experience" placeholder="Enter experience" value="{{old('experience')}}">
+          @error('experience')
           <span class="text-danger">{{$message}}</span>
           @enderror
         </div>

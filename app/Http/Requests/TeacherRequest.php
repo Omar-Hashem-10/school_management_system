@@ -31,7 +31,7 @@ class TeacherRequest extends FormRequest
             'user_id'             => 'nullable|integer|exists:users,id',
             'role_id'             => 'nullable|integer|exists:roles,id|in:3',
             'course_id'           => 'nullable|integer|exists:courses,id',
-            'experience'          => 'nullable|string',
+            'experience'          => 'nullable|integer',
             'password'            => 'required|min:8',
         ];
     }
