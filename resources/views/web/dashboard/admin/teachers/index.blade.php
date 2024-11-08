@@ -18,7 +18,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-  
+
           <div class="card">
             <div class="card-header border-transparent">
               <a href="{{ route('dashboard.admin.teachers.create') }}" class="btn btn-sm btn-info float-left">Place New teacher</a>
@@ -31,7 +31,7 @@
             <div class="card-body">
               <!-- Table with stripped rows -->
               <table class="table table-striped">
-  
+
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -61,16 +61,17 @@
                           <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
                       </div>
+                      <a class="btn btn-success" href="{{route('dashboard.admin.course_teachers.index',['teacher_id' => $teacher->id])}}">info</a>
                     </td>
                   </tr>
                   @endforeach
                 </tbody>
               </table>
               <!-- End Table with stripped rows -->
-  
+
             </div>
           </div>
-  
+
         </div>
       </div>
     </div>

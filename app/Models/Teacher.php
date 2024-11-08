@@ -43,5 +43,8 @@ public function feedbacks()
     return $this->hasMany(Feedback::class, 'teacher_id', 'id');
 }
 
-
+public function courseTeachers()
+{
+    return $this->hasMany(CourseTeacher::class, 'teacher_id');
+}
 }
