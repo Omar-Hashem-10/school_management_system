@@ -21,4 +21,8 @@ class Employee extends Model
 {
     return $this->belongsTo(User::class);
 }
+public function salaries()
+    {
+        return $this->morphMany(Salary::class, 'person');
+    }
 }

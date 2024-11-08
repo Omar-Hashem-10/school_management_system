@@ -50,7 +50,10 @@
           <label for="role_id">Role</label>
           <select class="form-select form-control" aria-label="Default select example" name="role_id"
             value="{{old('role_id')}}">
-            <option value="3" selected>Teacher</option>
+            <option value="{{ $role->id }}" selected>{{ $role->role_name }}</option>
+            @foreach ($roles as $role)
+            <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+            @endforeach
           </select>
           @error('role_id')
           <span class="text-danger">{{$message}}</span>
@@ -71,7 +74,8 @@
         </div>
         <div class="form-group">
           <label for="experience">Experience</label>
-          <input type="text" name="experience" class="form-control" id="experience" placeholder="Enter experience" value="{{old('experience')}}">
+          <input type="text" name="experience" class="form-control" id="experience" placeholder="Enter experience"
+            value="{{old('experience')}}">
           @error('experience')
           <span class="text-danger">{{$message}}</span>
           @enderror

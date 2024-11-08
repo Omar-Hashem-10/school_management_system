@@ -51,7 +51,10 @@
             <label for="role_id">Role</label>
             <select class="form-select form-control" aria-label="Default select example" name="role_id"
               value="{{$teacher->role_id}}">
-              <option value="3" selected>Teacher</option>
+              <option value="{{ $teacher->role_id }}" selected>{{ $teacher->role->role_name }}</option>
+              @foreach ($roles as $role)
+                <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                @endforeach
             </select>
             @error('role_id')
             <span class="text-danger">{{$message}}</span>
