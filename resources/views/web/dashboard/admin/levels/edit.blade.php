@@ -30,6 +30,13 @@
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                   </div>
+                  <div class="col-12">
+                    <label for="amount" class="form-label">Level Name</label>
+                    <input type="text" class="form-control" name="amount" id="amount" value="{{old('amount', $level->amount)}}">
+                    @error('amount')
+                        <span class="text-danger">{{$message}}</span>
+                    @enderror
+                  </div>
                   <div class="text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <button type="reset" class="btn btn-secondary">Reset</button>

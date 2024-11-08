@@ -42,6 +42,10 @@ public function feedbacks()
 {
     return $this->hasMany(Feedback::class, 'teacher_id', 'id');
 }
+public function salaries()
+    {
+        return $this->morphMany(Salary::class, 'person');
+    }
 
 public function courseTeachers()
 {

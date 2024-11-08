@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TeacherRequest;
 use App\Models\course;
+use App\Models\Role;
 use App\Models\Teacher;
 use App\Models\User;
 use Exception;
@@ -31,9 +32,11 @@ class TeacherController extends Controller
      */
     public function create()
     {
+        $role=Role::where('for',  'teachers')->first();
+        $roles=Role::where('for',  'teachers')->get();
         $course = Course::get()->first();
         $courses = Course::get()->all();
-        return view('web.dashboard.admin.teachers.create', compact(['courses', 'course']));
+        return view('web.dashboard.admin.teachers.create', compact(['courses', 'course', 'roles','role']));
     }
 
     /**
@@ -75,8 +78,10 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
+        $roles=Role::where('for',  'teachers')->get();
+
         $courses = Course::get()->all();
-        return view('web.dashboard.admin.teachers.edit',compact(['courses', 'teacher']));
+        return view('web.dashboard.admin.teachers.edit',compact(['courses', 'teacher', 'roles']));
     }
 
     /**

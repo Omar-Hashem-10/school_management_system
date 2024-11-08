@@ -1,11 +1,11 @@
 @extends('web.dashboard.master')
 
-@section('title','Admins')
+@section('title','Salaries')
 
 @section('content')
 
 <main id="main" class="main">
-  
+
   <div class="pagetitle">
     <h1>Dashboard</h1>
     <nav>
@@ -22,8 +22,8 @@
 
         <div class="card">
           <div class="card-header border-transparent">
-            <a href="{{ route('dashboard.admin.admins.create') }}" class="btn btn-sm btn-info float-left">Place New
-              admin</a>
+            <a href="{{ route('dashboard.admin.salaries.create') }}" class="btn btn-sm btn-info float-left">Place New
+              Salary</a>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -38,33 +38,40 @@
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Phone</th>
-                  <th scope="col">Image</th>
                   <th scope="col">Position</th>
+                  <th scope="col">Base Salary</th>
+                  <th scope="col">Bonus</th>
+                  <th scope="col">Deduction</th>
+                  <th scope="col">Total</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach ($admins as $admin )
+                @foreach ($salaries as $salary )
                 <tr>
                   <th scope="row">{{ $loop->iteration }}</th>
-                  <td>{{ $admin->admin_name }}</td>
-                  <td>{{ $admin->email }}</td>
-                  <td>{{ $admin->phone }}</td>
-                  <td>
-                    <img src="{{FileHelper::get_file_path($admin->image,'user')}}"  class="rounded-circle" width="100" height="100">
-                  </td>
-                  @if ($admin->role->role_name =='admin')
-                  <?php $badge='bg-danger'?>
-                  @elseif($admin->role->role_name=='manager')
-                  <?php $badge='bg-warning'?>
+                  @if($salary->person->role->role_name=='admin')
+                  <td>{{ ($salary->person->admin_name) }}</td>
+                  <td><span class="badge bg-danger">{{ $salary->person->role->role_name }}</span></td>
+                  @elseif ($salary->person->role->role_name=='manager')
+                  <td>{{ $salary->person->admin_name }}</td>
+                  <td><span class="badge bg-warning">{{ $salary->person->role->role_name }}</span></td>
+                  @elseif ($salary->person->role->role_name=='teacher')
+                  <td>{{ $salary->person->teacher_name }}</td>
+                  <td><span class="badge bg-success">teacher</span></td>
+                  @else
+                  <td>{{ $salary->person->employee_name }}</td>
+                  <td><span class="badge bg-primary">{{ $salary->person->role->role_name }}</span></td>
                   @endif
-                  <td><span class="badge {{$badge}}">{{$admin->role->role_name}}</span></td>
+                  <td>{{ $salary->base_salary }}</td>
+                  <td>{{ $salary->bonus }}</td>
+                  <td>{{ $salary->deduction }}</td>
+                  <td>{{ $salary->total_salary }}</td>
                   <td>
-                    <a class="btn btn-warning" href="{{route('dashboard.admin.admins.edit',$admin->id)}}">Edit</a>
+                    <a class="btn btn-warning" href="{{route('dashboard.admin.salaries.edit',$salary->id)}}">Edit</a>
                     <div class="btn-group" role="group">
-                      <form class="d-inline" action="{{route('dashboard.admin.admins.destroy',$admin->id)}}" method="post">
+                      <form class="d-inline" action="{{route('dashboard.admin.salaries.destroy',$salary->id)}}"
+                        method="post">
                         @csrf
                         @method('delete')
                         <button class="btn btn-danger" type="submit">Delete</button>

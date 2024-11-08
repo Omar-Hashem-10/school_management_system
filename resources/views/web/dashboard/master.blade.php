@@ -7,8 +7,9 @@
     <div class="wrapper">
         @include('web.dashboard.layouts.header.nav')
         @include('web.dashboard.layouts.header.aside')
-
         @yield('content')
+        @include('web.dashboard.inc.errors')
+        @include('web.dashboard.inc.success')
         @include('web.dashboard.layouts.footer.footer')
     </div>
 

@@ -11,6 +11,7 @@ class Level extends Model
 
     protected $fillable = [
         'level_name',
+        'amount',
     ];
 
     public function courses()
