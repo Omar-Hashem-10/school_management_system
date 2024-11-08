@@ -32,7 +32,9 @@ class RoleController extends Controller
     public function store(Request $request)
     {
         $data=$request->validate(
-            ['role_name' =>'required|string']
+            ['role_name' =>'required|string',
+            'for'=>'required|string',
+            ]
         );
         Role::create($data);
         return redirect()->route('dashboard.admin.roles.index')->with('success', 'Role added successfully');
