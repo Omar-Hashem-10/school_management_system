@@ -25,5 +25,9 @@ public function role()
 {
     return $this->belongsTo(Role::class);
 }
+public function salaries()
+    {
+        return $this->morphMany(Salary::class, 'person');
+    }
 
 }

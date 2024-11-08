@@ -31,6 +31,19 @@
             <span class="text-danger">{{$message}}</span>
             @enderror
           </div>
+          <div class="form-group">
+            <label for="for">For</label>
+            <select class="form-select form-control" aria-label="Default select example" name="for"
+              value="{{$role->for}}">
+              <option value="employees" selected>Employees</option>
+              <option value="admins" >Admins</option>
+              <option value="teachers" >Teachers</option>
+              <option value="students" >Students</option>
+            </select>
+            @error('for')
+            <span class="text-danger">{{$message}}</span>
+            @enderror
+          </div>
         </div>
         <div class="card-footer">
           <button type="submit" class="btn btn-primary">Submit</button>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
 use App\Models\ClassRoom;
+use App\Models\Role;
 use App\Models\Student;
 use App\Models\User;
 use Exception;
@@ -32,7 +33,9 @@ class StudentController extends Controller
     {
         $class=ClassRoom::first();
         $classes=ClassRoom::get();
-        return view('web.dashboard.admin.students.create',compact(['classes','class']));
+        $roles=Role::where('for',  'students')->get();
+
+        return view('web.dashboard.admin.students.create',compact(['classes','class','roles']));
     }
 
     /**
@@ -75,7 +78,9 @@ class StudentController extends Controller
     public function edit(student $student)
     {
         $classes=ClassRoom::get();
-        return view('web.dashboard.admin.students.edit',compact(['student','classes']));
+        $role=Role::where('for',  'students')->first();
+        $roles=Role::where('for',  'students')->get();
+        return view('web.dashboard.admin.students.edit',compact(['student','classes','roles','role']));
     }
 
     /**

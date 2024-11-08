@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use Exception;
-use App\Models\User;
-use App\Models\Admin;
-use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\AdminRequest;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AdminRequest;
+use App\Models\Admin;
+use App\Models\Role;
+use App\Models\User;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -31,7 +32,9 @@ class AdminController extends Controller
      */
     public function create()
     {
-        return view('web.dashboard.admin.admins.create');
+        $role=Role::where('for',  'admins')->first();
+        $roles=Role::where('for',  'admins')->get();
+        return view('web.dashboard.admin.admins.create',compact(['roles','role']));
     }
 
     /**
@@ -70,7 +73,8 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
-        return view('web.dashboard.admin.admins.edit', compact('admin'));
+        $roles=Role::where('for', operator: 'admins')->get();
+        return view('web.dashboard.admin.admins.edit', compact(['admin','roles']));
     }
 
     /**

@@ -1,21 +1,23 @@
 <?php
 
-use App\Models\ClassRoom;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\ProfileController;
-use App\Http\Controllers\Dashboard\Admin\HomeController;
-use App\Http\Controllers\Dashboard\Admin\RoleController;
-use App\Http\Controllers\Dashboard\Admin\UserController;
-use App\Http\Controllers\Dashboard\Auth\LoginController;
 use App\Http\Controllers\dashboard\admin\AdminController;
-use App\Http\Controllers\Dashboard\Admin\LevelController;
-use App\Http\Controllers\Dashboard\Auth\LogoutController;
 use App\Http\Controllers\Dashboard\Admin\AttendController;
+use App\Http\Controllers\Dashboard\Admin\ClassRoomController;
 use App\Http\Controllers\Dashboard\Admin\CourseController;
+use App\Http\Controllers\Dashboard\Admin\CourseLevelController;
+use App\Http\Controllers\Dashboard\Admin\HomeController;
+use App\Http\Controllers\Dashboard\Admin\LevelController;
+use App\Http\Controllers\Dashboard\Admin\RoleController;
+use App\Http\Controllers\Dashboard\Admin\SalaryController;
 use App\Http\Controllers\Dashboard\Admin\StudentController;
 use App\Http\Controllers\Dashboard\Admin\TeacherController;
-use App\Http\Controllers\Dashboard\Admin\ClassRoomController;
-use App\Http\Controllers\Dashboard\Admin\CourseLevelController;
+use App\Http\Controllers\Dashboard\Admin\UserController;
+use App\Http\Controllers\Dashboard\Auth\LoginController;
+use App\Http\Controllers\Dashboard\Auth\LogoutController;
+use App\Http\Controllers\Dashboard\ProfileController;
+use App\Models\ClassRoom;
+use Illuminate\Support\Facades\Route;
+
 
 Route::prefix('admin')->as('admin.')->group(function() {
     Route::middleware('auth')->group(function() {
@@ -27,6 +29,7 @@ Route::prefix('admin')->as('admin.')->group(function() {
     Route::resource('/roles', RoleController::class);
     Route::resource('/attends', AttendController::class);
     Route::resource('/courses', CourseController::class);
+    Route::resource('/salaries', SalaryController::class);
 
     Route::resource('/class_rooms', ClassRoomController::class);
 
