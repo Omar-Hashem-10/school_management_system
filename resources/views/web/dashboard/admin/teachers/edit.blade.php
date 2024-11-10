@@ -50,8 +50,8 @@
           <div class="form-group">
             <label for="role_id">Role</label>
             <select class="form-select form-control" aria-label="Default select example" name="role_id"
-              value="{{$teacher->role_id}}">
-              <option value="{{ $teacher->role_id }}" selected>{{ $teacher->role->role_name }}</option>
+              value="{{$teacher->user->role_id}}">
+              <option value="{{ $teacher->user->role_id }}" selected>{{ $teacher->user->role->role_name }}</option>
               @foreach ($roles as $role)
                 <option value="{{ $role->id }}">{{ $role->role_name }}</option>
                 @endforeach

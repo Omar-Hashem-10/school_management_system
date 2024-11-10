@@ -7,7 +7,7 @@ use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
 use App\Models\Role;
 use App\Models\User;
-use App\Traits\SideDataTraits;
+use App\Traits\DataTraits;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -18,14 +18,13 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $sideData = $this->getSideData();
-
         $admins = Admin::orderBy('id', 'desc')->paginate(10);
         return view('web.dashboard.admin.admins.index', $sideData , compact('admins'));
     }

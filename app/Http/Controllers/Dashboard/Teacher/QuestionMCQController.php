@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard\Teacher;
 
-use App\Http\Controllers\Controller;
-use App\Traits\SideDataTraits;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class QuestionMCQController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Handle the incoming request.
      */

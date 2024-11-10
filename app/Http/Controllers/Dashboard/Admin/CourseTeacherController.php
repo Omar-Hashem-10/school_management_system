@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Dashboard\Admin;
 use App\Models\Course;
 use App\Models\Teacher;
 use App\Models\ClassRoom;
-use App\Traits\SideDataTraits;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
 use App\Http\Controllers\Controller;
@@ -13,7 +13,7 @@ use App\Http\Requests\CourseTeacherRequest;
 
 class CourseTeacherController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */

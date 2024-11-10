@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\Level;
-use App\Traits\SideDataTraits;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Http\Requests\LevelRequest;
 use App\Http\Controllers\Controller;
 
 class LevelController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */

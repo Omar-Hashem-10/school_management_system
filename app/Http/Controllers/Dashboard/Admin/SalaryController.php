@@ -7,12 +7,12 @@ use App\Models\Admin;
 use App\Models\Employee;
 use App\Models\Salary;
 use App\Models\Teacher;
-use App\Traits\SideDataTraits;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 
 class SalaryController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     public function index()
     {
         $salaries = Salary::with('person')->get();
