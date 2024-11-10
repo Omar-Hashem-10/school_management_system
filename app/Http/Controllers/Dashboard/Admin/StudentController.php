@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StudentRequest;
-use App\Models\ClassRoom;
-use App\Models\Role;
-use App\Models\Student;
-use App\Models\User;
-use App\Traits\SideDataTraits;
 use Exception;
-use Illuminate\Http\Request;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Student;
+use App\Models\ClassRoom;
+use App\Traits\DataTraits;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\StudentRequest;
 use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */

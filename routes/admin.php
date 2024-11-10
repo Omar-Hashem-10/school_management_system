@@ -60,6 +60,10 @@ Route::prefix('admin')->as('admin.')->group(function() {
     Route::post('/logout', LogoutController::class)->name('logout');
     });
 });
-Route::get('admin/profile',[ProfileController::class,'index'])->name('profile.index');
+Route::get('profile',[ProfileController::class,'index'])->name('profile.index');
+Route::patch('profile/{user}',[ProfileController::class,'update'])->name('profile.update');
+Route::post('/profile/update-picture/{user}', [ProfileController::class, 'UpdateImage'])->name('profile.update.image');
+Route::post('/profile/change-password/{user}', [ProfileController::class, 'changePassword'])->name('profile.update.password');
+Route::delete('profile/image/{user}',[ProfileController::class,'destroyImage'])->name('profile.destroy.image');
 Route::get('login',[LoginController::class,'show'])->name('login.show');
 Route::post('login',[LoginController::class,'authenticate'])->name('login');

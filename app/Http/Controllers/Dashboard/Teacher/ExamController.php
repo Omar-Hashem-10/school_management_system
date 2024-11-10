@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Dashboard\Teacher;
 
 use App\Models\Exam;
 use App\Models\Teacher;
-use App\Traits\SideDataTraits;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
 use App\Http\Requests\ExamRequest;
@@ -12,7 +12,7 @@ use App\Http\Controllers\Controller;
 
 class ExamController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */

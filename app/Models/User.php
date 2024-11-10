@@ -57,7 +57,7 @@ public function employee()
 {
     return $this->hasOne(Employee::class);
 }
-public function manager()
+public function admin()
 {
     return $this->hasOne(Admin::class);
 }

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
+use App\Models\Admin;
 use App\Models\Course;
-use App\Traits\SideDataTraits;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseRequest;
 
 class CourseController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */
