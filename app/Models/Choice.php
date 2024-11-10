@@ -10,7 +10,7 @@ class Choice extends Model
     use HasFactory;
 
     protected $fillable = [
-        'choic_text',
+        'choice_text',
         'is_correct',
         'question_id',
     ];

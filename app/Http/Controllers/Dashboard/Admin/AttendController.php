@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\ClassRoom;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class AttendController extends Controller
+class  AttendController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('web.dashboard.admin.attends.index');
+        $ClassRooms = ClassRoom::all();
+        return view('web.dashboard.admin.attends.index', compact('ClassRooms'));
 
     }
 
@@ -22,7 +24,7 @@ class AttendController extends Controller
     public function create()
     {
         return view('web.dashboard.admin.attends.create');
-        
+
     }
 
     /**
@@ -47,7 +49,7 @@ class AttendController extends Controller
     public function edit(string $id)
     {
         return view('web.dashboard.admin.attends.edit');
-        
+
     }
 
     /**

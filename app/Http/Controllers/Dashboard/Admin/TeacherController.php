@@ -34,8 +34,16 @@ class TeacherController extends Controller
     {
         $role=Role::where('for',  'teachers')->first();
         $roles=Role::where('for',  'teachers')->get();
+
+        if(!isset($role))
+            return redirect()->back()->with('error','Not Found Role To Create Teacher');
+
         $course = Course::get()->first();
         $courses = Course::get()->all();
+
+        if(!isset($course))
+            return redirect()->back()->with('error','Not Found Course To Create Teacher');
+
         return view('web.dashboard.admin.teachers.create', compact(['courses', 'course', 'roles','role']));
     }
 
@@ -49,9 +57,8 @@ class TeacherController extends Controller
         $userData = [
             'name' => $data['teacher_name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
             'role_id' => $data['role_id'],
-            'created_at' => now(),
         ];
         $data = Arr::except($data, ['password', 'role_id']);
         if ($request->hasFile('image')) {
@@ -96,12 +103,11 @@ class TeacherController extends Controller
             'name' => $data['teacher_name'],
             'email' => $data['email'],
             'role_id' => $data['role_id'],
-            'updated_at' => now(),
         ];
         if ($data['password'] == $teacher->user->password) {
             $userData['password'] = $teacher->user->password;
         } else {
-            $userData['password'] = Hash::make($data['password']);
+            $userData['password'] = $data['password'];
         }
 
         if ($request->hasFile('image')) {
@@ -123,25 +129,30 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        $user= User::where('id',$teacher->user_id)->find;
-        $imagePath = null;
-        if ($teacher->image) {
-            $imagePath = $teacher->image;
-        }
+        $user = User::find($teacher->user_id);
+        $imagePath = $teacher->image ?? null;
+
         try {
             DB::beginTransaction();
+
             $teacher->delete();
+
             if ($user) {
                 $user->delete();
             }
+
             if ($imagePath) {
                 Storage::disk('public')->delete($imagePath);
             }
+
             DB::commit();
-            return redirect()->back()->with('success', 'teacher deleted successfully');
+
+            return redirect()->back()->with('success', 'Teacher deleted successfully');
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('errors', 'This teacher can not be deleted');
+
+            return redirect()->back()->with('errors', 'This teacher cannot be deleted');
         }
     }
+
 }

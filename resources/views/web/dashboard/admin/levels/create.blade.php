@@ -30,8 +30,8 @@
                     @enderror
                   </div>
                   <div class="col-12">
-                    <label for="amount" class="form-label">Level Name</label>
-                    <input type="text" class="form-control" name="amount" id="amount">
+                    <label for="amount" class="form-label">Level Amount</label>
+                    <input type="number" class="form-control" name="amount" id="amount">
                     @error('amount')
                         <span class="text-danger">{{$message}}</span>
                     @enderror

@@ -47,4 +47,10 @@ public function contacts()
 {
     return $this->hasMany(Contact::class, 'student_id', 'id');
 }
+
+public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
+
 }

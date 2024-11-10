@@ -70,17 +70,17 @@
                                             @method('delete')
                                             <button class="btn btn-danger" type="submit">Delete</button>
                                           </form>
-                                          <a href="{{ route('dashboard.admin.teachers.index') }}" class="btn btn-secondary">Back</a>
                                         </td>
                                     </tr>
-                                @endif
-                            @endforeach
-                        @endforeach
-                    @endforeach
-                  </tbody>
-              </table>
-              <!-- End Table with stripped rows -->
-            </div>
+                                    @endif
+                                    @endforeach
+                                    @endforeach
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <a href="{{ route('dashboard.admin.teachers.index') }}" class="btn btn-secondary">Back</a>
+                            <!-- End Table with stripped rows -->
+                        </div>
           </div>
         </div>
       </div>

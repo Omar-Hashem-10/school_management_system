@@ -34,7 +34,7 @@
               <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Course ID</th>
+                        <th>#</th>
                         <th>Course Name</th>
                         <th>Level</th>
                         <th>Course Code</th>
@@ -45,7 +45,7 @@
                     @foreach ($courses as $course)
                         @foreach ($course->levels as $level)
                             <tr>
-                                <td>{{ $course->id }}</td>
+                                <th scope="row">{{$loop->iteration}}</th>
                                 <td>{{ $course->course_name }}</td>
                                 <td>{{ $level->level_name }}</td>
                                 <td>{{ $level->pivot->course_code }}</td>
