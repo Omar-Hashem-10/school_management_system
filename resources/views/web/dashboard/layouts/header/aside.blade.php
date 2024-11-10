@@ -5,6 +5,10 @@
     @include('web.dashboard.admin.layouts.aside')
 @endcan
 
+@can('isManager')
+    @include('web.dashboard.admin.layouts.aside')
+@endcan
+
 @can('isTeacher')
     @include('web.dashboard.teacher.layouts.aside')
 @endcan

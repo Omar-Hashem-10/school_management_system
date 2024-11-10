@@ -12,11 +12,21 @@
       </a>
       <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li>
-          <a href="{{ route('dashboard.admin.attends.index') }}">
-            <i class="bi bi-circle"></i><span>Attends</span>
-          </a>
+            <a href="javascript:void(0)" class="nav-link" data-bs-toggle="collapse" data-bs-target="#attends-nav">
+                <i class="bi bi-circle"></i><span>Attends</span>
+            </a>
+            <ul class="nav-content collapse" id="attends-nav" data-bs-parent="#components-nav">
+                @foreach($class_rooms as $class_room)
+                    <li>
+                        <a href="{{ route('dashboard.admin.attends.index', ['class_room' => $class_room->id]) }}">
+                            <i class="bi bi-circle"></i><span>{{ $class_room->class_name }}</span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
         </li>
-        <li>
+
+
           <a href="{{ route('dashboard.admin.levels.index') }}">
             <i class="bi bi-circle"></i><span>Levels</span>
           </a>

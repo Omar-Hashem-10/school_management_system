@@ -36,6 +36,7 @@
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Level Name</th>
+                    <th scope="col">Level Amount</th>
                     <th scope="col">Created at</th>
                     <th scope="col">Updated at</th>
                     <th scope="col">Action</th>
@@ -46,6 +47,7 @@
                     <tr>
                         <th scope="row">{{$loop->iteration}}</th>
                         <td>{{$level->level_name}}</td>
+                        <td>{{$level->amount}}</td>
                         <td>{{$level->created_at}}</td>
                         <td>{{$level->updated_at}}</td>
                         <td>

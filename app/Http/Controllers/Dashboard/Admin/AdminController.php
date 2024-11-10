@@ -34,6 +34,10 @@ class AdminController extends Controller
     {
         $role=Role::where('for',  'admins')->first();
         $roles=Role::where('for',  'admins')->get();
+
+        if(!isset($role))
+        return redirect()->back()->with('error','Not Found Role To Create Teacher');
+
         return view('web.dashboard.admin.admins.create',compact(['roles','role']));
     }
 
@@ -47,9 +51,8 @@ class AdminController extends Controller
         $userData = [
             'name' => $data['admin_name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
             'role_id' => $data['role_id'],
-            'created_at' => now(),
         ];
         $data = Arr::except($data, 'password');
         if ($request->hasFile('image')) {
@@ -89,12 +92,11 @@ class AdminController extends Controller
             'name' => $data['admin_name'],
             'email' => $data['email'],
             'role_id' => $data['role_id'],
-            'updated_at' => now(),
         ];
         if ($data['password'] == $admin->user->password) {
             $userData['password'] = $admin->user->password;
         } else {
-            $userData['password'] = Hash::make($data['password']);
+            $userData['password'] = $data['password'];
         }
 
         if ($request->hasFile('image')) {

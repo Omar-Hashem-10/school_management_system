@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use App\Http\Requests\RoleRequest;
+use App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
@@ -23,20 +24,15 @@ class RoleController extends Controller
     public function create()
     {
         return view('web.dashboard.admin.roles.create');
-        
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        $data=$request->validate(
-            ['role_name' =>'required|string',
-            'for'=>'required|string',
-            ]
-        );
-        Role::create($data);
+        Role::create($request->validated());
         return redirect()->route('dashboard.admin.roles.index')->with('success', 'Role added successfully');
     }
 
@@ -54,18 +50,15 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         return view('web.dashboard.admin.roles.edit',compact('role'));
-        
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Role $role)
+    public function update(RoleRequest $request, Role $role)
     {
-        $data=$request->validate(
-            ['role_name' =>'required|string']
-        );
-        Role::where('id',$role->id)->update($data);
+        $role->update($request->validated());
         return redirect()->route('dashboard.admin.roles.index')->with('success', 'Role Updated successfully');
     }
 

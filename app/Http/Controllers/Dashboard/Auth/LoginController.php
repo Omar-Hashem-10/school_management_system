@@ -15,7 +15,6 @@ class LoginController extends Controller
 
     public function authenticate(Request $request): RedirectResponse
     {
-        // التحقق من صحة المدخلات
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -26,7 +25,7 @@ class LoginController extends Controller
 
             $user = Auth::user();
 
-            if ($user->role && $user->role->role_name === 'admin') {
+            if ($user->role && $user->role->role_name === 'admin' || $user->role->role_name === 'manager') {
                 return redirect()->intended('/dashboard/admin/home');
             }
 

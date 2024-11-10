@@ -39,4 +39,9 @@ public function schedule()
         return $this->hasMany(CourseTeacher::class, 'class_room_id');
     }
 
+    public function exams()
+    {
+        return $this->hasMany(Exam::class);
+    }
+
 }
