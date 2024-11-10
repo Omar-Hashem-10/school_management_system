@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Admin;
 use App\Models\Course;
 use App\Models\Teacher;
 use App\Models\ClassRoom;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
 use App\Http\Controllers\Controller;
@@ -12,6 +13,7 @@ use App\Http\Requests\CourseTeacherRequest;
 
 class CourseTeacherController extends Controller
 {
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +28,9 @@ class CourseTeacherController extends Controller
 
         $courses = Course::with('levels')->get();
 
-        return view('web.dashboard.admin.course_teachers.index', compact('course_teachers', 'courses'));
+        $sideData = $this->getSideData();
+
+        return view('web.dashboard.admin.course_teachers.index', $sideData , compact('course_teachers', 'courses'));
     }
 
     /**
@@ -36,7 +40,8 @@ class CourseTeacherController extends Controller
     {
         $courses = Course::with('levels')->get();
         $class_rooms = ClassRoom::get();
-        return view('web.dashboard.admin.course_teachers.create', compact('courses', 'class_rooms'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.course_teachers.create', $sideData , compact('courses', 'class_rooms'));
     }
 
     /**
@@ -49,21 +54,14 @@ class CourseTeacherController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(CourseTeacher $course_teacher)
     {
         $courses = Course::with('levels')->get();
         $class_rooms = ClassRoom::get();
-        return view('web.dashboard.admin.course_teachers.edit', compact('courses','class_rooms', 'course_teacher'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.course_teachers.edit', $sideData , compact('courses','class_rooms', 'course_teacher'));
     }
 
     /**

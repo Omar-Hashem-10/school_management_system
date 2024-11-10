@@ -3,18 +3,19 @@
 namespace App\Http\Controllers\Dashboard\Teacher;
 
 use App\Http\Controllers\Controller;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 
 class QuestionMCQController extends Controller
 {
+    use SideDataTraits;
     /**
      * Handle the incoming request.
      */
     public function __invoke(Request $request)
     {
-        $class_room_names = session('class_room_names');
-        $course_codes = session('course_codes');
+        $sideData = $this->getSideData();
         $course_level_id = session('course_level_id');
-        return view('web.dashboard.teacher.questions.mcq_questions.create', compact('class_room_names', 'course_codes', 'course_level_id'));
+        return view('web.dashboard.teacher.questions.mcq_questions.create', $sideData , compact('course_level_id'));
     }
 }

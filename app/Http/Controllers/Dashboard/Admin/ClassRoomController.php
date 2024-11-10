@@ -4,19 +4,22 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\Level;
 use App\Models\ClassRoom;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClassRoomRequest;
 
 class ClassRoomController extends Controller
 {
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $class_rooms = ClassRoom::paginate(5);
-        return view('web.dashboard.admin.class_rooms.index', compact('class_rooms'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.class_rooms.index', $sideData , compact('class_rooms'));
     }
 
     /**
@@ -25,7 +28,8 @@ class ClassRoomController extends Controller
     public function create()
     {
         $levels = Level::get();
-        return view('web.dashboard.admin.class_rooms.create', compact('levels'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.class_rooms.create', $sideData , compact('levels'));
     }
 
     /**
@@ -43,7 +47,8 @@ class ClassRoomController extends Controller
     public function edit(ClassRoom $class_room)
     {
         $levels = Level::get();
-        return view('web.dashboard.admin.class_rooms.edit', compact('levels', 'class_room'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.class_rooms.edit', $sideData , compact('levels', 'class_room'));
     }
 
     /**

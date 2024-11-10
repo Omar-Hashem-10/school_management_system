@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Teacher;
 use App\Models\Exam;
 use App\Models\Teacher;
 use App\Models\Question;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
 use App\Http\Controllers\Controller;
@@ -12,6 +13,7 @@ use App\Http\Requests\ExamQuestionRequest;
 
 class ExamQuestionsController extends Controller
 {
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
@@ -25,8 +27,8 @@ class ExamQuestionsController extends Controller
      */
     public function create()
     {
-        $class_room_names = session('class_room_names');
-        $course_codes = session('course_codes');
+        $sideData = $this->getSideData();
+
 
         $course_level_id = CourseTeacher::where('teacher_id', session('teacher_id'))
             ->where('class_room_id', session('class_room_id'))
@@ -41,7 +43,7 @@ class ExamQuestionsController extends Controller
         }
 
 
-        return view('web.dashboard.teacher.exam_questions.create', compact('class_room_names', 'course_codes', 'course_level_id', 'questions'));
+        return view('web.dashboard.teacher.exam_questions.create', $sideData , compact('course_level_id', 'questions'));
     }
 
     /**
@@ -86,13 +88,10 @@ class ExamQuestionsController extends Controller
             return !in_array($question->id, $exam_question_ids);
         });
 
-        $class_room_names = session('class_room_names');
-        $course_codes = session('course_codes');
+        $sideData = $this->getSideData();
         session()->put('exam_id_edit', $id);
 
-        return view('web.dashboard.teacher.exam_questions.edit', compact(
-            'class_room_names', 'course_codes', 'exam', 'questions_not_in_exam', 'exam_question_ids'
-        ));
+        return view('web.dashboard.teacher.exam_questions.edit', $sideData , compact('exam', 'questions_not_in_exam', 'exam_question_ids'));
     }
 
 

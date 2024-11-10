@@ -3,17 +3,19 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('web.dashboard.admin.users.index');
-        
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.users.index', $sideData);
     }
 
     /**
@@ -21,8 +23,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('web.dashboard.admin.users.create');
-        
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.users.create', $sideData);
     }
 
     /**
@@ -46,7 +48,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        return view('web.dashboard.admin.users.edit');
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.users.edit', $sideData);
     }
 
     /**

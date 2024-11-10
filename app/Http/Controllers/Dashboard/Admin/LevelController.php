@@ -3,19 +3,22 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\Level;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Http\Requests\LevelRequest;
 use App\Http\Controllers\Controller;
 
 class LevelController extends Controller
 {
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $levels = Level::paginate(5);
-        return view('web.dashboard.admin.levels.index', compact('levels'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.levels.index', $sideData , compact('levels'));
     }
 
     /**
@@ -23,7 +26,8 @@ class LevelController extends Controller
      */
     public function create()
     {
-        return view('web.dashboard.admin.levels.create');
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.levels.create', $sideData);
     }
 
     /**
@@ -40,7 +44,8 @@ class LevelController extends Controller
      */
     public function edit(Level $level)
     {
-        return view('web.dashboard.admin.levels.edit', compact('level'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.levels.edit', $sideData , compact('level'));
     }
 
     /**

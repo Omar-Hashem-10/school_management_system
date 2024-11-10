@@ -8,6 +8,7 @@ use App\Models\ClassRoom;
 use App\Models\Role;
 use App\Models\Student;
 use App\Models\User;
+use App\Traits\SideDataTraits;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
@@ -40,9 +42,9 @@ class StudentController extends Controller
 
         $students = $query->paginate(10);
 
-        $classRooms = ClassRoom::all();
+        $sideData = $this->getSideData();
 
-        return view('web.dashboard.admin.students.index', compact('students', 'classRooms'));
+        return view('web.dashboard.admin.students.index', $sideData , compact('students'));
     }
 
 
@@ -63,7 +65,9 @@ class StudentController extends Controller
         if(!isset($role))
         return redirect()->back()->with('error','Not Found Role To Create Student');
 
-        return view('web.dashboard.admin.students.create',compact(['classes','class','roles', 'role']));
+        $sideData = $this->getSideData();
+
+        return view('web.dashboard.admin.students.create', $sideData ,compact(['classes','class','roles', 'role']));
     }
 
     /**
@@ -91,13 +95,6 @@ class StudentController extends Controller
         return redirect()->route('dashboard.admin.students.create')->with('success', 'student added successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -107,7 +104,8 @@ class StudentController extends Controller
         $classes=ClassRoom::get();
         $role=Role::where('for',  'students')->first();
         $roles=Role::where('for',  'students')->get();
-        return view('web.dashboard.admin.students.edit',compact(['student','classes','roles','role']));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.students.edit', $sideData ,compact(['student','classes','roles','role']));
     }
 
     /**
@@ -115,8 +113,6 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, Student $student)
     {
-        // abort_if(!Gate::allows('admin'),403);
-        // dd($request->all());
         $data = $request->validated();
         $userData = [
             'name' => $data['student_name'],
