@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Teacher;
 
 use App\Models\Choice;
 use App\Models\Question;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChoiceRequest;
@@ -11,6 +12,7 @@ use App\Http\Requests\QuestionRequest;
 
 class QuestionController extends Controller
 {
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
@@ -18,8 +20,7 @@ class QuestionController extends Controller
     {
         $questions = Question::paginate(5);
 
-        $class_room_names = session('class_room_names');
-        $course_codes = session('course_codes');
+        $sideData = $this->getSideData();
 
         $course_level_id = $request->query('course_level_id');
 
@@ -27,7 +28,7 @@ class QuestionController extends Controller
             session(['course_level_id' => $course_level_id]);
         }
 
-        return view('web.dashboard.teacher.questions.index', compact('class_room_names', 'course_codes', 'questions'));
+        return view('web.dashboard.teacher.questions.index', $sideData , compact('questions'));
     }
 
 
@@ -74,8 +75,8 @@ class QuestionController extends Controller
      */
     public function edit(Question $question)
     {
-        $class_room_names = session('class_room_names');
-        $course_codes = session('course_codes');
+        $sideData = $this->getSideData();
+
 
         $choices = Choice::where('question_id', $question->id)->get();
 
@@ -85,12 +86,12 @@ class QuestionController extends Controller
                 $is_correct = $choice->is_correct;
             }
 
-            return view('web.dashboard.teacher.questions.mcq_questions.edit', compact('choices', 'question', 'class_room_names', 'course_codes', 'is_correct'));
+            return view('web.dashboard.teacher.questions.mcq_questions.edit', $sideData , compact('choices', 'question', 'is_correct'));
         }else{
             foreach ($choices as $choice) {
                 $is_correct = $choice->is_correct;
             }
-            return view('web.dashboard.teacher.questions.true_false_questions.edit', compact('question', 'choices', 'is_correct','course_codes', 'class_room_names'));
+            return view('web.dashboard.teacher.questions.true_false_questions.edit', $sideData , compact('question', 'choices', 'is_correct'));
         }
     }
 
@@ -118,7 +119,6 @@ class QuestionController extends Controller
         }else{
                 $is_correct = $request_choice->is_correct;
 
-        // تحديث الإجابة الصحيحة
         Choice::where('question_id', $question->id)
                 ->update(['is_correct' => $is_correct]);
         }

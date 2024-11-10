@@ -3,19 +3,22 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\Role;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Http\Requests\RoleRequest;
 use App\Http\Controllers\Controller;
 
 class RoleController extends Controller
 {
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $roles=Role::get()->all();
-        return view('web.dashboard.admin.roles.index',compact('roles'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.roles.index', $sideData ,compact('roles'));
     }
 
     /**
@@ -23,8 +26,8 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('web.dashboard.admin.roles.create');
-
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.roles.create', $sideData);
     }
 
     /**
@@ -37,20 +40,12 @@ class RoleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Role $role)
     {
-        return view('web.dashboard.admin.roles.edit',compact('role'));
-
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.roles.edit', $sideData ,compact('role'));
     }
 
     /**

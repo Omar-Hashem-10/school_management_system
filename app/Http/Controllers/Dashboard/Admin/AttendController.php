@@ -3,19 +3,21 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\ClassRoom;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class  AttendController extends Controller
 {
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $ClassRooms = ClassRoom::all();
-        return view('web.dashboard.admin.attends.index', compact('ClassRooms'));
+        $sideData = $this->getSideData();
 
+        return view('web.dashboard.admin.attends.index', $sideData , compact('ClassRooms'));
     }
 
     /**
@@ -23,8 +25,8 @@ class  AttendController extends Controller
      */
     public function create()
     {
-        return view('web.dashboard.admin.attends.create');
-
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.attends.create', $sideData);
     }
 
     /**
@@ -48,7 +50,8 @@ class  AttendController extends Controller
      */
     public function edit(string $id)
     {
-        return view('web.dashboard.admin.attends.edit');
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.attends.edit', $sideData);
 
     }
 

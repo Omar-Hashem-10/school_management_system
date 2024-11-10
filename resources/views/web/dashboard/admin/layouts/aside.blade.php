@@ -16,10 +16,10 @@
                 <i class="bi bi-circle"></i><span>Attends</span>
             </a>
             <ul class="nav-content collapse" id="attends-nav" data-bs-parent="#components-nav">
-                @foreach($class_rooms as $class_room)
+                @foreach($classRooms as $classRoom)
                     <li>
-                        <a href="{{ route('dashboard.admin.attends.index', ['class_room' => $class_room->id]) }}">
-                            <i class="bi bi-circle"></i><span>{{ $class_room->class_name }}</span>
+                        <a href="{{ route('dashboard.admin.attends.index', ['class_room' => $classRoom->id]) }}">
+                            <i class="bi bi-circle"></i><span>{{ $classRoom->class_name }}</span>
                         </a>
                     </li>
                 @endforeach

@@ -8,6 +8,7 @@ use App\Models\course;
 use App\Models\Role;
 use App\Models\Teacher;
 use App\Models\User;
+use App\Traits\SideDataTraits;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -18,13 +19,15 @@ use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $teachers = Teacher::orderBy('id', 'desc')->paginate(10);
-        return view('web.dashboard.admin.teachers.index', compact('teachers'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.teachers.index', $sideData , compact('teachers'));
     }
 
     /**
@@ -44,7 +47,9 @@ class TeacherController extends Controller
         if(!isset($course))
             return redirect()->back()->with('error','Not Found Course To Create Teacher');
 
-        return view('web.dashboard.admin.teachers.create', compact(['courses', 'course', 'roles','role']));
+            $sideData = $this->getSideData();
+
+        return view('web.dashboard.admin.teachers.create', $sideData , compact(['courses', 'course', 'roles','role']));
     }
 
     /**
@@ -73,14 +78,6 @@ class TeacherController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Teacher $teacher)
@@ -88,7 +85,8 @@ class TeacherController extends Controller
         $roles=Role::where('for',  'teachers')->get();
 
         $courses = Course::get()->all();
-        return view('web.dashboard.admin.teachers.edit',compact(['courses', 'teacher', 'roles']));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.teachers.edit', $sideData ,compact(['courses', 'teacher', 'roles']));
     }
 
     /**
@@ -96,8 +94,6 @@ class TeacherController extends Controller
      */
     public function update(TeacherRequest $request, Teacher $teacher)
     {
-        // abort_if(!Gate::allows('admin'),403);
-        // dd($request->all());
         $data = $request->validated();
         $userData = [
             'name' => $data['teacher_name'],

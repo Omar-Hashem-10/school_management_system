@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Teacher;
 
 use App\Models\Exam;
 use App\Models\Teacher;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
 use App\Http\Requests\ExamRequest;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Controller;
 
 class ExamController extends Controller
 {
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
@@ -20,10 +22,9 @@ class ExamController extends Controller
         if (!empty($class_room_id)) {
             session(['class_room_id' => $class_room_id]);
         }
-        $class_room_names = session('class_room_names');
-        $course_codes = session('course_codes');
+        $sideData = $this->getSideData();
         $exams = Exam::paginate(5);
-        return view('web.dashboard.teacher.exams.index', compact('exams', 'class_room_names', 'course_codes'));
+        return view('web.dashboard.teacher.exams.index', $sideData, compact('exams'));
     }
 
     /**
@@ -39,10 +40,10 @@ class ExamController extends Controller
             session(['course_level_id' => $course_level->id]);
         }
 
-        $class_room_names = session('class_room_names');
-        $course_codes = session('course_codes');
+        $sideData = $this->getSideData();
 
-        return view('web.dashboard.teacher.exams.create', compact('class_room_names', 'course_codes'));
+
+        return view('web.dashboard.teacher.exams.create', $sideData);
     }
 
 
@@ -67,11 +68,9 @@ class ExamController extends Controller
     public function edit(Exam $exam)
     {
 
-        $class_room_names = session('class_room_names');
-        $course_codes = session('course_codes');
+        $sideData = $this->getSideData();
 
-
-        return view('web.dashboard.teacher.exams.edit', compact('exam', 'class_room_names', 'course_codes'));
+        return view('web.dashboard.teacher.exams.edit',$sideData, compact('exam'));
     }
 
     /**
