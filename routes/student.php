@@ -2,8 +2,11 @@
 
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\Student\HomeController;
 
 
-Route::prefix('student')->as('student.')->group(function(){
-Route::view('home','web.dashboard.student.home.index')->name('home');
+Route::prefix('student')->as('student.')->group(function () {
+    Route::middleware('auth')->group(function () {
+        Route::get('/home', HomeController::class)->name('home');
+    });
 });
