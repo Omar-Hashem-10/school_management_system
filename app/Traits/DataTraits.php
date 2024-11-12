@@ -10,13 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 trait DataTraits
 {
-    public function getSideData()
-    {
-        $class_room_names = session('class_room_names');
-        $course_codes = session('course_codes');
-        $classRooms = ClassRoom::get();
-        return compact(['class_room_names','course_codes','classRooms']);
-    }
     public function getProfileData($model){
         $user=$model::where('user_id',operator: auth()->user()->id)->first();
         abort_if(!$user,404);
@@ -35,12 +28,10 @@ trait DataTraits
             $image = $request->file('image');
             $filename = $image->store('/'.$person.'s', 'public');
             $data['image'] = $filename;
-            
     }
     public function destroyImage($person){
             if ($person->image) {
                 Storage::disk('public')->delete($person->image);
             }
     }
-    
 }

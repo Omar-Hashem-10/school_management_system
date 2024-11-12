@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Employee;
 use App\Traits\DataTraits;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -17,7 +18,8 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    use DataTraits;
+    use DataTraits, SideDataTraits;
+
     public function index()
     {
         $sideData = $this->getSideData();
@@ -87,7 +89,6 @@ class ProfileController extends Controller
         $person->image = null;
         $person->save();
         session('user')[0]['image'] = $person->image;
-        
         return redirect()->back()->with('success', 'image deleted successfully');
     }
     public function update(Request $request,$id)

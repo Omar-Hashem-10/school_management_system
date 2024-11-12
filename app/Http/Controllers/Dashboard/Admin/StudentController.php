@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
+use App\Traits\SideDataTraits;
 use Exception;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Student;
 use App\Models\ClassRoom;
-use App\Traits\DataTraits;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;

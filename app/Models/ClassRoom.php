@@ -24,10 +24,10 @@ class ClassRoom extends Model
         return $this->hasMany(Student::class,'class_room_id','id');
     }
 
-public function attendances()
-{
-    return $this->hasMany(Attendance::class, 'class_room_id', 'id');
-}
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'class_room_id', 'id');
+    }
 
 public function schedule()
     {
