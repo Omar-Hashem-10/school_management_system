@@ -7,7 +7,7 @@ use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
 use App\Models\Role;
 use App\Models\User;
-use App\Traits\SideDataTraits;
+use App\Traits\DataTraits;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */

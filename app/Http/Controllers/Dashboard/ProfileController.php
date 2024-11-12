@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Storage;
 class ProfileController extends Controller
 {
     use DataTraits, SideDataTraits;
+
     public function index()
     {
         $sideData = $this->getSideData();
@@ -88,7 +89,6 @@ class ProfileController extends Controller
         $person->image = null;
         $person->save();
         session('user')[0]['image'] = $person->image;
-
         return redirect()->back()->with('success', 'image deleted successfully');
     }
     public function update(Request $request,$id)

@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */

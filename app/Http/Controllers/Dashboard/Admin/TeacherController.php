@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */

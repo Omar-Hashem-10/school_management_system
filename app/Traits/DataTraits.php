@@ -28,12 +28,10 @@ trait DataTraits
             $image = $request->file('image');
             $filename = $image->store('/'.$person.'s', 'public');
             $data['image'] = $filename;
-
     }
     public function destroyImage($person){
             if ($person->image) {
                 Storage::disk('public')->delete($person->image);
             }
     }
-
 }

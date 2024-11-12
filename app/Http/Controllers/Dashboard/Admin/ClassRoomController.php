@@ -13,7 +13,7 @@ use App\Http\Requests\ClassRoomRequest;
 
 class ClassRoomController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */

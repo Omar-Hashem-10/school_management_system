@@ -28,7 +28,6 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('/students', StudentController::class);
         Route::resource('/users', UserController::class);
         Route::resource('/roles', RoleController::class);
-
         Route::resource('/attends', AttendController::class);
 
         Route::get('/attends/{id}/{status?}', [AttendController::class, 'show'])->name('attends.show');
@@ -55,7 +54,6 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('course_teachers/{course_teacher}/edit', [CourseTeacherController::class, 'edit'])->name('course_teachers.edit');
         Route::put('course_teachers/{course_teacher}', [CourseTeacherController::class, 'update'])->name('course_teachers.update');
         Route::delete('course_teachers/{course_teacher}', [CourseTeacherController::class, 'destroy'])->name('course_teachers.destroy');
-
         Route::resource('/levels', LevelController::class);
         Route::post('/logout', LogoutController::class)->name('logout');
     });

@@ -14,7 +14,7 @@ use App\Http\Requests\AttendRequest;
 
 class  AttendController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */
@@ -109,6 +109,4 @@ class  AttendController extends Controller
 
         return redirect()->route('dashboard.admin.attends.index')->with('success', 'Deleted Attendance Successfully!');
     }
-
-
 }
