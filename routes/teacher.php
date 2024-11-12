@@ -2,9 +2,9 @@
 
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\Admin\HomeController;
 use App\Http\Controllers\Dashboard\Auth\LoginController;
 use App\Http\Controllers\Dashboard\Teacher\ExamController;
+use App\Http\Controllers\Dashboard\Teacher\HomeController;
 use App\Http\Controllers\Dashboard\Teacher\QuestionController;
 use App\Http\Controllers\Dashboard\Teacher\QuestionMCQController;
 use App\Http\Controllers\Dashboard\Teacher\ExamQuestionsController;
@@ -32,6 +32,3 @@ Route::prefix('teacher')->as('teacher.')->group(function(){
         Route::get('/question_true_false',QuestionTrueFalseController::class)->name('true_false');
     });
 });
-
-Route::get('login',[LoginController::class,'show'])->name('login.show');
-Route::post('login',[LoginController::class,'authenticate'])->name('login');

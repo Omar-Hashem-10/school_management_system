@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard\Teacher;
 
-use App\Http\Controllers\Controller;
-use App\Traits\SideDataTraits;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class QuestionTrueFalseController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Handle the incoming request.
      */
@@ -16,6 +16,6 @@ class QuestionTrueFalseController extends Controller
     {
         $sideData = $this->getSideData();
         $course_level_id = session('course_level_id');
-        return view('web.dashboard.teacher.questions.true_false_questions.create', $sideData , compact('class_room_names', 'course_codes', 'course_level_id'));
+        return view('web.dashboard.teacher.questions.true_false_questions.create', $sideData , compact( 'course_level_id'));
     }
 }

@@ -33,22 +33,29 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+                @endif
               <!-- Form for attendance creation -->
-              <form action="{{ route('dashboard.admin.attends.store') }}" method="POST">
+              <form action="{{ route('dashboard.admin.attend_students.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="class_room_id" value="{{ session('class_room_id') }}">
+                <input type="hidden" name="attendance_id" value="{{ session('attendance_id') }}">
 
-                <div class="form-group">
-                  <label for="attendance_date">Attendance Date</label>
-                  <input type="date" id="attendance_date" name="attendance_date" class="form-control" value="{{ old('attendance_date') }}">
-                  @error('attendance_date')
-                      <span class="text-danger">{{$message}}</span>
-                  @enderror
+                @foreach($students as $student)
+                <div class="form-group mt-3">
+                    <label for="status_{{ $student->id }}">Status for {{ $student->student_name }}</label>
+                    <select name="status[{{ $student->id }}]" id="status_{{ $student->id }}" class="form-control">
+                        <option value="">Select Status</option>
+                        <option value="present" {{ old('status.' . $student->id) == 'present' ? 'selected' : '' }}>Present</option>
+                        <option value="absent" {{ old('status.' . $student->id) == 'absent' ? 'selected' : '' }}>Absent</option>
+                        <option value="excused" {{ old('status.' . $student->id) == 'excused' ? 'selected' : '' }}>Excused</option>
+                    </select>
                 </div>
+                @endforeach
 
                 <button type="submit" class="btn btn-success mt-3">Create Attendance</button>
-              </form>
+            </form>
+
+
             </div>
           </div>
 

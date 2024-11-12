@@ -36,23 +36,27 @@
                 @endif
 
               <!-- Form for editing attendance -->
-              <form action="{{ route('dashboard.admin.attends.update', $attendance->id) }}" method="POST">
+              <form action="{{ route('dashboard.admin.attend_students.update', $attendance->id) }}" method="POST">
                 @csrf
                 @method('PUT')
 
                 <input type="hidden" name="class_room_id" value="{{ $attendance->class_room_id }}">
+                <input type="hidden" name="attendance_id" value="{{ $attendance->id }}">
 
-                <div class="form-group">
-                  <label for="attendance_date">Attendance Date</label>
-                  <input type="date" id="attendance_date" name="attendance_date" class="form-control" value="{{ old('attendance_date', $attendance->attendance_date) }}">
-                  @error('attendance_date')
-                      <span class="text-danger">{{$message}}</span>
-                  @enderror
+                @foreach($attendance_students as $attendance_student)
+                <div class="form-group mt-3">
+                    <label for="status_{{ $attendance_student->student_id }}">Status for {{ $attendance_student->student->student_name }}</label>
+                    <select name="status[{{ $attendance_student->student_id }}]" id="status_{{ $attendance_student->student_id }}" class="form-control">
+                        <option value="">Select Status</option>
+                        <option value="present" {{ (old('status.' . $attendance_student->student_id, $attendance_student->status ?? '') == 'present') ? 'selected' : '' }}>Present</option>
+                        <option value="absent" {{ (old('status.' . $attendance_student->student_id, $attendance_student->status ?? '') == 'absent') ? 'selected' : '' }}>Absent</option>
+                        <option value="excused" {{ (old('status.' . $attendance_student->student_id, $attendance_student->status ?? '') == 'excused') ? 'selected' : '' }}>Excused</option>
+                    </select>
                 </div>
+                @endforeach
+
 
                 <button type="submit" class="btn btn-success mt-3">Update Attendance</button>
-
-                <a href="{{ route('dashboard.admin.attend_students.edit', $attendance->id) }}" class="btn btn-primary mt-3 ml-2">Edit Students</a>
               </form>
             </div>
           </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
+use App\Models\Admin;
 use App\Models\Course;
 use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;

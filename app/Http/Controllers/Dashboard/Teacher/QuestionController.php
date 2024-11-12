@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Dashboard\Teacher;
 
 use App\Models\Choice;
 use App\Models\Question;
-use App\Traits\SideDataTraits;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ChoiceRequest;
@@ -12,7 +12,7 @@ use App\Http\Requests\QuestionRequest;
 
 class QuestionController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */

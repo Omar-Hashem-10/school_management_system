@@ -25,7 +25,6 @@ class AdminController extends Controller
     public function index()
     {
         $sideData = $this->getSideData();
-
         $admins = Admin::orderBy('id', 'desc')->paginate(10);
         return view('web.dashboard.admin.admins.index', $sideData , compact('admins'));
     }

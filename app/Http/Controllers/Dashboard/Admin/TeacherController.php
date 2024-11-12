@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\TeacherRequest;
-use App\Models\course;
-use App\Models\Role;
-use App\Models\Teacher;
-use App\Models\User;
 use App\Traits\SideDataTraits;
 use Exception;
-use Illuminate\Http\Request;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\course;
+use App\Models\Teacher;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\TeacherRequest;
 use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
@@ -83,7 +83,7 @@ class TeacherController extends Controller
     public function edit(Teacher $teacher)
     {
         $roles=Role::where('for',  'teachers')->get();
-
+        // dd($teacher);
         $courses = Course::get()->all();
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.teachers.edit', $sideData ,compact(['courses', 'teacher', 'roles']));
@@ -114,7 +114,7 @@ class TeacherController extends Controller
             $filename = $image->store('/teachers', 'public');
             $data['image'] = $filename;
         }
-        $data = Arr::except($data, 'password');
+        $data = Arr::except($data, ['password','role_id']);
         User::where('id', $teacher->user_id)->update($userData);
         Teacher::where('id', $teacher->id)->update($data);
         return redirect()->route('dashboard.admin.teachers.index')->with('success', 'teacher updated successfully');

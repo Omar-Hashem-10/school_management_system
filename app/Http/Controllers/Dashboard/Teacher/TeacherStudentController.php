@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Dashboard\Teacher;
 
 use App\Models\Student;
 use App\Models\ClassRoom;
-use App\Traits\SideDataTraits;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
 use App\Http\Controllers\Controller;
 
 class TeacherStudentController extends Controller
 {
-    use SideDataTraits;
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */

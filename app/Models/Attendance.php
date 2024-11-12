@@ -10,20 +10,17 @@ class Attendance extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date',
-        'status',
-        'student_id',
+        'attendance_date',
         'class_room_id',
     ];
-
-
-    public function student()
-{
-    return $this->belongsTo(Student::class, 'student_id', 'id');
-}
 
 public function classRoom()
 {
     return $this->belongsTo(ClassRoom::class, 'class_room_id', 'id');
 }
+
+public function attendanceStudents()
+    {
+        return $this->hasMany(AttendanceStudent::class);
+    }
 }

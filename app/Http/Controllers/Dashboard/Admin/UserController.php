@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {

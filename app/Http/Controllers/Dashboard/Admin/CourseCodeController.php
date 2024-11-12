@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CourseCodeController extends Controller
 {
