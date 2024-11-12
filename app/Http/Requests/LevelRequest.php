@@ -23,7 +23,7 @@ class LevelRequest extends FormRequest
     {
         return [
             'level_name' => 'required|string|min:3|max:50',
-            'amount' => 'required|integer|min:4|max:5',
+            'amount' => 'required|integer',
         ];
     }
 }

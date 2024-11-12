@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('web.dashboard.layouts.header.head')
-
+@section('title','Login')
 <body>
 
     <main>

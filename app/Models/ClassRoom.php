@@ -34,5 +34,14 @@ public function schedule()
         return $this->hasOne(Schedule::class, 'class_room_id', 'id');
     }
 
+    public function courseTeachers()
+    {
+        return $this->hasMany(CourseTeacher::class, 'class_room_id');
+    }
+
+    public function exams()
+    {
+        return $this->hasMany(Exam::class);
+    }
 
 }

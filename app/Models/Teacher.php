@@ -47,4 +47,8 @@ public function salaries()
         return $this->morphMany(Salary::class, 'person');
     }
 
+public function courseTeachers()
+{
+    return $this->hasMany(CourseTeacher::class, 'teacher_id');
+}
 }

@@ -7,14 +7,17 @@ use App\Models\Admin;
 use App\Models\Employee;
 use App\Models\Salary;
 use App\Models\Teacher;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 
 class SalaryController extends Controller
 {
+    use DataTraits;
     public function index()
     {
         $salaries = Salary::with('person')->get();
-        return view('web.dashboard.admin.salaries.index', compact('salaries'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.salaries.index', $sideData , compact('salaries'));
     }
     public function create()
     {
@@ -30,11 +33,12 @@ class SalaryController extends Controller
             'admin' => $admins,
         ];
 
-        return view('web.dashboard.admin.salaries.create', compact('people'));
+        $sideData = $this->getSideData();
+
+        return view('web.dashboard.admin.salaries.create', $sideData , compact('people'));
     }
     public function store(Request $request)
     {
-        // dd(($request->all()));
         $data = $request->validate([
             'person_id' => 'required|string',
             'base_salary' => 'required|numeric',
@@ -72,7 +76,9 @@ class SalaryController extends Controller
             'Admin' => $admins,
         ];
 
-        return view('web.dashboard.admin.salaries.edit', compact('salary', 'people'));
+        $sideData = $this->getSideData();
+
+        return view('web.dashboard.admin.salaries.edit', $sideData , compact('salary', 'people'));
     }
     public function update(Request $request, Salary $salary)
     {
@@ -86,7 +92,6 @@ class SalaryController extends Controller
             'year' => 'required|numeric|min:1900|max:2099',
         ]);
 
-        // dd($data);
         list($personType, $personId) = explode('-', $data['person_id']);
 
         if ($personType === 'Teacher') {

@@ -2,20 +2,24 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
+use App\Models\Admin;
 use App\Models\Course;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseRequest;
 
 class CourseController extends Controller
 {
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $courses = Course::paginate(5);
-        return view('web.dashboard.admin.courses.index', compact('courses'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.courses.index', $sideData , compact('courses'));
 
     }
 
@@ -24,7 +28,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('web.dashboard.admin.courses.create');
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.courses.create', $sideData);
     }
 
     /**
@@ -41,8 +46,8 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        return view('web.dashboard.admin.courses.edit', compact('course'));
-
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.courses.edit', $sideData , compact('course'));
     }
 
     /**

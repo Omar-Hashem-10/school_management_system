@@ -12,7 +12,7 @@
         @include('web.dashboard.inc.success')
         @include('web.dashboard.layouts.footer.footer')
     </div>
-
+    @yield('scripts')
 </body>
 
 </html>

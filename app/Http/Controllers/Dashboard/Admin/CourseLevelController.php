@@ -5,19 +5,22 @@ namespace App\Http\Controllers\Dashboard\Admin;
 use App\Models\Level;
 use App\Models\Course;
 use App\Models\CourseLevel;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseLevelRequest;
 
 class CourseLevelController extends Controller
 {
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $courses = Course::with('levels')->get();
-        return view('web.dashboard.admin.course_levels.index', compact('courses'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.course_levels.index', $sideData , compact('courses'));
     }
 
     /**
@@ -27,7 +30,8 @@ class CourseLevelController extends Controller
     {
         $courses = Course::get();
         $levels = Level::get();
-        return view('web.dashboard.admin.course_levels.create', compact('courses', 'levels'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.course_levels.create', $sideData , compact('courses', 'levels'));
     }
 
     /**
@@ -55,7 +59,9 @@ class CourseLevelController extends Controller
 
         $courseLevel = $course->levels()->where('level_id', $level->id)->first();
 
-        return view('web.dashboard.admin.course_levels.edit', compact('course', 'level', 'courseLevel', 'courses', 'levels'));
+        $sideData = $this->getSideData();
+
+        return view('web.dashboard.admin.course_levels.edit', $sideData , compact('course', 'level', 'courseLevel', 'courses', 'levels'));
     }
 
 

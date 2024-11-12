@@ -2,29 +2,51 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StudentRequest;
-use App\Models\ClassRoom;
-use App\Models\Role;
-use App\Models\Student;
-use App\Models\User;
 use Exception;
-use Illuminate\Http\Request;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Student;
+use App\Models\ClassRoom;
+use App\Traits\DataTraits;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\StudentRequest;
 use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = Student::orderBy('id', 'desc')->paginate(10);
-        return view('web.dashboard.admin.students.index', compact('students'));
+        $query = Student::query();
+
+        if ($request->has('student_name') && $request->student_name != '') {
+            $query->where('student_name', 'like', '%' . $request->student_name . '%');
+        }
+
+        if ($request->has('class_room_id') && $request->class_room_id != '') {
+            $query->where('class_room_id', $request->class_room_id);
+        }
+
+        if ($request->has('sort_by') && in_array($request->sort_by, ['student_name', 'email', 'phone'])) {
+            $query->orderBy($request->sort_by, $request->order ?? 'asc');
+        } else {
+            $query->orderBy('id', 'desc');
+        }
+
+        $students = $query->paginate(10);
+
+        $sideData = $this->getSideData();
+
+        return view('web.dashboard.admin.students.index', $sideData , compact('students'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -33,9 +55,19 @@ class StudentController extends Controller
     {
         $class=ClassRoom::first();
         $classes=ClassRoom::get();
+
+        if(!isset($class))
+        return redirect()->back()->with('error','Not Found Class To Create Student');
+
+        $role=Role::where('for',  'students')->first();
         $roles=Role::where('for',  'students')->get();
 
-        return view('web.dashboard.admin.students.create',compact(['classes','class','roles']));
+        if(!isset($role))
+        return redirect()->back()->with('error','Not Found Role To Create Student');
+
+        $sideData = $this->getSideData();
+
+        return view('web.dashboard.admin.students.create', $sideData ,compact(['classes','class','roles', 'role']));
     }
 
     /**
@@ -48,9 +80,8 @@ class StudentController extends Controller
         $userData = [
             'name' => $data['student_name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
             'role_id' => $data['role_id'],
-            'created_at' => now(),
         ];
         $data = Arr::except($data, ['password', 'role_id']);
         if ($request->hasFile('image')) {
@@ -61,16 +92,9 @@ class StudentController extends Controller
         $user = User::create($userData);
         $data['user_id'] = $user->id;
         student::create($data);
-        return redirect()->route('dashboard.admin.students.index')->with('success', 'student added successfully');
+        return redirect()->route('dashboard.admin.students.create')->with('success', 'student added successfully');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        // 
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -80,7 +104,8 @@ class StudentController extends Controller
         $classes=ClassRoom::get();
         $role=Role::where('for',  'students')->first();
         $roles=Role::where('for',  'students')->get();
-        return view('web.dashboard.admin.students.edit',compact(['student','classes','roles','role']));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.students.edit', $sideData ,compact(['student','classes','roles','role']));
     }
 
     /**
@@ -88,19 +113,16 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, Student $student)
     {
-        // abort_if(!Gate::allows('admin'),403);
-        // dd($request->all());
         $data = $request->validated();
         $userData = [
             'name' => $data['student_name'],
             'email' => $data['email'],
             'role_id' => $data['role_id'],
-            'updated_at' => now(),
         ];
         if ($data['password'] == $student->user->password) {
             $userData['password'] = $student->user->password;
         } else {
-            $userData['password'] = Hash::make($data['password']);
+            $userData['password'] = $data['password'];
         }
         $data = Arr::except($data, ['password', 'role_id']);
         if ($request->hasFile('image')) {

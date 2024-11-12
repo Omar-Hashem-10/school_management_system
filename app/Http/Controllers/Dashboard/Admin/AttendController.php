@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Admin;
+use App\Models\ClassRoom;
+use App\Traits\DataTraits;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class AttendController extends Controller
+class  AttendController extends Controller
 {
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('web.dashboard.admin.attends.index');
-
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.attends.index', $sideData );
     }
 
     /**
@@ -21,8 +25,8 @@ class AttendController extends Controller
      */
     public function create()
     {
-        return view('web.dashboard.admin.attends.create');
-        
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.attends.create', $sideData);
     }
 
     /**
@@ -46,8 +50,9 @@ class AttendController extends Controller
      */
     public function edit(string $id)
     {
-        return view('web.dashboard.admin.attends.edit');
-        
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.attends.edit', $sideData);
+
     }
 
     /**

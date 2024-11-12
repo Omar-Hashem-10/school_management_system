@@ -2,29 +2,32 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\TeacherRequest;
-use App\Models\course;
-use App\Models\Role;
-use App\Models\Teacher;
-use App\Models\User;
 use Exception;
-use Illuminate\Http\Request;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\course;
+use App\Models\Teacher;
+use App\Traits\DataTraits;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\TeacherRequest;
 use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
+    use DataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $teachers = Teacher::orderBy('id', 'desc')->paginate(10);
-        return view('web.dashboard.admin.teachers.index', compact('teachers'));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.teachers.index', $sideData , compact('teachers'));
     }
 
     /**
@@ -34,9 +37,19 @@ class TeacherController extends Controller
     {
         $role=Role::where('for',  'teachers')->first();
         $roles=Role::where('for',  'teachers')->get();
+
+        if(!isset($role))
+            return redirect()->back()->with('error','Not Found Role To Create Teacher');
+
         $course = Course::get()->first();
         $courses = Course::get()->all();
-        return view('web.dashboard.admin.teachers.create', compact(['courses', 'course', 'roles','role']));
+
+        if(!isset($course))
+            return redirect()->back()->with('error','Not Found Course To Create Teacher');
+
+            $sideData = $this->getSideData();
+
+        return view('web.dashboard.admin.teachers.create', $sideData , compact(['courses', 'course', 'roles','role']));
     }
 
     /**
@@ -49,9 +62,8 @@ class TeacherController extends Controller
         $userData = [
             'name' => $data['teacher_name'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
             'role_id' => $data['role_id'],
-            'created_at' => now(),
         ];
         $data = Arr::except($data, ['password', 'role_id']);
         if ($request->hasFile('image')) {
@@ -66,22 +78,15 @@ class TeacherController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        // 
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Teacher $teacher)
     {
         $roles=Role::where('for',  'teachers')->get();
-
+        // dd($teacher);
         $courses = Course::get()->all();
-        return view('web.dashboard.admin.teachers.edit',compact(['courses', 'teacher', 'roles']));
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.teachers.edit', $sideData ,compact(['courses', 'teacher', 'roles']));
     }
 
     /**
@@ -89,19 +94,16 @@ class TeacherController extends Controller
      */
     public function update(TeacherRequest $request, Teacher $teacher)
     {
-        // abort_if(!Gate::allows('admin'),403);
-        // dd($request->all());
         $data = $request->validated();
         $userData = [
             'name' => $data['teacher_name'],
             'email' => $data['email'],
             'role_id' => $data['role_id'],
-            'updated_at' => now(),
         ];
         if ($data['password'] == $teacher->user->password) {
             $userData['password'] = $teacher->user->password;
         } else {
-            $userData['password'] = Hash::make($data['password']);
+            $userData['password'] = $data['password'];
         }
 
         if ($request->hasFile('image')) {
@@ -112,7 +114,7 @@ class TeacherController extends Controller
             $filename = $image->store('/teachers', 'public');
             $data['image'] = $filename;
         }
-        $data = Arr::except($data, 'password');
+        $data = Arr::except($data, ['password','role_id']);
         User::where('id', $teacher->user_id)->update($userData);
         Teacher::where('id', $teacher->id)->update($data);
         return redirect()->route('dashboard.admin.teachers.index')->with('success', 'teacher updated successfully');
@@ -123,25 +125,30 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        $user= User::where('id',$teacher->user_id)->find;
-        $imagePath = null;
-        if ($teacher->image) {
-            $imagePath = $teacher->image;
-        }
+        $user = User::find($teacher->user_id);
+        $imagePath = $teacher->image ?? null;
+
         try {
             DB::beginTransaction();
+
             $teacher->delete();
+
             if ($user) {
                 $user->delete();
             }
+
             if ($imagePath) {
                 Storage::disk('public')->delete($imagePath);
             }
+
             DB::commit();
-            return redirect()->back()->with('success', 'teacher deleted successfully');
+
+            return redirect()->back()->with('success', 'Teacher deleted successfully');
         } catch (Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('errors', 'This teacher can not be deleted');
+
+            return redirect()->back()->with('errors', 'This teacher cannot be deleted');
         }
     }
+
 }

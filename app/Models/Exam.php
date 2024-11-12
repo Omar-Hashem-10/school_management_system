@@ -14,8 +14,9 @@ class Exam extends Model
         'exam_date',
         'exam_duration',
         'half_grade',
-        'class_level_id',
+        'course_level_id',
         'teacher_id',
+        'class_room_id',
     ];
 
     public function teacher()
@@ -38,4 +39,13 @@ public function feedbacks()
     return $this->hasMany(Feedback::class, 'exam_id', 'id');
 }
 
+public function classRoom()
+    {
+        return $this->belongsTo(ClassRoom::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class);
+    }
 }
