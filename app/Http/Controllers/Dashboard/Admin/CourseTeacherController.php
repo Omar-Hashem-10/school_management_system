@@ -14,7 +14,7 @@ use App\Http\Requests\CourseTeacherRequest;
 
 class CourseTeacherController extends Controller
 {
-    use DataTraits;
+use DataTraits;
     use SideDataTraits;
     /**
      * Display a listing of the resource.
