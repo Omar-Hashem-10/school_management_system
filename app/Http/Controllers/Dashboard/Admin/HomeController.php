@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Dashboard\Admin;
 use App\Models\Admin;
 use App\Models\ClassRoom;
 use App\Traits\DataTraits;
-use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +15,7 @@ use Illuminate\Support\Facades\Gate;
 
 class HomeController extends Controller
 {
-    use SideDataTraits, DataTraits;
+    use DataTraits;
 
     /**
      * Display a listing of the resource.
