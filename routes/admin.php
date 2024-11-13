@@ -1,23 +1,24 @@
 <?php
 
-use App\Http\Controllers\dashboard\admin\AdminController;
-use App\Http\Controllers\Dashboard\Admin\AttendController;
-use App\Http\Controllers\Dashboard\Admin\ClassRoomController;
-use App\Http\Controllers\Dashboard\Admin\CourseController;
-use App\Http\Controllers\Dashboard\Admin\CourseLevelController;
+use App\Models\ClassRoom;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\Admin\HomeController;
-use App\Http\Controllers\Dashboard\Admin\LevelController;
 use App\Http\Controllers\Dashboard\Admin\RoleController;
+use App\Http\Controllers\Dashboard\Admin\UserController;
+use App\Http\Controllers\Dashboard\Auth\LoginController;
+use App\Http\Controllers\dashboard\admin\AdminController;
+use App\Http\Controllers\Dashboard\Admin\LevelController;
+use App\Http\Controllers\Dashboard\Auth\LogoutController;
+use App\Http\Controllers\Dashboard\Admin\AttendController;
+use App\Http\Controllers\Dashboard\Admin\CourseController;
 use App\Http\Controllers\Dashboard\Admin\SalaryController;
 use App\Http\Controllers\Dashboard\Admin\StudentController;
 use App\Http\Controllers\Dashboard\Admin\TeacherController;
+use App\Http\Controllers\Dashboard\Admin\ClassRoomController;
+use App\Http\Controllers\Dashboard\Admin\CourseLevelController;
+use App\Http\Controllers\Dashboard\Admin\AttendStudentController;
 use App\Http\Controllers\Dashboard\Admin\CourseTeacherController;
-use App\Http\Controllers\Dashboard\Admin\UserController;
-use App\Http\Controllers\Dashboard\Auth\LoginController;
-use App\Http\Controllers\Dashboard\Auth\LogoutController;
-use App\Http\Controllers\Dashboard\ProfileController;
-use App\Models\ClassRoom;
-use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->as('admin.')->group(function () {
     Route::middleware('auth')->group(function () {
@@ -27,26 +28,24 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('/students', StudentController::class);
         Route::resource('/users', UserController::class);
         Route::resource('/roles', RoleController::class);
+        Route::resource('/attends', AttendController::class);
 
-        Route::get('/attends/{class_room?}', [AttendController::class, 'index'])->name('attends.index');
-        Route::get('/attends/create/{class_room?}', [AttendController::class, 'create'])->name('attends.create');
-        Route::post('/attends', [AttendController::class, 'store'])->name('attends.store');
-        Route::get('/attends/{id}', [AttendController::class, 'show'])->name('attends.show');
-        Route::get('/attends/{id}/edit', [AttendController::class, 'edit'])->name('attends.edit');
-        Route::put('/attends/{id}', [AttendController::class, 'update'])->name('attends.update');
-        Route::delete('/attends/{id}', [AttendController::class, 'destroy'])->name('attends.destroy');
+        Route::get('/attends/{id}/{status?}', [AttendController::class, 'show'])->name('attends.show');
+
+
+        Route::resource('/attend_students', AttendStudentController::class);
 
         Route::resource('/courses', CourseController::class);
         Route::resource('/salaries', SalaryController::class);
 
         Route::resource('/class_rooms', ClassRoomController::class);
 
-        Route::get('dashboard/admin/course_levels', [CourseLevelController::class, 'index'])->name('course_levels.index');
-        Route::get('dashboard/admin/course_levels/create', [CourseLevelController::class, 'create'])->name('course_levels.create');
-        Route::post('dashboard/admin/course_levels', [CourseLevelController::class, 'store'])->name('course_levels.store');
-        Route::get('dashboard/admin/course_levels/{course}/{level}/edit', [CourseLevelController::class, 'edit'])->name('course_levels.edit');
-        Route::put('dashboard/admin/course_levels/{course}/{level}', [CourseLevelController::class, 'update'])->name('course_levels.update');
-        Route::delete('dashboard/admin/course_levels/{course}/{level}', [CourseLevelController::class, 'destroy'])->name('course_levels.destroy');
+        Route::get('/course_levels', [CourseLevelController::class, 'index'])->name('course_levels.index');
+        Route::get('/course_levels/create', [CourseLevelController::class, 'create'])->name('course_levels.create');
+        Route::post('/course_levels', [CourseLevelController::class, 'store'])->name('course_levels.store');
+        Route::get('/course_levels/{course}/{level}/edit', [CourseLevelController::class, 'edit'])->name('course_levels.edit');
+        Route::put('/course_levels/{course}/{level}', [CourseLevelController::class, 'update'])->name('course_levels.update');
+        Route::delete('/course_levels/{course}/{level}', [CourseLevelController::class, 'destroy'])->name('course_levels.destroy');
 
         Route::get('course-teachers/{teacher_id}', [CourseTeacherController::class, 'index'])->name('course_teachers.index');
 
@@ -55,7 +54,6 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('course_teachers/{course_teacher}/edit', [CourseTeacherController::class, 'edit'])->name('course_teachers.edit');
         Route::put('course_teachers/{course_teacher}', [CourseTeacherController::class, 'update'])->name('course_teachers.update');
         Route::delete('course_teachers/{course_teacher}', [CourseTeacherController::class, 'destroy'])->name('course_teachers.destroy');
-
         Route::resource('/levels', LevelController::class);
         Route::post('/logout', LogoutController::class)->name('logout');
     });

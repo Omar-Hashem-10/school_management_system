@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
 
 class CourseCodeController extends Controller
 {
+    use  SideDataTraits;
     /**
      * Display a listing of the resource.
      */

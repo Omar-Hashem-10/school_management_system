@@ -27,12 +27,6 @@ class Student extends Model
 {
     return $this->belongsTo(User::class, 'user_id', 'id');
 }
-
-public function attendances()
-{
-    return $this->hasMany(Attendance::class, 'student_id', 'id');
-}
-
 public function grades()
 {
     return $this->hasMany(Grade::class, 'student_id', 'id');
@@ -53,4 +47,13 @@ public function answers()
         return $this->hasMany(Answer::class);
     }
 
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
+    public function attendanceStudents()
+    {
+        return $this->hasMany(AttendanceStudent::class);
+    }
 }

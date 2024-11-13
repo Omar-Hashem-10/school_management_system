@@ -7,9 +7,9 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Student;
 use App\Models\ClassRoom;
-use App\Traits\DataTraits;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Traits\SideDataTraits;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
 
 class StudentController extends Controller
 {
-    use DataTraits;
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */

@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Models\Admin;
 use App\Models\Level;
 use App\Models\ClassRoom;
-use App\Traits\DataTraits;
+use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClassRoomRequest;
 
 class ClassRoomController extends Controller
 {
-    use DataTraits;
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */

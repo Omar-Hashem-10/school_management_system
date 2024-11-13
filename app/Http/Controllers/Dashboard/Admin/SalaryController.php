@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Admin;
-use App\Models\Employee;
 use App\Models\Salary;
 use App\Models\Teacher;
-use App\Traits\DataTraits;
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Traits\SideDataTraits;
+use App\Http\Controllers\Controller;
 
 class SalaryController extends Controller
 {
-    use DataTraits;
+    use  SideDataTraits;
     public function index()
     {
         $salaries = Salary::with('person')->get();
