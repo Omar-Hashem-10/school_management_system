@@ -10,6 +10,7 @@ class TimeSlot extends Model
     use HasFactory;
 
     protected $fillable = [
+        'lecture_number',
         'start_time',
         'end_time',
     ];
