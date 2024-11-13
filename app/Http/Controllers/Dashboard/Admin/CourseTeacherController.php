@@ -6,16 +6,16 @@ use App\Models\Course;
 use App\Models\Teacher;
 use App\Models\ClassRoom;
 use App\Traits\DataTraits;
-use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
+use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CourseTeacherRequest;
 
 class CourseTeacherController extends Controller
 {
-    use DataTraits, SideDataTraits;
-
+    use DataTraits;
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */

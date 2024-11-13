@@ -12,7 +12,7 @@ class Schedule extends Model
     protected $fillable = [
         'day',
         'class_room_id',
-        'class_level_id',
+        'course_level_id',
         'time_slot_id',
     ];
 

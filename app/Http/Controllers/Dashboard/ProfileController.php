@@ -8,8 +8,8 @@ use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Employee;
 use App\Traits\DataTraits;
-use App\Traits\SideDataTraits;
 use Illuminate\Http\Request;
+use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    use DataTraits, SideDataTraits;
+    use DataTraits ,SideDataTraits;
 
     public function index()
     {
