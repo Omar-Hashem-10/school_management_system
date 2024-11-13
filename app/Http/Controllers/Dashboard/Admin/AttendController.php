@@ -3,18 +3,18 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\Admin;
-use App\Models\AttendanceStudent;
 use App\Models\Student;
 use App\Models\ClassRoom;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
+use App\Models\AttendanceStudent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AttendRequest;
 
 class  AttendController extends Controller
 {
-    use DataTraits;
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */

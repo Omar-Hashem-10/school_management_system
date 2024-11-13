@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard\Teacher;
 
-use App\Traits\DataTraits;
 use Illuminate\Http\Request;
+use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
 
 class QuestionTrueFalseController extends Controller
 {
-    use DataTraits;
+    use SideDataTraits;
     /**
      * Handle the incoming request.
      */

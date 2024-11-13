@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Traits\SideDataTraits;
 use Exception;
 use App\Models\Role;
 use App\Models\User;
@@ -10,6 +9,7 @@ use App\Models\course;
 use App\Models\Teacher;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
+use App\Traits\SideDataTraits;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
-    use DataTraits;
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */

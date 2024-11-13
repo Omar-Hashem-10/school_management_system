@@ -8,12 +8,13 @@ use App\Models\Question;
 use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
+use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ExamQuestionRequest;
 
 class ExamQuestionsController extends Controller
 {
-    use DataTraits;
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
