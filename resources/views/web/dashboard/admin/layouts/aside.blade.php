@@ -51,6 +51,11 @@
           </a>
         </li>
         <li>
+            <a href="{{ route('dashboard.admin.days.index') }}">
+                <i class="bi bi-circle"></i><span>Days</span>
+            </a>
+        </li>
+        <li>
             <a href="{{ route('dashboard.admin.time_slots.index') }}">
               <i class="bi bi-circle"></i><span>Time Slots</span>
             </a>

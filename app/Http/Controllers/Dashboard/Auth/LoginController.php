@@ -29,11 +29,17 @@ class LoginController extends Controller
                 return redirect()->intended('/dashboard/admin/home');
             }
 
-            if ($user->role && $user->role->role_name === 'teacher') {
+            elseif ($user->role && $user->role->role_name === 'teacher') {
                 return redirect()->intended('/dashboard/teacher/home');
             }
 
-            return redirect()->intended('/home');
+            elseif ($user->role && $user->role->role_name === 'student') {
+                return redirect()->intended('/dashboard/student/home');
+            }
+
+            else{
+                return redirect()->intended('/home');
+            }
         }
 
         return back()->withErrors([

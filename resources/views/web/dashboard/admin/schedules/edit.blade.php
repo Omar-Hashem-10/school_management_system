@@ -51,18 +51,18 @@
         </div>
 
         <div class="form-group">
-          <label for="day">Day</label>
-          <select class="form-select form-control" name="day" value="{{ old('day', $schedule->day) }}">
-            <option value="">Select Day</option>
-            <option value="Sunday" {{ old('day', $schedule->day) == 'Sunday' ? 'selected' : '' }}>Sunday</option>
-            <option value="Monday" {{ old('day', $schedule->day) == 'Monday' ? 'selected' : '' }}>Monday</option>
-            <option value="Tuesday" {{ old('day', $schedule->day) == 'Tuesday' ? 'selected' : '' }}>Tuesday</option>
-            <option value="Wednesday" {{ old('day', $schedule->day) == 'Wednesday' ? 'selected' : '' }}>Wednesday</option>
-            <option value="Thursday" {{ old('day', $schedule->day) == 'Thursday' ? 'selected' : '' }}>Thursday</option>
-          </select>
-          @error('day')
-          <span class="text-danger">{{ $message }}</span>
-          @enderror
+            <label for="day_id">Day</label>
+            <select class="form-select form-control" name="day_id">
+                <option value="">Select Day</option>
+                @foreach ($days as $day)
+                    <option value="{{ $day->id }}" {{ old('day_id', $schedule->day_id) == $day->id ? 'selected' : '' }}>
+                        {{ $day->day_name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('day_id')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
 
         <div class="form-group">

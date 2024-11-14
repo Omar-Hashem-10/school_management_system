@@ -48,19 +48,19 @@
 
         <!-- Day Selection -->
         <div class="form-group">
-          <label for="day">Day</label>
-          <select class="form-select form-control" aria-label="Day Select" name="day" value="{{ old('day') }}">
-            <option value="">Select Day</option>
-            <option value="Sunday">Sunday</option>
-            <option value="Monday">Monday</option>
-            <option value="Tuesday">Tuesday</option>
-            <option value="Wednesday">Wednesday</option>
-            <option value="Thursday">Thursday</option>
-          </select>
-          @error('day')
-          <span class="text-danger">{{ $message }}</span>
-          @enderror
+            <label for="day_id">Day</label>
+            <select class="form-select form-control" aria-label="Day Select" name="day_id" value="{{ old('day_id') }}">
+                <option value="">Select Day</option>
+                @foreach ($days as $day)
+                    <option value="{{ $day->id }}" {{ old('day_id') == $day->id ? 'selected' : '' }}>{{ $day->day_name }}</option>
+                @endforeach
+            </select>
+            @error('day_id')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
+
+
 
         <div class="form-group">
             <label for="time_slot_id">Time Slot</label>
