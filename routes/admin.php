@@ -3,6 +3,7 @@
 use App\Models\Schedule;
 use App\Models\ClassRoom;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DayController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\Admin\HomeController;
@@ -59,6 +60,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::delete('course_teachers/{course_teacher}', [CourseTeacherController::class, 'destroy'])->name('course_teachers.destroy');
         Route::resource('/levels', LevelController::class);
 
+        Route::resource('/days', DayController::class);
         Route::resource('/time_slots', TimeSlotController::class);
         Route::resource('/schedules', ScheduleController::class);
 

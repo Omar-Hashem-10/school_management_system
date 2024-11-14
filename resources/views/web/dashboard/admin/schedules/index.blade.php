@@ -33,16 +33,17 @@
               <!-- Filter form -->
               <form action="{{ route('dashboard.admin.schedules.index') }}" method="GET" class="mb-3">
                 <div class="row">
-                  <div class="col-md-3">
-                    <select class="form-select" name="day_filter">
-                      <option value="">Select Day</option>
-                      <option value="Sunday" {{ request('day_filter') == 'Sunday' ? 'selected' : '' }}>Sunday</option>
-                      <option value="Monday" {{ request('day_filter') == 'Monday' ? 'selected' : '' }}>Monday</option>
-                      <option value="Tuesday" {{ request('day_filter') == 'Tuesday' ? 'selected' : '' }}>Tuesday</option>
-                      <option value="Wednesday" {{ request('day_filter') == 'Wednesday' ? 'selected' : '' }}>Wednesday</option>
-                      <option value="Thursday" {{ request('day_filter') == 'Thursday' ? 'selected' : '' }}>Thursday</option>
-                    </select>
-                  </div>
+                    <div class="col-md-3">
+                        <select class="form-select" name="day_filter">
+                            <option value="">Select Day</option>
+                            @foreach ($days as $day)
+                                <option value="{{ $day->id }}" {{ request('day_filter') == $day->day_name ? 'selected' : '' }}>
+                                    {{ $day->day_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
                   <div class="col-md-3">
                     <button type="submit" class="btn btn-primary">Filter</button>
                   </div>
@@ -67,24 +68,24 @@
                     @foreach ($courses as $course)
                         @foreach ($course->levels as $level)
                             @if ($level->pivot->id == $schedule->course_level_id)
-                                @if (request('day_filter') == '' || $schedule->day == request('day_filter'))
-                  <tr>
-                    <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $schedule->classRoom->class_name }}</td>
-                    <td>{{ $course->course_name }}</td>
-                    <td>{{ $schedule->day }}</td>
-                    <td>{{ $schedule->timeSlot->start_time }}</td>
-                    <td>{{ $schedule->timeSlot->end_time }}</td>
-                    <td>
-                      <a class="btn btn-warning" href="{{ route('dashboard.admin.schedules.edit', $schedule->id) }}">Edit</a>
-                      <div class="btn-group" role="group">
-                        <form class="d-inline" action="{{ route('dashboard.admin.schedules.destroy', $schedule->id) }}" method="post">
-                          @csrf
-                          @method('delete')
-                          <button class="btn btn-danger" type="submit">Delete</button>
-                        </form>
-                      </div>
-                    </td>
+                                @if (request('day_filter') == '' || $schedule->day_id == request('day_filter'))
+                    <tr>
+                        <th scope="row">{{ $loop->iteration }}</th>
+                        <td>{{ $schedule->classRoom->class_name }}</td>
+                        <td>{{ $course->course_name }}</td>
+                        <td>{{ $schedule->day->day_name }}</td>
+                        <td>{{ $schedule->timeSlot->start_time }}</td>
+                        <td>{{ $schedule->timeSlot->end_time }}</td>
+                        <td>
+                        <a class="btn btn-warning" href="{{ route('dashboard.admin.schedules.edit', $schedule->id) }}">Edit</a>
+                        <div class="btn-group" role="group">
+                            <form class="d-inline" action="{{ route('dashboard.admin.schedules.destroy', $schedule->id) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </div>
+                        </td>
                   </tr>
                   @endif
                   @endif
