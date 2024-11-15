@@ -22,7 +22,8 @@
 
         <div class="card">
           <div class="card-header border-transparent">
-            <a href="{{ route('dashboard.admin.salaries.amounts',$date->id) }}" class="btn btn-sm btn-info float-left">All Amounts</a>
+            <a href="{{ route('dashboard.admin.salaries.create',$date->id) }}" class="btn btn-sm btn-info float-left">Place New
+              Amount</a>
             <div class="card-tools">
               <button type="button" class="btn btn-tool" data-card-widget="collapse">
                 <i class="fas fa-minus"></i>
@@ -38,38 +39,42 @@
                   <th scope="col">#</th>
                   <th scope="col">Name</th>
                   <th scope="col">Position</th>
-                  <th scope="col">Base Salary</th>
-                  <th scope="col">Amounts</th>
-                  <th scope="col">Total Salary</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Created_At</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($people as $type => $persons)
-                @foreach($persons as $person)
+                @foreach ($salaries as $salary )
                 <tr>
                   <th scope="row">{{ $loop->iteration }}</th>
-                  @if($person->role['role_name']=='admin')
-                  <td>{{ ($person->admin_name) }}</td>
-                  <td><span class="badge bg-danger">{{ $person->role['role_name'] }}</span></td>
-                  @elseif ($person->role['role_name']=='manager')
-                  <td>{{ $person->admin_name }}</td>
-                  <td><span class="badge bg-warning">{{ $person->role['role_name'] }}</span></td>
-                  @elseif ($person->role['role_name']=='teacher')
-                  <td>{{ $person->teacher_name }}</td>
+                  @if($salary->person->role->role_name=='admin')
+                  <td>{{ ($salary->person->admin_name) }}</td>
+                  <td><span class="badge bg-danger">{{ $salary->person->role->role_name }}</span></td>
+                  @elseif ($salary->person->role->role_name=='manager')
+                  <td>{{ $salary->person->admin_name }}</td>
+                  <td><span class="badge bg-warning">{{ $salary->person->role->role_name }}</span></td>
+                  @elseif ($salary->person->role->role_name=='teacher')
+                  <td>{{ $salary->person->teacher_name }}</td>
                   <td><span class="badge bg-success">teacher</span></td>
                   @else
-                  <td>{{ $person->employee_name }}</td>
-                  <td><span class="badge bg-primary">{{ $person->role['role_name'] }}</span></td>
+                  <td>{{ $salary->person->employee_name }}</td>
+                  <td><span class="badge bg-primary">{{ $salary->person->role->role_name }}</span></td>
                   @endif
-                  <td>{{ $person->role->base_salary }}</td>
-                  <td>{{ $person->amounts($date->month, $date->year) }}</td>
-                  <td>{{ $person->calculateMonthlySalary($date->month, $date->year) }}</td>
+                  <td>{{ $salary->amount }}</td>
+                  <td>{{ $salary->created_at }}</td>
                   <td>
-                    <a class="btn btn-warning" href="{{route('dashboard.admin.salaries.create',[$date->id,$person->id])}}">add amount</a>
+                    <a class="btn btn-warning" href="{{route('dashboard.admin.salaries.edit',$salary->id)}}">Edit</a>
+                    <div class="btn-group" role="group">
+                      <form class="d-inline" action="{{route('dashboard.admin.salaries.destroy',$salary->id)}}"
+                        method="post">
+                        @csrf
+                        @method('delete')
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                      </form>
+                    </div>
                   </td>
                 </tr>
-                @endforeach
                 @endforeach
               </tbody>
             </table>

@@ -17,11 +17,16 @@ class Teacher extends Model
         'experience',
         'course_id',
         'user_id',
+        'role_id',
     ];
 
     public function course()
     {
         return $this->belongsTo(Course::class, 'course_id', 'id');
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 
     public function user()
@@ -51,4 +56,26 @@ public function courseTeachers()
 {
     return $this->hasMany(CourseTeacher::class, 'teacher_id');
 }
+public function calculateMonthlySalary($month, $year)
+    {
+        $baseSalary = $this->role->base_salary;  
+        
+        $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
+
+        $adjustments = $date 
+            ? $this->salaries()->where('date_id', $date->id)->sum('amount') 
+            : 0;
+
+        return $baseSalary + $adjustments;
+    }
+    public function amounts($month, $year)
+    {  
+        $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
+
+        $adjustments = $date 
+            ? $this->salaries()->where('date_id', $date->id)->sum('amount') 
+            : 0;
+
+        return $adjustments;
+    }
 }

@@ -10,7 +10,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
                 <li class="breadcrumb-item ">Users</li>
-                <li class="breadcrumb-item "><a href="{{ route('dashboard.admin.salaries.index') }}">@yield('title')</a>
+                <li class="breadcrumb-item "><a href="{{route('dashboard.admin.salaries.index',$date->id)}}">@yield('title')</a>
                 </li>
                 <li class="breadcrumb-item active">Create</li>
             </ol>
@@ -30,13 +30,7 @@
                         <option value="">Select Person</option>
                         @foreach($people as $type => $persons)
                         @foreach($persons as $person)
-                        @if($type =='admin')
-                        <option value="{{ $type }}-{{ $person->id }}">{{ $person->admin_name }}</option>
-                        @elseif ($type =='teacher')
-                        <option value="{{ $type }}-{{ $person->id }}">{{ $person->teacher_name }}</option>
-                        @else
-                        <option value="{{ $type }}-{{ $person->id }}">{{ $person->employee_name }}</option>
-                        @endif
+                        <option value="{{ $type }}-{{ $person->id }}">{{ $person->name }}</option>
                         @endforeach
                         @endforeach
                     </select>
@@ -45,38 +39,19 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="base_salary">Base Salary</label>
-                    <input type="number" name="base_salary" class="form-control" value="{{ old('base_salary') }}">
+                    <label for="amount">Amount</label>
+                    <input type="number" name="amount" class="form-control" step="0.01" value="{{ old('amount') }}">
                 </div>
-                @error('base_salary')
+                @error('amount')
                 <span class="text-danger">{{$message}}</span>
                 @enderror
                 <div class="form-group">
-                    <label for="bonus">Bonus</label>
-                    <input type="number" name="bonus" class="form-control" step="0.01" value="{{ old('bonus') }}">
-                </div>
-                @error('bonus')
-                <span class="text-danger">{{$message}}</span>
-                @enderror
-                <div class="form-group">
-                    <label for="deduction">Deduction</label>
-                    <input type="number" name="deduction" class="form-control" step="0.01" value="{{ old('deduction') }}">
-                </div>
-                @error('deduction')
-                <span class="text-danger">{{$message}}</span>
-                @enderror
-                <div class="form-group">
-                    <label for="month">Month</label>
-                    <input type="number" name="month" class="form-control"  min="1" max="12" value="{{ old('month') }}">
-                </div>
-                @error('month')
-                <span class="text-danger">{{$message}}</span>
-                @enderror
-                <div class="form-group">
-                    <label for="year">Year</label>
-                    <input type="number" name="year" class="form-control"  min="1900" max="2099" value="{{ old('year') }}">
-                </div>
-                @error('year')
+                    <label for="date_id">Date</label>
+                    <select class="form-select form-control" aria-label="Default select example" name="date_id">
+                        <option value="{{ $date->id }}">{{ $date->month ." - ".$date->year }}</option>
+                    </select>
+                    </div>
+                @error('date_id')
                 <span class="text-danger">{{$message}}</span>
                 @enderror
             </div>

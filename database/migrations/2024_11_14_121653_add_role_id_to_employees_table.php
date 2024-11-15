@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('roles', function (Blueprint $table) {
-            $table->enum('for',['admins','employees','teachers','students'])->default('employees');
+        Schema::table('employees', function (Blueprint $table) {
+            $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('roles', function (Blueprint $table) {
-            //
+        Schema::table('employees', function (Blueprint $table) {
+            $table->dropForeign('employees_role_id_foreign');
         });
     }
 };
