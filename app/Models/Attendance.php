@@ -23,4 +23,7 @@ public function attendanceStudents()
     {
         return $this->hasMany(AttendanceStudent::class);
     }
+    public function date(){
+        $this->belongsTo(Date::class);
+    }
 }

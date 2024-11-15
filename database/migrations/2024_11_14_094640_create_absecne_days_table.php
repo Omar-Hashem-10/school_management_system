@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('levels', function (Blueprint $table) {
-            $table->decimal('amount');
+        Schema::create('absecne_days', function (Blueprint $table) {
+            $table->id();
+            $table->morphs('attendable');
+            $table->integer('absence_days')->default(0);           
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('levels', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('absecne_days');
     }
 };

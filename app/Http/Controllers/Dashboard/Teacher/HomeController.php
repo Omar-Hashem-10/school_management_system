@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Dashboard\Teacher;
 
 use App\Models\Teacher;
 use App\Models\ClassRoom;
-use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
 use Illuminate\Support\Facades\DB;
@@ -13,11 +12,9 @@ use Illuminate\Support\Facades\Gate;
 
 class HomeController extends Controller
 {
-    use DataTraits;
     public function __invoke()
     {
         abort_if(!Gate::allows('isTeacher'), 403);
-        $this->getProfileData(Teacher::class);
         $user = auth()->user();
         $teacher = $user->teacher;
         session()->put('teacher_id', $teacher->id);

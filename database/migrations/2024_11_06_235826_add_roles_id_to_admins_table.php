@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
+        Schema::table('admins', function (Blueprint $table) {
+            // $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
         });
     }
 
@@ -21,8 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('admins', function (Blueprint $table) {
+            // Remove
+            // $table->dropForeign('admins_role_id_foreign');
         });
     }
 };

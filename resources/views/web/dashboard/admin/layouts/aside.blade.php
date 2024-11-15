@@ -68,7 +68,7 @@
       </ul>
       <ul id="users-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li>
-          <a href="{{ route('dashboard.admin.salaries.index') }}">
+          <a href="{{ route('dashboard.admin.salaries.show.dates') }}">
             <i class="bi bi-circle"></i><span>salaries</span>
           </a>
         </li>
