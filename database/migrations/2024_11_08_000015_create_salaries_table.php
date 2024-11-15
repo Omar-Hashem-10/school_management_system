@@ -14,14 +14,9 @@ return new class extends Migration
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('person_id');       
-            $table->foreignId('role_id');
             $table->string('person_type'); 
-            $table->decimal('base_salary', 8, 2);         
-            $table->decimal('bonus', 8, 2)->nullable();    
-            $table->decimal('deduction', 8, 2)->nullable(); 
-            $table->decimal('total_salary', 8, 2);         
-            $table->integer('month');                      
-            $table->integer('year');
+            $table->decimal('amount', 10, 2); 
+            $table->foreignId('date_id')->constrained('dates')->onDelete('cascade'); 
             $table->timestamps();
         });
     }

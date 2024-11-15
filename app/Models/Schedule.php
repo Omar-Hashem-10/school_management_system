@@ -12,8 +12,9 @@ class Schedule extends Model
     protected $fillable = [
         'day',
         'class_room_id',
-        'class_level_id',
+        'course_level_id',
         'time_slot_id',
+        'day_id',
     ];
 
     public function classRoom()
@@ -24,5 +25,10 @@ class Schedule extends Model
     public function timeSlot()
     {
         return $this->belongsTo(TimeSlot::class, 'time_slot_id', 'id');
+    }
+
+    public function day()
+    {
+        return $this->belongsTo(Day::class);
     }
 }

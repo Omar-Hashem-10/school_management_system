@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('schedules', function (Blueprint $table) {
+            $table->foreignId('day_id')->constrained('days')->cascadeOnDelete();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
+        Schema::table('schedules', function (Blueprint $table) {
+            $table->dropColumn('day_id');
         });
     }
 };

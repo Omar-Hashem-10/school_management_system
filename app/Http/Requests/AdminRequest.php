@@ -29,7 +29,7 @@ class AdminRequest extends FormRequest
             'phone'               => 'nullable|string',
             'image'               => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'user_id'             => 'nullable|integer|exists:users,id',
-            'role_id'             => 'required|integer|exists:roles,id|in:1,2',
+            'role_id'             => 'required|integer|exists:roles,id',
             'password'            => 'required|min:8',
         ];
     }

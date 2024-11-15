@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
+use App\Models\Date;
 use App\Models\Admin;
 use App\Models\Salary;
 use App\Models\Teacher;
@@ -13,19 +14,38 @@ use App\Http\Controllers\Controller;
 class SalaryController extends Controller
 {
     use  SideDataTraits;
-    public function index()
+    public function index(Date $date)
     {
-        $salaries = Salary::with('person')->get();
+        $teachers = Teacher::select()->get();
+        $employees = Employee::select()->get();
+        $admins = Admin::select()->get();
+
+        $people = [
+            'teacher' => $teachers,
+            'employee' => $employees,
+            'admin' => $admins,
+        ];
+        
         $sideData = $this->getSideData();
-        return view('web.dashboard.admin.salaries.index', $sideData , compact('salaries'));
+        return view('web.dashboard.admin.salaries.index', $sideData, compact('people', 'date'));
     }
-    public function create()
+    public function amounts(Date $date)
     {
-        $teachers = Teacher::select('id', 'teacher_name')->get()->all();
-
-        $employees = Employee::select('id', 'employee_name')->get()->all();
-
-        $admins = Admin::select('id', 'admin_name')->get()->all();
+        $salaries = Salary::where('date_id',$date->id)->with('person')->get()->all();
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.salaries.amounts', $sideData , compact('salaries','date'));
+    }
+    public function showDates()
+    {
+        $dates = Date::where('day',null)->get();
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.salaries.dates', $sideData , compact('dates'));
+    }
+    public function create(Date $date)
+    {
+        $teachers = Teacher::select('id', 'teacher_name AS name')->get();
+        $employees = Employee::select('id', 'employee_name AS name')->get();
+        $admins = Admin::select('id', 'admin_name AS name')->get();
 
         $people = [
             'teacher' => $teachers,
@@ -35,17 +55,14 @@ class SalaryController extends Controller
 
         $sideData = $this->getSideData();
 
-        return view('web.dashboard.admin.salaries.create', $sideData , compact('people'));
+        return view('web.dashboard.admin.salaries.create', $sideData , compact(['people','date']));
     }
     public function store(Request $request)
     {
         $data = $request->validate([
             'person_id' => 'required|string',
-            'base_salary' => 'required|numeric',
-            'bonus' => 'nullable|numeric',
-            'deduction' => 'nullable|numeric',
-            'month' => 'required|numeric|min:1|max:12',
-            'year' => 'required|numeric|min:1900|max:2099',
+            'date_id' => 'required|numeric',
+            'amount' => 'nullable|numeric',
         ]);
 
         list($personType, $personId) = explode('-', $data['person_id']);
@@ -56,26 +73,21 @@ class SalaryController extends Controller
         } else {
             $person = Employee::find($personId);
         }
-        $data['role_id'] = $person->role_id;
-        $data['total_salary'] = ($data['base_salary']+$data['bonus'])-$data['deduction'];
         if ($person) {
             $person->salaries()->create($data);
         }
-
-        return redirect()->route('dashboard.admin.salaries.index')->with('success', 'Salary created successfully.');
+        return redirect()->route('dashboard.admin.salaries.index',$data['date_id'])->with('success', 'Salary created successfully.');
     }
     public function edit(Salary $salary)
     {
-        $teachers = Teacher::select('id', 'teacher_name')->get();
-        $employees = Employee::select('id', 'employee_name')->get();
-        $admins = Admin::select('id', 'admin_name')->get();
-
+        $teachers = Teacher::select('id', 'teacher_name AS name')->get();
+        $employees = Employee::select('id', 'employee_name AS name')->get();
+        $admins = Admin::select('id', 'admin_name AS name')->get();
         $people = [
             'Teacher' => $teachers,
             'Employee' => $employees,
             'Admin' => $admins,
         ];
-
         $sideData = $this->getSideData();
 
         return view('web.dashboard.admin.salaries.edit', $sideData , compact('salary', 'people'));
@@ -85,15 +97,12 @@ class SalaryController extends Controller
         dd(($request->all()));
         $data = $request->validate([
             'person_id' => 'required|string',
-            'base_salary' => 'required|numeric',
-            'bonus' => 'nullable|numeric',
-            'deduction' => 'nullable|numeric',
-            'month' => 'required|numeric|min:1|max:12',
-            'year' => 'required|numeric|min:1900|max:2099',
+            'date_id' => 'required|numeric',
+            'amount' => 'nullable|numeric',
         ]);
 
         list($personType, $personId) = explode('-', $data['person_id']);
-
+        array_push($person,'name');
         if ($personType === 'Teacher') {
             $person = Teacher::find($personId);
         } elseif ($personType === 'Admin') {
@@ -101,14 +110,11 @@ class SalaryController extends Controller
         } else {
             $person = Employee::find($personId);
         }
-        $data['role_id'] = $person->role_id;
-        $data['person_id'] = $person->id;
-        $data['total_salary'] = ($data['base_salary']+$data['bonus'])-$data['deduction'];
         if ($person) {
             $salary->update($data);
         }
 
-        return redirect()->route('dashboard.admin.salaries.index')->with('success', 'Salary updated successfully.');
+        return redirect()->route('dashboard.admin.salaries.index',$data['date_id'])->with('success', 'Salary updated successfully.');
     }
     public function destroy(Salary $salary)
     {

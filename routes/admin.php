@@ -1,8 +1,12 @@
 <?php
 
+use App\Models\Schedule;
 use App\Models\ClassRoom;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DayController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\Admin\DateController;
 use App\Http\Controllers\Dashboard\Admin\HomeController;
 use App\Http\Controllers\Dashboard\Admin\RoleController;
 use App\Http\Controllers\Dashboard\Admin\UserController;
@@ -15,6 +19,7 @@ use App\Http\Controllers\Dashboard\Admin\CourseController;
 use App\Http\Controllers\Dashboard\Admin\SalaryController;
 use App\Http\Controllers\Dashboard\Admin\StudentController;
 use App\Http\Controllers\Dashboard\Admin\TeacherController;
+use App\Http\Controllers\Dashboard\Admin\TimeSlotController;
 use App\Http\Controllers\Dashboard\Admin\ClassRoomController;
 use App\Http\Controllers\Dashboard\Admin\CourseLevelController;
 use App\Http\Controllers\Dashboard\Admin\AttendStudentController;
@@ -36,10 +41,23 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('/attend_students', AttendStudentController::class);
 
         Route::resource('/courses', CourseController::class);
-        Route::resource('/salaries', SalaryController::class);
+        
+        Route::get('/salaries/dates',[SalaryController::class, 'showDates'])->name('salaries.show.dates');
+        Route::post('/salaries',[SalaryController::class, 'store'])->name('salaries.store');
+        Route::get('/salaries/create/{date}',[SalaryController::class, 'create'])->name('salaries.create');
+        Route::get('/salaries/{salary}/edit',[SalaryController::class, 'edit'])->name('salaries.edit');
+        Route::patch('/salaries/{salary}',[SalaryController::class, 'update'])->name('salaries.update');
+        Route::delete('/salaries/{salary}/destroy',[SalaryController::class, 'destroy'])->name('salaries.destroy');
+        Route::get('/salaries/amounts/{date}',[SalaryController::class, 'amounts'])->name('salaries.amounts');
+        Route::get('/salaries/index/{date}',[SalaryController::class, 'index'])->name('salaries.index');
+        
+        Route::get('/dates/{date}/edit',[DateController::class, 'edit'])->name('dates.edit');
+        Route::get('/dates',[DateController::class, 'index'])->name('dates.index');
+        Route::get('/dates/create',[DateController::class, 'create'])->name('dates.create');
+        Route::patch('/dates/{date}',[DateController::class, 'update'])->name('dates.update');
+        Route::post('/dates',[DateController::class, 'store'])->name('dates.store');
 
         Route::resource('/class_rooms', ClassRoomController::class);
-
         Route::get('/course_levels', [CourseLevelController::class, 'index'])->name('course_levels.index');
         Route::get('/course_levels/create', [CourseLevelController::class, 'create'])->name('course_levels.create');
         Route::post('/course_levels', [CourseLevelController::class, 'store'])->name('course_levels.store');
@@ -55,6 +73,11 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::put('course_teachers/{course_teacher}', [CourseTeacherController::class, 'update'])->name('course_teachers.update');
         Route::delete('course_teachers/{course_teacher}', [CourseTeacherController::class, 'destroy'])->name('course_teachers.destroy');
         Route::resource('/levels', LevelController::class);
+
+        Route::resource('/days', DayController::class);
+        Route::resource('/time_slots', TimeSlotController::class);
+        Route::resource('/schedules', ScheduleController::class);
+
         Route::post('/logout', LogoutController::class)->name('logout');
     });
 });
