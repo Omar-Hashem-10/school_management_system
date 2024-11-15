@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TimeSlot extends Model
+class Day extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'lecture_number',
-        'start_time',
-        'end_time',
+        'day_name',
     ];
 
     public function schedules()
     {
-        return $this->hasMany(Schedule::class, 'time_slot_id', 'id');
+        return $this->hasMany(Schedule::class);
     }
 }
