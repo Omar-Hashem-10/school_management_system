@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use Exception;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Student;
@@ -10,6 +11,7 @@ use App\Models\Employee;
 use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
@@ -93,11 +95,14 @@ class ProfileController extends Controller
     }
     public function update(Request $request,$id)
     {
+        
         $data=$request->validate([
             'name'=>'required|string|max:255',
             'phone'=>'nullable|string',
-            'email'=>'required|email|max:255',
+            'email'=>'required','email',
+            Rule::unique('users','email')->ignore(auth()->user()->id),
         ]);
+        try{
         $userData = [
             'name' => $data['name'],
             'email' => $data['email'],
@@ -115,6 +120,7 @@ class ProfileController extends Controller
             $person = Employee::findOrFail($id);
             $data['employee_name']=$data['name'];
         }
+        User::where('id',$person->user_id)->update($userData);
         session('user')[0]['name'] = $data['name'];
         unset($data['name']);
         foreach($data as $key => $value){
@@ -122,7 +128,9 @@ class ProfileController extends Controller
             session('user')[0][$key] = $person[$key];
         }
         $person->save();
-        User::where('id',$person->user_id)->update($userData);
+    }catch(Exception $e){
+        return redirect()->back()->with('error','the email is exist before');
+}
         return redirect()->back()->with('success', 'the data updated successfully');
     }
     public function changePassword(Request $request, User $user)

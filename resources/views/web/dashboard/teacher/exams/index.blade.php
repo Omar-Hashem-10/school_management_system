@@ -23,9 +23,6 @@
             <div class="card-header border-transparent">
                 <a href="{{ route('dashboard.teacher.exams.create') }}" class="btn btn-sm btn-info float-left">Create New Exam</a>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
               </div>
             </div>
             <div class="card-body">
@@ -47,7 +44,14 @@
                             <td>{{ $exam->exam_date }}</td>
                             <td>{{ $exam->exam_duration }}</td>
                             <td>
+                                <!-- Show Button -->
+                                <a href="{{ route('dashboard.teacher.exams.show', $exam->id) }}" class="btn btn-sm btn-primary">Show Question In Exam</a>
+
+                                <a href="{{ route('dashboard.teacher.exams.showStudents', $exam->id) }}" class="btn btn-sm btn-primary">Show Students Who Took the Exam</a>
+                                <!-- Edit Button -->
                                 <a href="{{ route('dashboard.teacher.exams.edit', $exam->id) }}" class="btn btn-sm btn-warning">Edit</a>
+
+                                <!-- Delete Button -->
                                 <form action="{{ route('dashboard.teacher.exams.destroy', $exam->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')

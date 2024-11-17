@@ -29,7 +29,7 @@ class TeacherRequest extends FormRequest
             'phone'               => 'nullable|string',
             'image'               => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'user_id'             => 'nullable|integer|exists:users,id',
-            'role_id'             => 'nullable|integer|exists:roles,id|in:3',
+            'role_id'             => 'nullable|integer|exists:roles,id',
             'course_id'           => 'nullable|integer|exists:courses,id',
             'experience'          => 'nullable|integer',
             'password'            => 'required|min:8',

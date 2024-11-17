@@ -18,7 +18,6 @@ class QuestionController extends Controller
      */
     public function index(Request $request)
     {
-        $questions = Question::paginate(5);
 
         $sideData = $this->getSideData();
 
@@ -27,7 +26,7 @@ class QuestionController extends Controller
         if (!empty($course_level_id)) {
             session(['course_level_id' => $course_level_id]);
         }
-
+        $questions = Question::where('course_level_id', session('course_level_id'))->paginate(5);
         return view('web.dashboard.teacher.questions.index', $sideData , compact('questions'));
     }
 

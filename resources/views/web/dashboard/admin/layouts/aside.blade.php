@@ -95,8 +95,10 @@
           </a>
         </li>
         <li>
-          <a href="{{ route('dashboard.admin.salaries.index') }}">
-            <i class="bi bi-circle"></i><span>Salaries</span>
+
+          <a href="{{ route('dashboard.admin.salaries.show.dates') }}">
+            <i class="bi bi-circle"></i><span>salaries</span>
+
           </a>
         </li>
         <li>
