@@ -32,6 +32,6 @@ class HomeController extends Controller
             session()->put('course_level_codes', $course_level_codes);
 
         return view('web.dashboard.student.home.index', compact('course_level_codes'));
-    }
 
+}
 }
