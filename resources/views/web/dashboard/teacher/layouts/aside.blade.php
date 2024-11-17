@@ -57,6 +57,21 @@
                 </ul>
             </li>
 
+            <li>
+                <a href="javascript:void(0)" class="nav-link" data-bs-toggle="collapse" data-bs-target="#tasks-nav">
+                    <i class="bi bi-building"></i><span>Tasks</span>
+                </a>
+                <ul class="nav-content collapse" id="tasks-nav" data-bs-parent="#components-nav">
+                    @foreach($class_room_names as $class_room_id => $class_name)
+                        <li>
+                            <a href="{{ route('dashboard.teacher.tasks.index', ['class_room_id' => $class_room_id]) }}">
+                                <i class="bi bi-circle"></i><span>{{ $class_name }}</span>
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </li>
+
         </ul>
     </li>
 

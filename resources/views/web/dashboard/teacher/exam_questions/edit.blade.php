@@ -31,7 +31,6 @@
                 </div>
             @endif
 
-            {{-- النموذج المشترك --}}
             <form action="{{ route('dashboard.teacher.exam-questions.update', $exam->id) }}" method="POST">
                 @csrf
                 @method('PUT')
@@ -41,10 +40,8 @@
                 @endif
 
                 <div class="row">
-                    {{-- قسم الأسئلة غير المدرجة في الامتحان --}}
                     <div class="col-md-6">
                         <h4>Questions Not in Exam</h4>
-
                         <div class="form-group mb-3">
                             <label>True/False Questions Not in Exam</label>
                             @foreach($questions_not_in_exam as $question)
@@ -54,6 +51,7 @@
                                         <label class="form-check-label" for="questionNotInExam{{ $question->id }}">
                                             {{ $question->question_text }}
                                         </label>
+                                        <input type="number" name="scores[{{ $question->id }}]" class="form-control" placeholder="Enter score" />
                                     </div>
                                 @endif
                             @endforeach
@@ -68,16 +66,15 @@
                                         <label class="form-check-label" for="questionNotInExam{{ $question->id }}">
                                             {{ $question->question_text }}
                                         </label>
+                                        <input type="number" name="scores[{{ $question->id }}]" class="form-control" placeholder="Enter score" />
                                     </div>
                                 @endif
                             @endforeach
                         </div>
                     </div>
 
-                    {{-- قسم الأسئلة المدرجة في الامتحان --}}
                     <div class="col-md-6">
                         <h4>Questions in Exam</h4>
-
                         <div class="form-group mb-3">
                             <label>True/False Questions in Exam</label>
                             @foreach($exam->questions as $question)
@@ -87,6 +84,7 @@
                                         <label class="form-check-label" for="questionInExam{{ $question->id }}">
                                             {{ $question->question_text }}
                                         </label>
+                                        <input type="number" name="scores[{{ $question->id }}]" value="{{ $question->pivot->question_grade }}" class="form-control" placeholder="Enter score" />
                                     </div>
                                 @endif
                             @endforeach
@@ -101,6 +99,7 @@
                                         <label class="form-check-label" for="questionInExam{{ $question->id }}">
                                             {{ $question->question_text }}
                                         </label>
+                                        <input type="number" name="scores[{{ $question->id }}]" value="{{ $question->pivot->question_grade }}" class="form-control" placeholder="Enter score" />
                                     </div>
                                 @endif
                             @endforeach
@@ -108,11 +107,11 @@
                     </div>
                 </div>
 
-                {{-- زرّ واحد للإرسال --}}
                 <div class="text-center mt-4">
                     <button type="submit" class="btn btn-primary">Update Exam</button>
                 </div>
             </form>
+
         </div>
     </div>
 </main>

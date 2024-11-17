@@ -43,5 +43,8 @@ public function schedule()
     {
         return $this->hasMany(Exam::class);
     }
-
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

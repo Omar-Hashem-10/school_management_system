@@ -59,13 +59,14 @@ class TeacherController extends Controller
     {
 
         $data = $request->validated();
+
         $userData = [
             'name' => $data['teacher_name'],
             'email' => $data['email'],
             'password' => $data['password'],
             'role_id' => $data['role_id'],
         ];
-        $data = Arr::except($data, ['password', 'role_id']);
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $filename = $image->store('/teachers', 'public');
