@@ -73,8 +73,8 @@
           @enderror
         </div>
         <div class="form-group">
-          <label for="experience">Experience</label>
-          <input type="text" name="experience" class="form-control" id="experience" placeholder="Enter experience"
+          <label for="experience">Experience Years</label>
+          <input type="number" name="experience" class="form-control" id="experience" placeholder="Enter experience"
             value="{{old('experience')}}">
           @error('experience')
           <span class="text-danger">{{$message}}</span>
@@ -102,7 +102,6 @@
       <div class="card-footer">
         <button type="submit" class="btn btn-primary">Submit</button>
       </div>
-
     </form>
   </div>
 </main>
