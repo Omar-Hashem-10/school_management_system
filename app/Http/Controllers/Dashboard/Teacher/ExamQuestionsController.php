@@ -33,16 +33,16 @@ class ExamQuestionsController extends Controller
 
         $course_level_id = CourseTeacher::where('teacher_id', session('teacher_id'))
             ->where('class_room_id', session('class_room_id'))
-            ->first();
+            ->pluck('course_level_id');
 
-        if ($course_level_id) {
-            $questions = Question::where('teacher_id', session('teacher_id'))
-                ->where('course_level_id', $course_level_id->id)
+
+            if ($course_level_id) {
+                $questions = Question::where('teacher_id', session('teacher_id'))
+                ->where('course_level_id', $course_level_id)
                 ->get();
-        } else {
-            $questions = collect();
-        }
-
+            } else {
+                $questions = collect();
+            }
 
         return view('web.dashboard.teacher.exam_questions.create', $sideData , compact('course_level_id', 'questions'));
     }
@@ -54,16 +54,35 @@ class ExamQuestionsController extends Controller
     {
         $exam_id = $request->input('exam_id');
         $question_ids = $request->input('questions');
+        $scores = $request->input('scores');
+
+        if (empty($question_ids)) {
+            return redirect()->back()->with('error', 'Please select at least one question.');
+        }
 
         $exam = Exam::findOrFail($exam_id);
+        $total_score = 0;
 
         foreach ($question_ids as $question_id) {
-            $exam->questions()->attach($question_id);
+            $score = isset($scores[$question_id]) ? $scores[$question_id] : 0;
+            $total_score += $score;
+        }
+
+        if ($total_score < $exam->half_grade) {
+            return redirect()->back()->with('error', 'The total score is less than the required half grade.');
+        }
+
+        foreach ($question_ids as $question_id) {
+            $score = isset($scores[$question_id]) ? $scores[$question_id] : 0;
+            $exam->questions()->attach($question_id, ['question_grade' => $score]);
         }
 
         return redirect()->route('dashboard.teacher.exams.index', ['class_room_id' => session('class_room_id')])
-                            ->with('success', 'Add Questions In Exam Successfully!');
+                         ->with('success', 'Questions Added To Exam Successfully!');
     }
+
+
+
 
 
     /**
@@ -73,17 +92,15 @@ class ExamQuestionsController extends Controller
     {
         $course_level_id = CourseTeacher::where('teacher_id', session('teacher_id'))
             ->where('class_room_id', session('class_room_id'))
-            ->first();
+            ->pluck('course_level_id');
 
-        $questions_all = $course_level_id
-            ? Question::where('teacher_id', session('teacher_id'))
-                ->where('course_level_id', $course_level_id->id)
-                ->get()
-            : collect();
+        $questions_all = Question::where('teacher_id', session('teacher_id'))->where('course_level_id', $course_level_id)->get();
 
         $exam = Exam::findOrFail($id);
-
         $exam_question_ids = $exam->questions->pluck('id')->toArray();
+
+        // هنا نضيف درجات الأسئلة التي تم تضمينها في الامتحان
+        $exam_questions = $exam->questions()->withPivot('question_grade')->get();
 
         $questions_not_in_exam = $questions_all->filter(function ($question) use ($exam_question_ids) {
             return !in_array($question->id, $exam_question_ids);
@@ -92,8 +109,10 @@ class ExamQuestionsController extends Controller
         $sideData = $this->getSideData();
         session()->put('exam_id_edit', $id);
 
-        return view('web.dashboard.teacher.exam_questions.edit', $sideData , compact('exam', 'questions_not_in_exam', 'exam_question_ids'));
+        return view('web.dashboard.teacher.exam_questions.edit', $sideData, compact('exam', 'questions_not_in_exam', 'exam_question_ids', 'exam_questions'));
     }
+
+
 
 
     /**
@@ -107,9 +126,14 @@ class ExamQuestionsController extends Controller
 
         foreach ($question_ids_all as $question_id) {
             if (!$exam->questions->contains($question_id)) {
-                $exam->questions()->syncWithoutDetaching([$question_id]);
+                $exam->questions()->syncWithoutDetaching([
+                    $question_id => [
+                        'question_grade' => $request->input('scores.' . $question_id),
+                    ]
+                ]);
             }
         }
+
         $question_ids = $request->input('questions_in_exam', []);
 
         $current_question_ids = $exam->questions->pluck('id')->toArray();
@@ -119,17 +143,18 @@ class ExamQuestionsController extends Controller
             $exam->questions()->detach($removed_question_ids);
         }
 
+        foreach ($question_ids as $question_id) {
+            $exam->questions()->updateExistingPivot($question_id, [
+                'question_grade' => $request->input('scores.' . $question_id),
+            ]);
+        }
+
         if (count($question_ids) > 0) {
-            foreach ($question_ids as $question_id) {
-                $exam->questions()->syncWithoutDetaching([$question_id]);
-            }
+            return redirect()->route('dashboard.teacher.exams.index')->with('success', 'Questions updated successfully.');
         } else {
             return redirect()->back()->with('error', 'Please select at least one question.');
         }
-
-        return redirect()->route('dashboard.teacher.exams.index')->with('success', 'Questions updated successfully.');
     }
-
 
 
     /**
