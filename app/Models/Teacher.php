@@ -72,7 +72,6 @@ public function calculateMonthlySalary($month, $year)
         return $baseSalary + $adjustments;
     }
     public function amounts($month, $year)
-    {
         $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
 
         $adjustments = $date
@@ -81,4 +80,4 @@ public function calculateMonthlySalary($month, $year)
 
         return $adjustments;
     }
-}
+    }
