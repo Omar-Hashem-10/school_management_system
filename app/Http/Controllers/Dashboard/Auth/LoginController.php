@@ -35,6 +35,7 @@ class LoginController extends Controller
                 return redirect()->intended('/dashboard/admin/home');
             }
 
+
             if ($user->role && $user->role->for === 'teachers') {
                 $this->getProfileData(Teacher::class);
                 return redirect()->intended('/dashboard/teacher/home');
@@ -44,7 +45,13 @@ class LoginController extends Controller
                 return redirect()->intended('/dashboard/student/home');
             }
 
-            return redirect()->intended('/home');
+            elseif ($user->role && $user->role->role_name === 'student') {
+                return redirect()->intended('/dashboard/student/home');
+            }
+
+            else{
+                return redirect()->intended('/home');
+            }
         }
 
         return back()->withErrors([

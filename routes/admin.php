@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\Schedule;
 use App\Models\ClassRoom;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DayController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\Admin\DateController;
 use App\Http\Controllers\Dashboard\Admin\HomeController;
@@ -16,6 +19,7 @@ use App\Http\Controllers\Dashboard\Admin\CourseController;
 use App\Http\Controllers\Dashboard\Admin\SalaryController;
 use App\Http\Controllers\Dashboard\Admin\StudentController;
 use App\Http\Controllers\Dashboard\Admin\TeacherController;
+use App\Http\Controllers\Dashboard\Admin\TimeSlotController;
 use App\Http\Controllers\Dashboard\Admin\ClassRoomController;
 use App\Http\Controllers\Dashboard\Admin\CourseLevelController;
 use App\Http\Controllers\Dashboard\Admin\AttendStudentController;
@@ -69,6 +73,11 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::put('course_teachers/{course_teacher}', [CourseTeacherController::class, 'update'])->name('course_teachers.update');
         Route::delete('course_teachers/{course_teacher}', [CourseTeacherController::class, 'destroy'])->name('course_teachers.destroy');
         Route::resource('/levels', LevelController::class);
+
+        Route::resource('/days', DayController::class);
+        Route::resource('/time_slots', TimeSlotController::class);
+        Route::resource('/schedules', ScheduleController::class);
+
         Route::post('/logout', LogoutController::class)->name('logout');
     });
 });
