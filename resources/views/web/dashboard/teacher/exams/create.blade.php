@@ -51,8 +51,9 @@
 
             <div class="form-group mb-3">
                 <label for="exam_date">Exam Date</label>
-                <input type="date" name="exam_date" id="exam_date" class="form-control" required>
+                <input type="datetime-local" name="exam_date" id="exam_date" class="form-control" required>
             </div>
+
 
             <div class="form-group mb-3">
                 <label for="exam_duration">Exam Duration (in minutes)</label>

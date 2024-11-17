@@ -59,6 +59,7 @@ class TeacherController extends Controller
     {
 
         $data = $request->validated();
+
         $userData = [
             'name' => $data['teacher_name'],
             'email' => $data['email'],

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Dashboard\Teacher;
 
 use App\Models\Exam;
+use App\Models\Answer;
+use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
+use App\Traits\SideDataTraits;
 use App\Http\Requests\ExamRequest;
 use App\Http\Controllers\Controller;
-use App\Traits\SideDataTraits;
 
 class ExamController extends Controller
 {
@@ -23,7 +25,7 @@ class ExamController extends Controller
             session(['class_room_id' => $class_room_id]);
         }
         $sideData = $this->getSideData();
-        $exams = Exam::paginate(5);
+        $exams = Exam::where('class_room_id', session('class_room_id'))->where('teacher_id', session('teacher_id'))->paginate(5);
         return view('web.dashboard.teacher.exams.index', $sideData, compact('exams'));
     }
 
@@ -62,11 +64,48 @@ class ExamController extends Controller
                             ->with('success', 'Created Exam Now Add Questions');
     }
 
+    public function show(Exam $exam)
+    {
+        $questions = $exam->questions()->paginate(5);
+
+        $questions->getCollection()->transform(function ($question) {
+            $question->pivot->question_grade;
+            return $question;
+        });
+
+        $sideData = $this->getSideData();
+        return view('web.dashboard.teacher.exams.show', $sideData, compact('exam', 'questions'));
+    }
+
+
+    public function showStudents(Exam $exam)
+    {
+        $sideData = $this->getSideData();
+
+        $students = Student::whereIn('id', function ($query) use ($exam) {
+            $query->select('student_id')
+                  ->from('answers')
+                  ->where('exam_id', $exam->id)
+                  ->distinct();
+        })->paginate(5);
+
+
+        return view('web.dashboard.teacher.exams.show-students', $sideData, compact('students', 'exam'));
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Exam $exam)
     {
+        $course_level = CourseTeacher::where('teacher_id', session('teacher_id'))
+        ->where('class_room_id', session('class_room_id'))
+        ->first();
+
+        if ($course_level) {
+        session(['course_level_id' => $course_level->id]);
+        }
 
         $sideData = $this->getSideData();
 

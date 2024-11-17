@@ -52,7 +52,7 @@
 
         <div class="form-group mb-3">
             <label for="exam_date">Exam Date</label>
-            <input type="date" name="exam_date" id="exam_date" class="form-control" value="{{ old('exam_date', \Carbon\Carbon::parse($exam->exam_date)->format('Y-m-d')) }}" required>
+            <input type="datetime-local" name="exam_date" id="exam_date" class="form-control" value="{{ old('exam_date', \Carbon\Carbon::parse($exam->exam_date)->format('Y-m-d\TH:i')) }}" required>
         </div>
 
         <div class="form-group mb-3">

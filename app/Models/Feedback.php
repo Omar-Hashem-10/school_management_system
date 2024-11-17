@@ -8,27 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Feedback extends Model
 {
     use HasFactory;
-
     protected $fillable = [
         'feedback_text',
+        'task_grade',
         'teacher_id',
         'student_id',
-        'exam_id',
+        'task_id',
     ];
 
+    public function task()
+    {
+        return $this->belongsTo(Task::class, 'task_id');
+    }
     public function teacher()
-{
-    return $this->belongsTo(Teacher::class, 'teacher_id', 'id');
-}
+    {
+        return $this->belongsTo(Teacher::class);
+    }
 
-public function student()
-{
-    return $this->belongsTo(Student::class, 'student_id', 'id');
-}
-
-public function exam()
-{
-    return $this->belongsTo(Exam::class, 'exam_id', 'id');
-}
-
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
 }
