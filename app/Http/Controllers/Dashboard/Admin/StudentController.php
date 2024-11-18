@@ -24,7 +24,7 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Student::query();
+        $query = User::query()->where('type','student');
 
         if ($request->has('student_name') && $request->student_name != '') {
             $query->where('student_name', 'like', '%' . $request->student_name . '%');

@@ -53,7 +53,7 @@
                   <td>{{ $admin->email }}</td>
                   <td>{{ $admin->phone }}</td>
                   <td>
-                    <img src="{{FileHelper::get_file_path($admin->image,'user')}}"  class="rounded-circle" width="100" height="100">
+                    <img src="{{FileHelper::get_file_path($admin->imageable,'user')}}"  class="rounded-circle" width="100" height="100">
                   </td>
                   @if ($admin->role->role_name =='admin')
                   <?php $badge='bg-danger'?>

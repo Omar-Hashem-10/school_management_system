@@ -25,7 +25,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::orderBy('id', 'desc')->paginate(10);
+        $teachers = User::where('type','teacher')->orderBy('id', 'desc')->paginate(10);
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.teachers.index', $sideData , compact('teachers'));
     }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ClassRoom extends Model
+class Classroom extends Model
 {
     use HasFactory;
 
@@ -21,22 +21,22 @@ class ClassRoom extends Model
 
     public function students()
     {
-        return $this->hasMany(Student::class,'class_room_id','id');
+        return $this->hasMany(Student::class,'classroom_id','id');
     }
 
     public function attendances()
     {
-        return $this->hasMany(Attendance::class, 'class_room_id', 'id');
+        return $this->hasMany(Attendance::class, 'classroom_id', 'id');
     }
 
 public function schedule()
     {
-        return $this->hasOne(Schedule::class, 'class_room_id', 'id');
+        return $this->hasOne(Schedule::class, 'classroom_id', 'id');
     }
 
     public function courseTeachers()
     {
-        return $this->hasMany(CourseTeacher::class, 'class_room_id');
+        return $this->hasMany(CourseTeacher::class, 'classroom_id');
     }
 
     public function exams()

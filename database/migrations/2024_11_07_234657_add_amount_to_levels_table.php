@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('exams', function (Blueprint $table) {
-            $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
+        Schema::table('levels', function (Blueprint $table) {
+            $table->decimal('amount');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('exams', function (Blueprint $table) {
-            $table->dropColumn('class_room_id');
+        Schema::table('levels', function (Blueprint $table) {
+            //
         });
     }
 };
