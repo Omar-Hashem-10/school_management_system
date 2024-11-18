@@ -50,7 +50,7 @@
                     <td>{{ $teacher->email }}</td>
                     <td>{{ $teacher->phone }}</td>
                     <td>
-                      <img src="{{FileHelper::get_file_path($teacher->image,'user')}}"  class="rounded-circle" width="100" height="100">
+                      <img src="{{FileHelper::get_file_path($teacher->imageable,'user')}}"  class="rounded-circle" width="100" height="100">
                     </td>
                     <td>
                       <a class="btn btn-warning" href="{{route('dashboard.admin.teachers.edit',$teacher->id)}}">Edit</a>

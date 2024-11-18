@@ -25,7 +25,7 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        $teachers = Teacher::orderBy('id', 'desc')->paginate(10);
+        $teachers = User::where('type','teacher')->orderBy('id', 'desc')->paginate(10);
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.teachers.index', $sideData , compact('teachers'));
     }
@@ -59,13 +59,14 @@ class TeacherController extends Controller
     {
 
         $data = $request->validated();
+
         $userData = [
             'name' => $data['teacher_name'],
             'email' => $data['email'],
             'password' => $data['password'],
             'role_id' => $data['role_id'],
         ];
-        $data = Arr::except($data, ['password', 'role_id']);
+        $data = Arr::except($data, ['password']);
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $filename = $image->store('/teachers', 'public');

@@ -19,9 +19,9 @@
         <div class="card">
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-            <img src="{{FileHelper::get_file_path(session('user')[0]->image,'user')}}" alt="Profile"
+            <img src="{{FileHelper::get_file_path(auth()->user()->imageable,'user')}}" alt="Profile"
               class="rounded-circle">
-            <h2>{{ session('user')[0]['name']}}</h2>
+            <h2>{{ auth()->user()->fullName()}}</h2>
             <h3>{{auth()->user()->role->role_name}}</h3>
           </div>
         </div>
@@ -62,7 +62,7 @@
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                  <div class="col-lg-9 col-md-8">{{ session('user')[0]['name']}}</div>
+                  <div class="col-lg-9 col-md-8">{{auth()->user()->fullName()}}</div>
                 </div>
 
                 <div class="row">
@@ -75,12 +75,12 @@
                 </div>
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Phone</div>
-                  <div class="col-lg-9 col-md-8">{{ session('user')[0]['phone']}}</div>
+                  <div class="col-lg-9 col-md-8">{{ auth()->user()->phone}}</div>
                 </div>
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Email</div>
-                  <div class="col-lg-9 col-md-8">{{ session('user')[0]['email']}}</div>
+                  <div class="col-lg-9 col-md-8">{{ auth()->user()->email}}</div>
                 </div>
 
               </div>
@@ -91,18 +91,18 @@
                 <div class="row mb-3">
                   <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                   <div class="col-md-8 col-lg-9">
-                    <img src="{{FileHelper::get_file_path(session('user')[0]->image,'user')}}" alt="Profile"
+                    <img src="{{FileHelper::get_file_path(auth()->user()->imageable,'user')}}" alt="Profile"
                       class="rounded-circle">
                     <div class="pt-2">
                       <form class="d-inline"
-                        action="{{ route('dashboard.profile.update.image',session('user')[0]->id)  }}"
+                        action="{{ route('dashboard.profile.update.image',auth()->user()->id)  }}"
                         enctype="multipart/form-data" method="POST">
                         @csrf
                         <input type="file" id="fileInput" name="image">
                         <button class="btn btn-primary btn-sm d-inline" type="submit"><i
                             class="bi bi-upload"></i></button>
                       </form>
-                      <form action="{{ route('dashboard.profile.destroy.image',session('user')[0]->id) }}" method="POST"
+                      <form action="{{ route('dashboard.profile.destroy.image',auth()->user()->id) }}" method="POST"
                         class="d-inline">
                         @csrf
                         @method('delete')
@@ -112,15 +112,15 @@
                     </div>
                   </div>
                 </div>
-                <form action="{{ route('dashboard.profile.update',session('user')[0]->id) }}" method="POST">
+                <form action="{{ route('dashboard.profile.update',auth()->user()->id) }}" method="POST">
                   @csrf
                   @method('PATCH')
                   <div class="row mb-3">
-                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                    <label for="first_name" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                     <div class="col-md-8 col-lg-9">
-                      <input name="name" type="text" class="form-control" id="fullName"
-                        value="{{ session('user')[0]['name'] }}">
-                        @error('name')
+                      <input name="first_name" type="text" class="form-control" id="first_name"
+                        value="{{ auth()->user()->first_name }}">
+                        @error('first_name')
                       <span class="text-danger">{{$message}}</span>
                       @enderror
                     </div>
@@ -129,7 +129,7 @@
                     <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
                     <div class="col-md-8 col-lg-9">
                       <input name="phone" type="text" class="form-control" id="Phone"
-                        value="{{ session('user')[0]['phone'] }}">
+                        value="{{ auth()->user()->phone }}">
                         @error('phone')
                       <span class="text-danger">{{$message}}</span>
                       @enderror
@@ -140,7 +140,7 @@
                     <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                     <div class="col-md-8 col-lg-9">
                       <input name="email" type="email" class="form-control" id="Email"
-                        value="{{ session('user')[0]['email'] }}">
+                        value="{{ auth()->user()->email }}">
                         @error('email')
                       <span class="text-danger">{{$message}}</span>
                       @enderror

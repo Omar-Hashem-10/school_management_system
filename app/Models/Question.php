@@ -21,14 +21,14 @@ class Question extends Model
     return $this->belongsTo(Teacher::class, 'teacher_id', 'id');
 }
 
-public function choice()
+public function choices()
 {
-    return $this->hasOne(Choice::class, 'question_id', 'id');
+    return $this->hasMany(Choice::class, 'question_id', 'id');
 }
 
 public function exams()
 {
-    return $this->belongsToMany(Exam::class, 'exam_questions', 'question_id', 'exam_id');
+    return $this->belongsToMany(Exam::class, 'exam_questions', 'question_id', 'exam_id')->withPivot('question_grade')->withTimestamps();;
 }
 
 public function answers()

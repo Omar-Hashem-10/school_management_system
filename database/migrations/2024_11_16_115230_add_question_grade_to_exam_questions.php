@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('exams', function (Blueprint $table) {
-            $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
+        Schema::table('exam_questions', function (Blueprint $table) {
+            $table->integer('question_grade');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('exams', function (Blueprint $table) {
-            $table->dropColumn('class_room_id');
+        Schema::table('exam_questions', function (Blueprint $table) {
+            $table->dropColumn('question_grade');
         });
     }
 };

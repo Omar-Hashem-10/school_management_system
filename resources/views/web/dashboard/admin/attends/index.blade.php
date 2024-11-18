@@ -17,7 +17,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-
+          <h3>Attendace For class </h3>
           <div class="card">
             <div class="card-header border-transparent">
                 <a href="{{ route('dashboard.admin.attends.create') }}" class="btn btn-sm btn-info float-left">Place New Attend</a>
@@ -34,7 +34,6 @@
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Date</th>
-                    <th scope="col">Class Name</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -43,10 +42,9 @@
                     <tr>
                       <th scope="row">{{ $attendance->id }}</th>
                       <td>{{ $attendance->attendance_date }}</td>
-                      <td>{{ $attendance->classRoom->class_name }}</td>
                       <td>
                         <a href="{{ route('dashboard.admin.attends.edit', $attendance->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                        <a href="{{ route('dashboard.admin.attends.show', $attendance->id) }}" class="btn btn-sm btn-info">View</a>
+                        <a href="{{ route('dashboard.admin.attendace.student.index', $attendance->id) }}" class="btn btn-sm btn-info">View</a>
                         <form action="{{ route('dashboard.admin.attends.destroy', $attendance->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')

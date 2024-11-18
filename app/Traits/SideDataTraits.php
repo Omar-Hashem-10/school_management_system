@@ -3,7 +3,7 @@
 
 namespace App\Traits;
 
-use App\Models\ClassRoom;
+use App\Models\Classroom;
 
 
 trait SideDataTraits
@@ -12,7 +12,8 @@ trait SideDataTraits
     {
         $class_room_names = session('class_room_names');
         $course_codes = session('course_codes');
-        $classRooms = ClassRoom::all();
-        return compact('class_room_names', 'course_codes', 'classRooms');
+        $classRooms = Classroom::all();
+        $course_level_codes = session('course_level_codes');
+        return compact('class_room_names', 'course_codes', 'classRooms', 'course_level_codes');
     }
 }

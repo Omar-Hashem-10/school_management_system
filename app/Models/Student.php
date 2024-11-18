@@ -37,6 +37,11 @@ public function feedbacks()
     return $this->hasMany(Feedback::class, 'student_id', 'id');
 }
 
+public function taskSends()
+    {
+        return $this->hasMany(TaskSend::class, 'student_id', 'id');
+    }
+
 public function contacts()
 {
     return $this->hasMany(Contact::class, 'student_id', 'id');
@@ -56,4 +61,5 @@ public function answers()
     {
         return $this->hasMany(AttendanceStudent::class);
     }
+
 }

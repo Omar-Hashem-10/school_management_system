@@ -11,18 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('levels', function (Blueprint $table) {
-            // $table->decimal('amount');
+        Schema::create('classrooms', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->foreignId('level_id')->constrained('levels')->cascadeOnDelete();
+            $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('levels', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('classrooms');
     }
 };
