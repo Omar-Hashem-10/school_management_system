@@ -19,10 +19,13 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'phone',
         'email',
         'password',
-        'role_id',
+        'type',
+        'gender',
     ];
 
     /**
@@ -53,23 +56,24 @@ public function student()
 {
     return $this->hasOne(Student::class, 'user_id', 'id');
 }
-public function employee()
-{
-    return $this->hasOne(Employee::class);
-}
 public function admin()
 {
     return $this->hasOne(Admin::class);
 }
 public function role()
 {
-    return $this->belongsTo(Role::class, 'role_id', 'id');
+    return $this->belongsTo(Role::class);
 }
-
 public function setPasswordAttribute($value)
 {
     if (!empty($value)) {
         $this->attributes['password'] = Hash::make($value);
     }
+}
+public function fullName(){
+    return ucwords($this->first_name." ".$this->last_name);
+} 
+public function image(){
+    return $this->morphMany(Image::class, 'imageable');
 }
 }
