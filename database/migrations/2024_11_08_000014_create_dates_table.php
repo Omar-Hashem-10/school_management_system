@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('dates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('day')->nullable(); 
-            $table->unsignedTinyInteger('month');            
+            $table->unsignedTinyInteger('day')->nullable();
+            $table->unsignedTinyInteger('month');
             $table->unsignedSmallInteger('year');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

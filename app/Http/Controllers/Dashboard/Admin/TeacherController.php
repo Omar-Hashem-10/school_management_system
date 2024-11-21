@@ -27,29 +27,28 @@ class TeacherController extends Controller
     {
         $teachers = Teacher::orderBy('id', 'desc')->paginate(10);
         $sideData = $this->getSideData();
-        return view('web.dashboard.admin.teachers.index', $sideData , compact('teachers'));
+        return view('web.dashboard.admin.teachers.index', $sideData, compact('teachers'));
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $role=Role::where('for',  'teachers')->first();
-        $roles=Role::where('for',  'teachers')->get();
+        $role = Role::where('for',  'teachers')->first();
+        $roles = Role::where('for',  'teachers')->get();
 
-        if(!isset($role))
-            return redirect()->back()->with('error','Not Found Role To Create Teacher');
+        if (!isset($role))
+            return redirect()->back()->with('error', 'Not Found Role To Create Teacher');
 
         $course = Course::get()->first();
         $courses = Course::get()->all();
 
-        if(!isset($course))
-            return redirect()->back()->with('error','Not Found Course To Create Teacher');
+        if (!isset($course))
+            return redirect()->back()->with('error', 'Not Found Course To Create Teacher');
 
-            $sideData = $this->getSideData();
+        $sideData = $this->getSideData();
 
-        return view('web.dashboard.admin.teachers.create', $sideData , compact(['courses', 'course', 'roles','role']));
+        return view('web.dashboard.admin.teachers.create', $sideData, compact(['courses', 'course', 'roles', 'role']));
     }
 
     /**
@@ -83,11 +82,11 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        $roles=Role::where('for',  'teachers')->get();
+        $roles = Role::where('for',  'teachers')->get();
         // dd($teacher);
         $courses = Course::get()->all();
         $sideData = $this->getSideData();
-        return view('web.dashboard.admin.teachers.edit', $sideData ,compact(['courses', 'teacher', 'roles']));
+        return view('web.dashboard.admin.teachers.edit', $sideData, compact(['courses', 'teacher', 'roles']));
     }
 
     /**
@@ -115,7 +114,7 @@ class TeacherController extends Controller
             $filename = $image->store('/teachers', 'public');
             $data['image'] = $filename;
         }
-        $data = Arr::except($data, ['password','role_id']);
+        $data = Arr::except($data, ['password', 'role_id']);
         User::where('id', $teacher->user_id)->update($userData);
         Teacher::where('id', $teacher->id)->update($data);
         return redirect()->route('dashboard.admin.teachers.index')->with('success', 'teacher updated successfully');
@@ -151,5 +150,4 @@ class TeacherController extends Controller
             return redirect()->back()->with('errors', 'This teacher cannot be deleted');
         }
     }
-
 }

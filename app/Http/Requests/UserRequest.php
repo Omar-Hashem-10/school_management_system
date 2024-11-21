@@ -43,7 +43,6 @@ class UserRequest extends FormRequest
             'experience'          => 'nullable|integer',
         ];
     }
-
     public function messages()
     {
         return [

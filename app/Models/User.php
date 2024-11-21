@@ -28,7 +28,6 @@ class User extends Authenticatable
         'type',
         'gender',
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -38,7 +37,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
     /**
      * The attributes that should be cast.
      *
@@ -49,32 +47,34 @@ class User extends Authenticatable
     ];
 
     public function teacher()
-{
-    return $this->hasOne(Teacher::class, 'user_id', 'id');
-}
-public function student()
-{
-    return $this->hasOne(Student::class, 'user_id', 'id');
-}
-public function admin()
-{
-    return $this->hasOne(Admin::class);
-}
-public function role()
-{
-    return $this->belongsTo(Role::class);
-}
-public function fullName(){
-    return ucwords($this->first_name." ".$this->last_name);
-} 
-public function image(){
-    return $this->morphOne(Image::class, 'imageable');
-}
-public function salaries()
-{
-    return $this->morphMany(Salary::class, 'person');
-}
-public function amounts($month, $year)
+    {
+        return $this->hasOne(Teacher::class, 'user_id', 'id');
+    }
+    public function student()
+    {
+        return $this->hasOne(Student::class, 'user_id', 'id');
+    }
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+    public function fullName()
+    {
+        return ucwords($this->first_name . " " . $this->last_name);
+    }
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+    public function salaries()
+    {
+        return $this->morphMany(Salary::class, 'person');
+    }
+    public function amounts($month, $year)
     {
         $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
 

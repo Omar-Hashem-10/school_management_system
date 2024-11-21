@@ -132,7 +132,6 @@ class UserController extends Controller
         }
         return view('web.dashboard.admin.users.edit', $sideData, compact('user', "roles", 'classrooms', 'subjects', 'types', 'teacher', 'student'));
     }
-
     /**
      * Update the specified resource in storage.
      */

@@ -24,8 +24,7 @@ class RoleRequest extends FormRequest
         return [
             'role_name' => 'required|string',
             'for' => 'required|string|in:admins,employees,teachers,students',
-            'base_salary'=>'nullable'
+            'base_salary' => 'nullable'
         ];
     }
-
 }

@@ -28,7 +28,6 @@ class AdminController extends Controller
         $admins = Admin::orderBy('id', 'desc')->paginate(10);
         return view('web.dashboard.admin.admins.index', $sideData , compact('admins'));
     }
-
     /**
      * Show the form for creating a new resource.
      */

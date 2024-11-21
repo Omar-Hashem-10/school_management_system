@@ -17,15 +17,14 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('phone')->nullable();
             $table->string('email')->unique();
-            $table->enum('type',['admin','student','parent','teacher']);
+            $table->enum('type', ['admin', 'student', 'parent', 'teacher']);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('gender',['male','female']);
+            $table->enum('gender', ['male', 'female']);
             $table->rememberToken();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

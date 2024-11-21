@@ -16,12 +16,11 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('all_text')->nullable();
             $table->string('path');
-            $table->unsignedBigInteger('imageable_id');       
-            $table->string('imageable_type');       
+            $table->unsignedBigInteger('imageable_id');
+            $table->string('imageable_type');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

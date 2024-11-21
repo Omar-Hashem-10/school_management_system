@@ -24,29 +24,28 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::query()->where('type','student');
-        if ($request->has( 'name') && $request->name != '') {
+        $query = User::query()->where('type', 'student');
+        if ($request->has('name') && $request->name != '') {
             $words = explode(' ', trim($request->name));
-            $query->where('first_name', 'like', '%' .$words[0]. '%')
-            ->where('last_name', 'like', '%' .$words[1]. '%')
-            ->get();
+            $query->where('first_name', 'like', '%' . $words[0] . '%')
+                ->where('last_name', 'like', '%' . $words[1] . '%')
+                ->get();
         }
         if ($request->has('classroom_id') && $request->classroom_id != '') {
-            $classroom=$request->classroom_id;
+            $classroom = $request->classroom_id;
             $query->whereHas('student', function ($query) use ($classroom) {
-                $query->where('classroom_id',$classroom);
+                $query->where('classroom_id', $classroom);
             })->get();
-            
         }
         if ($request->has('sort_by') && in_array($request->sort_by, ['name', 'email', 'phone'])) {
-            
+
             $query->orderBy($request->sort_by, $request->order ?? 'asc');
         } else {
             $query->orderBy('id', 'desc');
         }
         $students = $query->paginate(10);
         $sideData = $this->getSideData();
-        return view('web.dashboard.admin.students.index', $sideData , compact('students'));
+        return view('web.dashboard.admin.students.index', $sideData, compact('students'));
     }
 
 
@@ -55,21 +54,21 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $class=ClassRoom::first();
-        $classes=ClassRoom::get();
+        $class = ClassRoom::first();
+        $classes = ClassRoom::get();
 
-        if(!isset($class))
-        return redirect()->back()->with('error','Not Found Class To Create Student');
+        if (!isset($class))
+            return redirect()->back()->with('error', 'Not Found Class To Create Student');
 
-        $role=Role::where('for',  'students')->first();
-        $roles=Role::where('for',  'students')->get();
+        $role = Role::where('for',  'students')->first();
+        $roles = Role::where('for',  'students')->get();
 
-        if(!isset($role))
-        return redirect()->back()->with('error','Not Found Role To Create Student');
+        if (!isset($role))
+            return redirect()->back()->with('error', 'Not Found Role To Create Student');
 
         $sideData = $this->getSideData();
 
-        return view('web.dashboard.admin.students.create', $sideData ,compact(['classes','class','roles', 'role']));
+        return view('web.dashboard.admin.students.create', $sideData, compact(['classes', 'class', 'roles', 'role']));
     }
 
     /**
@@ -103,11 +102,11 @@ class StudentController extends Controller
      */
     public function edit(student $student)
     {
-        $classes=ClassRoom::get();
-        $role=Role::where('for',  'students')->first();
-        $roles=Role::where('for',  'students')->get();
+        $classes = ClassRoom::get();
+        $role = Role::where('for',  'students')->first();
+        $roles = Role::where('for',  'students')->get();
         $sideData = $this->getSideData();
-        return view('web.dashboard.admin.students.edit', $sideData ,compact(['student','classes','roles','role']));
+        return view('web.dashboard.admin.students.edit', $sideData, compact(['student', 'classes', 'roles', 'role']));
     }
 
     /**
@@ -146,7 +145,7 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        $user=User::find($student->user_id);
+        $user = User::find($student->user_id);
         $imagePath = null;
         if ($student->image) {
             $imagePath = $student->image;

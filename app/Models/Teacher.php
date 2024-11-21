@@ -15,7 +15,6 @@ class Teacher extends Model
         'user_id',
         'role_id',
     ];
-    
     public function course()
     {
         return $this->belongsTo(Course::class, 'course_id', 'id');

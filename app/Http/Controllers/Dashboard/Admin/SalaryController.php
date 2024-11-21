@@ -23,7 +23,6 @@ class SalaryController extends Controller
             'teacher' => $teachers,
             'admin' => $admins,
         ];
-
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.salaries.index', $sideData, compact('people', 'date'));
     }
