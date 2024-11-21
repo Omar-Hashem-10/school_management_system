@@ -44,11 +44,11 @@
                 @foreach ($admins as $admin )
                 <tr>
                   <th scope="row">{{ $loop->iteration }}</th>
-                  <td>{{ $admin->user->fullName() }}</td>
-                  <td>{{ $admin->user->email }}</td>
-                  <td>{{ $admin->user->phone }}</td>
+                  <td>{{ $admin->fullName() }}</td>
+                  <td>{{ $admin->email }}</td>
+                  <td>{{ $admin->phone }}</td>
                   <td>
-                    <img src="{{FileHelper::get_file_path($admin->user->image?->path,'user')}}"  class="rounded-circle" width="100" height="100">
+                    <img src="{{FileHelper::get_file_path($admin->image?->path,'user')}}"  class="rounded-circle" width="100" height="100">
                   </td>
                   @if ($admin->role->role_name =='admin')
                   <?php $badge='bg-danger'?>
@@ -57,9 +57,9 @@
                   @endif
                   <td><span class="badge {{$badge}}">{{$admin->role->role_name}}</span></td>
                   <td>
-                    <a class="btn btn-warning" href="{{route('dashboard.admin.users.edit',$admin->user->id)}}">Edit</a>
+                    <a class="btn btn-warning" href="{{route('dashboard.admin.users.edit',$admin->id)}}">Edit</a>
                     <div class="btn-group" role="group">
-                      <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$admin->user->id)}}" method="post">
+                      <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$admin->id)}}" method="post">
                         @csrf
                         @method('delete')
                         <button class="btn btn-danger" type="submit">Delete</button>

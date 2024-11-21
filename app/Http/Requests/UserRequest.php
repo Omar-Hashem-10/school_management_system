@@ -35,10 +35,10 @@ class UserRequest extends FormRequest
             ],
             'gender'              => 'nullable|in:male,female',
             'type'                => 'required|in:admin,teacher,student,parent',
-            'image'               => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'               => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'password'            => 'required|string|min:6',
             'subject_id'          => 'nullable|integer|exists:subjects,id',
-            'classroom_id'        => 'nullable|integer|exists:classrooms,id',
+            'class_room_id'       => 'nullable|integer|exists:class_rooms,id',
             'role_id'             => 'required|integer|exists:roles,id',
             'experience'          => 'nullable|integer',
         ];

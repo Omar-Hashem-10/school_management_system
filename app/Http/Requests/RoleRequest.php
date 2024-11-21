@@ -22,8 +22,8 @@ class RoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role_name' => 'required|string',
-            'for' => 'required|string|in:admins,employees,teachers,students',
+            'role_name'     => 'required|string',
+            'for'        => 'required|string|in:admins,employees,teachers,students',
             'base_salary' => 'nullable'
         ];
     }

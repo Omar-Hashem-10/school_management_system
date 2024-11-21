@@ -90,18 +90,18 @@
                     @enderror
                 </div>
                 <div id="student-inputs" class="form-group" style="display: none;">
-                    <label for="student-class">classroom</label>
-                    <select class="form-select form-control" aria-label="Default select example" name="classroom_id">
+                    <label for="student-class">class room</label>
+                    <select class="form-select form-control" aria-label="Default select example" name="class_room_id">
                         @if ($student)
-                        <option value="{{$student['classroom_id']}}" selected>{{$student->classroom->name}}</option>
+                        <option value="{{$student['class_room_id']}}" selected>{{$student->class_room->name}}</option>
                         @else
                         <option value="" selected>Select classroom</option>
                         @endif
-                        @foreach ($classrooms as $classroom)
-                        <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
+                        @foreach ($class_rooms as $class_room)
+                        <option value="{{ $class_room->id }}">{{ $class_room->name }}</option>
                         @endforeach
                     </select>
-                    @error('classroom_id')
+                    @error('class_room_id')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
