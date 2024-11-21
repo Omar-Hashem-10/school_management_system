@@ -31,10 +31,10 @@ class StudentController extends Controller
                 ->where('last_name', 'like', '%' . $words[1] . '%')
                 ->get();
         }
-        if ($request->has('classroom_id') && $request->classroom_id != '') {
-            $classroom = $request->classroom_id;
-            $query->whereHas('student', function ($query) use ($classroom) {
-                $query->where('classroom_id', $classroom);
+        if ($request->has('class_room_id') && $request->class_room_id != '') {
+            $class_room = $request->class_room_id;
+            $query->whereHas('student', function ($query) use ($class_room) {
+                $query->where('class_room_id', $class_room);
             })->get();
         }
         if ($request->has('sort_by') && in_array($request->sort_by, ['name', 'email', 'phone'])) {

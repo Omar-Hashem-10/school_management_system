@@ -19,7 +19,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
                 <li class="breadcrumb-item ">Users</li>
-                <li class="breadcrumb-item "><a href="{{ route('dashboard.admin.admins.index') }}">@yield('title')</a>
+                <li class="breadcrumb-item "><a href="{{ route('dashboard.admin.users.index') }}">@yield('title')</a>
                 </li>
                 <li class="breadcrumb-item active">Create</li>
             </ol>
@@ -100,14 +100,14 @@
                     @enderror
                 </div>
                 <div id="student-inputs" class="form-group" style="display: none;">
-                    <label for="student-class">classroom</label>
-                    <select class="form-select form-control" aria-label="Default select example" name="classroom_id">
+                    <label for="student-class">class Room</label>
+                    <select class="form-select form-control" aria-label="Default select example" name="class_room_id">
                         <option value="" selected>Select classroom</option>
-                        @foreach ($classrooms as $classroom)
-                        <option value="{{ $classroom->id }}">{{ $classroom->name }}</option>
+                        @foreach ($class_rooms as $class_room)
+                        <option value="{{ $class_room->id }}">{{ $class_room->name }}</option>
                         @endforeach
                     </select>
-                    @error('classroom_id')
+                    @error('class_room_id')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>

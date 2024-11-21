@@ -31,10 +31,10 @@
                     <input type="text" name="name" class="form-control" placeholder="Search by Name" value="{{ request()->name }}">
                   </div>
                   <div class="col-md-4">
-                    <select name="classroom_id" class="form-control">
+                    <select name="class_room_id" class="form-control">
                       <option value="">Select Class</option>
-                      @foreach($classRooms as $classRoom)
-                        <option value="{{ $classRoom->id }}" {{ request()->classRoom_id == $classRoom->id ? 'selected' : '' }}>{{ $classRoom->name }}</option>
+                      @foreach($class_rooms as $class_room)
+                        <option value="{{ $class_room->id }}" {{ request()->class_room_id == $class_room->id ? 'selected' : '' }}>{{ $class_room->name }}</option>
                       @endforeach
                     </select>
                   </div>
@@ -87,7 +87,7 @@
                     <td>{{ $student->fullName() }}</td>
                     <td>{{ $student->email }}</td>
                     <td>{{ $student->phone }}</td>
-                    <td>{{ $student->student->classroom['name']}}</td>
+                    <td>{{ $student->student->class_room['name']}}</td>
                     <td>
                       <img src="{{ FileHelper::get_file_path($student->image?->path, 'user') }}" class="rounded-circle" width="100" height="100">
                     </td>

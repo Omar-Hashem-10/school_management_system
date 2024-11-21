@@ -48,7 +48,7 @@
                   <td>{{ $user->email }}</td>
                   <td>{{ $user->phone }}</td>
                   <td>
-                    <img src="{{FileHelper::get_file_path($user->imageable,'user')}}" class="rounded-circle" width="100"
+                    <img src="{{FileHelper::get_file_path($user->image?->path,'user')}}" class="rounded-circle" width="100"
                       height="100">
                   </td>
                   @if ($user->role->role_name =='admin')
