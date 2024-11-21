@@ -14,12 +14,12 @@ class Date extends Model
         'year',
     ];
 
-public function salaries()
-{
-    return $this->hasMany(Salary::class);
-}
-public function attendances()
-{
-    return $this->hasMany(Attendance::class);
-}
+    public function salaries()
+    {
+        return $this->hasMany(Salary::class);
+    }
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
 }

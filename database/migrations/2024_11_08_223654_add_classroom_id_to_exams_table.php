@@ -15,7 +15,6 @@ return new class extends Migration
             $table->foreignId('classroom_id')->constrained('classrooms')->cascadeOnDelete();
         });
     }
-
     /**
      * Reverse the migrations.
      */

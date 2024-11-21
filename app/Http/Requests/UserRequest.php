@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
@@ -24,11 +25,28 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'          => 'required|string|max:255',
-            'email'         => 'required|email|unique:users,email',
-            'phone'         => 'nullable|string',
-            'image'         => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
-            'password'      => 'required|string|min:6',
+            'first_name'          => 'required|string|max:255',
+            'last_name'           => 'required|string|max:255',
+            'phone'               => 'nullable|string',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($this->user),
+            ],
+            'gender'              => 'nullable|in:male,female',
+            'type'                => 'required|in:admin,teacher,student,parent',
+            'image'               => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'password'            => 'required|string|min:6',
+            'subject_id'          => 'nullable|integer|exists:subjects,id',
+            'classroom_id'        => 'nullable|integer|exists:classrooms,id',
+            'role_id'             => 'required|integer|exists:roles,id',
+            'experience'          => 'nullable|integer',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'password.required' => __('custom.validation.password.required'),
         ];
     }
 }

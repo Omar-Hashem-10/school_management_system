@@ -9,14 +9,18 @@ class Salary extends Model
 {
     use HasFactory;
     protected $fillable = [
-     'amount', 'date_id', 'person_id','person_type'
+        'amount',
+        'date_id',
+        'person_id',
+        'person_type'
     ];
 
     public function person()
     {
         return $this->morphTo();
     }
-    public function date(){
+    public function date()
+    {
         return $this->belongsTo(Date::class);
     }
 }

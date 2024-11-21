@@ -62,7 +62,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         Route::get('/salaries/dates',[SalaryController::class, 'showDates'])->name('salaries.show.dates');
         Route::post('/salaries',[SalaryController::class, 'store'])->name('salaries.store');
-        Route::get('/salaries/create/{date}',[SalaryController::class, 'create'])->name('salaries.create');
+        Route::get('/salaries/create/{date}/{person}',[SalaryController::class, 'create'])->name('salaries.create');
         Route::get('/salaries/{salary}/edit',[SalaryController::class, 'edit'])->name('salaries.edit');
         Route::patch('/salaries/{salary}',[SalaryController::class, 'update'])->name('salaries.update');
         Route::delete('/salaries/{salary}/destroy',[SalaryController::class, 'destroy'])->name('salaries.destroy');
@@ -71,9 +71,9 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         Route::get('/dates/{date}/edit',[DateController::class, 'edit'])->name('dates.edit');
         Route::get('/dates',[DateController::class, 'index'])->name('dates.index');
-        Route::get('/dates/create',[DateController::class, 'create'])->name('dates.create');
+        Route::get('/dates/create/{bage}',[DateController::class, 'create'])->name('dates.create');
         Route::patch('/dates/{date}',[DateController::class, 'update'])->name('dates.update');
-        Route::post('/dates',[DateController::class, 'store'])->name('dates.store');
+        Route::post('/dates/{bage}',[DateController::class, 'store'])->name('dates.store');
 
         Route::get('course-teachers/{teacher_id}', [CourseTeacherController::class, 'index'])->name('course_teachers.index');
 

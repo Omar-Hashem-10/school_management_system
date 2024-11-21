@@ -14,21 +14,20 @@ class Role extends Model
         'for',
     ];
 
-public function users()
-{
-    return $this->hasMany(User::class);
-}
-public function admins()
-{
-    return $this->hasMany(Admin::class);
-}
-public function teachers()
-{
-    return $this->hasMany(Teacher::class);
-}
-public function employees()
-{
-    return $this->hasMany(Employee::class);
-}
-
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+    public function admins()
+    {
+        return $this->hasMany(Admin::class);
+    }
+    public function teachers()
+    {
+        return $this->hasMany(Teacher::class);
+    }
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
 }

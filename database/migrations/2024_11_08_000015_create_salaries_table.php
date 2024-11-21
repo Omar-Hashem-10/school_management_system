@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('salaries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('person_id');       
-            $table->string('person_type'); 
-            $table->decimal('amount', 10, 2); 
-            $table->foreignId('date_id')->constrained('dates')->onDelete('cascade'); 
+            $table->unsignedBigInteger('person_id');
+            $table->string('person_type');
+            $table->decimal('amount', 10, 2);
+            $table->foreignId('date_id')->constrained('dates')->onDelete('cascade');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

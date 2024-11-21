@@ -51,7 +51,6 @@ class UserController extends Controller
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.users.edit', $sideData);
     }
-
     /**
      * Update the specified resource in storage.
      */
