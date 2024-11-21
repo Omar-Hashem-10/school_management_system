@@ -14,13 +14,13 @@ class Student extends Model
         'email',
         'phone',
         'image',
-        'class_room_id',
+        'classroom_id',
         'user_id',
       ];
 
-    public function classRoom()
+    public function classroom()
     {
-        return $this->belongsTo(ClassRoom::class, 'class_room_id', 'id');
+        return $this->belongsTo(Classroom::class, 'classroom_id', 'id');
     }
 
     public function user()

@@ -25,8 +25,8 @@
                     @method('PUT')
                   <div class="col-12">
                     <label for="level_name" class="form-label">Level Name</label>
-                    <input type="text" class="form-control" name="level_name" id="level_name" value="{{old('level_name', $level->level_name)}}">
-                    @error('level_name')
+                    <input type="text" class="form-control" name="name" id="name" value="{{old('name', $level->name)}}">
+                    @error('name')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                   </div>

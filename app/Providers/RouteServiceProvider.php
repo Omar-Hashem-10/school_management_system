@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Support\Facades\RateLimiter;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -25,7 +27,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureRateLimiting();
-
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')
@@ -33,8 +34,18 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
-
+            Route::group(['prefix' => LaravelLocalization::setLocale(),
+                    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ],
+                 ],function () {
                 Route::prefix('dashboard')->as('dashboard.')->group(function () {
+                    Route::get('/toggle-locale', function () {
+                        // Toggle between 'en' and 'ar'
+                        $currentLocale = LaravelLocalization::getCurrentLocale();
+                        $newLocale = $currentLocale === 'en' ? 'ar' : 'en';
+                        $url = LaravelLocalization::getLocalizedURL($newLocale, URL::previous());
+                        // Redirect to the new locale's URL
+                        return redirect($url);
+                    })->name('toggle-locale');
                     Route::middleware('web')->group(base_path('routes/admin.php'));
 
                     Route::middleware('web')->group(base_path('routes/student.php'));
@@ -43,6 +54,7 @@ class RouteServiceProvider extends ServiceProvider
 
                     Route::middleware('web')->group(base_path('routes/adminstrator.php'));
                 });
+            });
         });
     }
 

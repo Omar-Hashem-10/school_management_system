@@ -19,7 +19,7 @@
         <div class="card">
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-            <img src="{{FileHelper::get_file_path(auth()->user()->imageable,'user')}}" alt="Profile"
+            <img src="{{FileHelper::get_file_path(auth()->user()->image?->path,'user')}}" alt="Profile"
               class="rounded-circle">
             <h2>{{ auth()->user()->fullName()}}</h2>
             <h3>{{auth()->user()->role->role_name}}</h3>
@@ -91,7 +91,7 @@
                 <div class="row mb-3">
                   <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                   <div class="col-md-8 col-lg-9">
-                    <img src="{{FileHelper::get_file_path(auth()->user()->imageable,'user')}}" alt="Profile"
+                    <img src="{{FileHelper::get_file_path(auth()->user()->image?->path,'user')}}" alt="Profile"
                       class="rounded-circle">
                     <div class="pt-2">
                       <form class="d-inline"
