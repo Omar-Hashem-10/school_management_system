@@ -22,11 +22,9 @@ class CourseTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'course_level_id' => 'required|exists:course_levels,id',
+            'course_code_id' => 'required|exists:course_codes,id',
             'teacher_id'      => 'required|exists:teachers,id',
             'class_room_id'   => 'required|exists:class_rooms,id',
-            'semester'        => 'required|in:first,second',
-            'year'            => 'required|date',
         ];
     }
 }

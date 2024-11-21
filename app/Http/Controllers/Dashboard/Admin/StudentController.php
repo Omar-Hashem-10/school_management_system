@@ -24,29 +24,26 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-
         $query = User::query()->where('type','student');
-        if ($request->has( 'name') && $request->name != '') {
-            $words = explode(' ', trim($request->name));
-            $query->where('first_name', 'like', '%' .$words[0]. '%')
-            ->where('last_name', 'like', '%' .$words[1]. '%')
-            ->get();
+
+        if ($request->has('student_name') && $request->student_name != '') {
+            $query->where('student_name', 'like', '%' . $request->student_name . '%');
         }
-        if ($request->has('classroom_id') && $request->classroom_id != '') {
-            $classroom=$request->classroom_id;
-            $query->whereHas('student', function ($query) use ($classroom) {
-                $query->where('classroom_id',$classroom);
-            })->get();
-            
+
+        if ($request->has('class_room_id') && $request->class_room_id != '') {
+            $query->where('class_room_id', $request->class_room_id);
         }
-        if ($request->has('sort_by') && in_array($request->sort_by, ['name', 'email', 'phone'])) {
-            
+
+        if ($request->has('sort_by') && in_array($request->sort_by, ['student_name', 'email', 'phone'])) {
             $query->orderBy($request->sort_by, $request->order ?? 'asc');
         } else {
             $query->orderBy('id', 'desc');
         }
+
         $students = $query->paginate(10);
+
         $sideData = $this->getSideData();
+
         return view('web.dashboard.admin.students.index', $sideData , compact('students'));
     }
 

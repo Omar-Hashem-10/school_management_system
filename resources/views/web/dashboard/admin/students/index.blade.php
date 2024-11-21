@@ -22,20 +22,25 @@
           <div class="card">
             <div class="card-header border-transparent">
               <a href="{{ route('dashboard.admin.students.create') }}" class="btn btn-sm btn-info float-left">Place New student</a>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
             </div>
             <div class="card-body">
               <!-- Filter Form -->
               <form method="GET" action="{{ route('dashboard.admin.students.index') }}" class="mb-3">
                 <div class="row">
                   <div class="col-md-4">
-                    <input type="text" name="name" class="form-control" placeholder="Search by Name" value="{{ request()->name }}">
+                    <input type="text" name="student_name" class="form-control" placeholder="Search by Name" value="{{ request()->student_name }}">
                   </div>
                   <div class="col-md-4">
-                    <select name="classroom_id" class="form-control">
+                    <select name="class_room_id" class="form-control">
                       <option value="">Select Class</option>
-                      @foreach($classRooms as $classRoom)
-                        <option value="{{ $classRoom->id }}" {{ request()->classRoom_id == $classRoom->id ? 'selected' : '' }}>{{ $classRoom->name }}</option>
-                      @endforeach
+                      {{-- @foreach($classRooms as $classRoom)
+                        <option value="{{ $classRoom->id }}" {{ request()->class_room_id == $classRoom->id ? 'selected' : '' }}>{{ $classRoom->class_name }}</option>
+                      @endforeach --}}
                     </select>
                   </div>
                   <div class="col-md-4">
@@ -49,7 +54,7 @@
                 <div class="row">
                   <div class="col-md-4">
                     <select name="sort_by" class="form-control">
-                      <option value="name" {{ request()->sort_by == 'name' ? 'selected' : '' }}>Sort by Name</option>
+                      <option value="student_name" {{ request()->sort_by == 'student_name' ? 'selected' : '' }}>Sort by Name</option>
                       <option value="email" {{ request()->sort_by == 'email' ? 'selected' : '' }}>Sort by Email</option>
                       <option value="phone" {{ request()->sort_by == 'phone' ? 'selected' : '' }}>Sort by Phone</option>
                     </select>
@@ -75,7 +80,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
-                    <th scope="col">Class Name</th>
+                    {{-- <th scope="col">Class Name</th> --}}
                     <th scope="col">Image</th>
                     <th scope="col">Actions</th>
                   </tr>
@@ -84,17 +89,17 @@
                   @foreach ($students as $student )
                   <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $student->fullName() }}</td>
+                    <td>{{ $student->student_name }}</td>
                     <td>{{ $student->email }}</td>
                     <td>{{ $student->phone }}</td>
-                    <td>{{ $student->student->classroom['name']}}</td>
+                    {{-- <td>{{ $student->classRoom->class_name }}</td> --}}
                     <td>
-                      <img src="{{ FileHelper::get_file_path($student->image?->path, 'user') }}" class="rounded-circle" width="100" height="100">
+                      <img src="{{ FileHelper::get_file_path($student->imageable, 'user') }}" class="rounded-circle" width="100" height="100">
                     </td>
                     <td>
-                      <a class="btn btn-warning" href="{{ route('dashboard.admin.users.edit', $student->id) }}">Edit</a>
+                      <a class="btn btn-warning" href="{{ route('dashboard.admin.students.edit', $student->id) }}">Edit</a>
                       <div class="btn-group" role="group">
-                        <form class="d-inline" action="{{ route('dashboard.admin.users.destroy', $student->id) }}" method="post">
+                        <form class="d-inline" action="{{ route('dashboard.admin.students.destroy', $student->id) }}" method="post">
                           @csrf
                           @method('delete')
                           <button class="btn btn-danger" type="submit">Delete</button>

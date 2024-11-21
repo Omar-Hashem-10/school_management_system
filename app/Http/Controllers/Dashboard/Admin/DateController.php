@@ -13,8 +13,13 @@ class DateController extends Controller
 {
     use SideDataTraits;
  public function create($bage){
+   if($bage=='salary'){
+      $route='dashboard.admin.salaries.show.dates';
+   }elseif($bage=='student_attend'){
+      $route='dashboard.admin.salaries.show.dates';
+   }
     $sideData = $this->getSideData();
-    return view('web.dashboard.admin.dates.create',$sideData,compact('bage'));
+    return view('web.dashboard.admin.dates.create',$sideData);
  }
  public function edit(Date $date){
     $sideData = $this->getSideData();
@@ -29,18 +34,13 @@ class DateController extends Controller
     Date::where('id',$date->id)->update($data);
     return redirect()->route('dashboard.admin.salaries.show.dates')->with('success','date updated successfully!');
  }
- public function store(Request $request,$bage){
-   if($bage=='salary'){
-      $route='dashboard.admin.salaries.show.dates';
-   }elseif($bage=='student_attend'){
-      $route='dashboard.admin.salaries.show.dates';
-   }
+ public function store(Request $request ){
     $data=$request->validate([
         'day' => 'nullable|numeric',
         'month' => 'required|numeric',
         'year' => 'required|numeric',
     ]);
     Date::create($data);
-    return redirect()->route($route)->with('success','date added successfully!');
+    return redirect()->route('dashboard.admin.salaries.show.dates')->with('success','date added successfully!');
  }
 }

@@ -36,8 +36,7 @@
         @method('PATCH')
 
         <div class="card-body">
-          <!-- Hidden Fields for course_level_id and teacher_id -->
-          <input type="hidden" name="course_level_id" value="{{ $question->course_level_id }}">
+          <input type="hidden" name="course_code_id" value="{{ $question->course_code_id }}">
           <input type="hidden" name="teacher_id" value="{{ $question->teacher_id }}">
           <input type="hidden" name="question_type" value="mcq">
 

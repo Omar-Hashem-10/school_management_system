@@ -1,4 +1,5 @@
 @extends('web.dashboard.master')
+
 @section('title','Salaries')
 
 @section('content')
@@ -26,18 +27,12 @@
                     <label for="person_id">Person</label>
                     <select class="form-select form-control" aria-label="Default select example" name="person_id"
                     value="{{ old('person_id') }}">
-                        @if ($user)
-                        <option value="{{ $user['type'] }}-{{ $user->id  }}">{{ $user->fullName() }}</option>
-                            @else
                         <option value="">Select Person</option>
-                        @endif
-                        @if (!$user)
                         @foreach($people as $type => $persons)
                         @foreach($persons as $person)
-                        <option value="{{ $type }}-{{ $person->id }}">{{ $person->fullName() }}</option>
+                        <option value="{{ $type }}-{{ $person->id }}">{{ $person->name }}</option>
                         @endforeach
                         @endforeach
-                        @endif
                     </select>
                     @error('person_id')
                     <span class="text-danger">{{$message}}</span>

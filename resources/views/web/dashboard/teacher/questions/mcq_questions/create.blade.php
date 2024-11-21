@@ -33,8 +33,7 @@
       <form action="{{ route('dashboard.teacher.questions.store') }}" method="POST">
         @csrf
         <div class="card-body">
-          <!-- Hidden Fields for course_level_id and teacher_id -->
-          <input type="hidden" name="course_level_id" value="{{ session('course_level_id') }}">
+          <input type="hidden" name="course_code_id" value="{{ $course_code_id }}">
           <input type="hidden" name="teacher_id" value="{{ session('teacher_id') }}">
           <input type="hidden" name="question_type" value="mcq">
           <input type="hidden" name="choice_text" value="">

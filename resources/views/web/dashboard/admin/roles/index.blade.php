@@ -21,6 +21,11 @@
           <div class="card">
             <div class="card-header border-transparent">
               <a href="{{ route('dashboard.admin.roles.create') }}" class="btn btn-sm btn-info float-left">Place New role</a>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
             </div>
             <div class="card-body">
               <!-- Table with stripped rows -->
@@ -31,7 +36,6 @@
                     <th scope="col">#</th>
                     <th scope="col">Role</th>
                     <th scope="col">For</th>
-                    <th scope="col">Base Salary</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -41,7 +45,6 @@
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $role->role_name }}</td>
                     <td>{{ $role->for }}</td>
-                    <td>{{ $role->base_salary }}</td>
                     <td>
                       <a class="btn btn-warning" href="{{route('dashboard.admin.roles.edit',$role->id)}}">Edit</a>
                       <div class="btn-group" role="group">

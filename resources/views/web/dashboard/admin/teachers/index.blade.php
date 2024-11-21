@@ -21,7 +21,12 @@
 
           <div class="card">
             <div class="card-header border-transparent">
-              <a href="{{ route('dashboard.admin.users.create') }}" class="btn btn-sm btn-info float-left">Place New teacher</a>
+              <a href="{{ route('dashboard.admin.teachers.create') }}" class="btn btn-sm btn-info float-left">Place New teacher</a>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
             </div>
             <div class="card-body">
               <!-- Table with stripped rows -->
@@ -41,22 +46,22 @@
                   @foreach ($teachers as $teacher )
                   <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $teacher->user->fullName() }}</td>
-                    <td>{{ $teacher->user->email }}</td>
-                    <td>{{ $teacher->user->phone }}</td>
+                    <td>{{ $teacher->first_name }}</td>
+                    <td>{{ $teacher->email }}</td>
+                    <td>{{ $teacher->phone }}</td>
                     <td>
-                      <img src="{{FileHelper::get_file_path($teacher->user->image?->path,'user')}}"  class="rounded-circle" width="100" height="100">
+                      <img src="{{FileHelper::get_file_path($teacher->imageable,'user')}}"  class="rounded-circle" width="100" height="100">
                     </td>
                     <td>
-                      <a class="btn btn-warning" href="{{route('dashboard.admin.users.edit',$teacher->user->id)}}">Edit</a>
+                      <a class="btn btn-warning" href="{{route('dashboard.admin.teachers.edit',$teacher->id)}}">Edit</a>
                       <div class="btn-group" role="group">
-                        <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$teacher->user->id)}}" method="post">
+                        <form class="d-inline" action="{{route('dashboard.admin.teachers.destroy',$teacher->id)}}" method="post">
                           @csrf
                           @method('delete')
                           <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
                       </div>
-                      <a class="btn btn-success" href="{{route('dashboard.admin.course_teachers.index',['teacher_id' => $teacher->id])}}">info</a>
+                      <a class="btn btn-success" href="{{route('dashboard.admin.course_teachers.index',['teacher_id' => $teacher->teacher->id])}}">info</a>
                     </td>
                   </tr>
                   @endforeach

@@ -23,11 +23,6 @@
           <div class="card">
             <div class="card-header border-transparent">
               <a href="{{ route('dashboard.admin.schedules.create') }}" class="btn btn-sm btn-info float-left">Add New Schedule</a>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
             </div>
             <div class="card-body">
               <!-- Filter form -->
@@ -57,6 +52,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Classroom</th>
                     <th scope="col">Course Code</th>
+                    <th scope="col">Semester</th>
                     <th scope="col">Day</th>
                     <th scope="col">Start Time</th>
                     <th scope="col">End Time</th>
@@ -65,14 +61,12 @@
                 </thead>
                 <tbody>
                   @foreach ($schedules as $schedule)
-                    @foreach ($courses as $course)
-                        @foreach ($course->levels as $level)
-                            @if ($level->pivot->id == $schedule->course_level_id)
                                 @if (request('day_filter') == '' || $schedule->day_id == request('day_filter'))
                     <tr>
                         <th scope="row">{{ $loop->iteration }}</th>
-                        <td>{{ $schedule->classRoom->class_name }}</td>
-                        <td>{{ $course->course_name }}</td>
+                        <td>{{ $schedule->classRoom->name }}</td>
+                        <td>{{ $schedule->courseCode->code }}</td>
+                        <td>{{ $schedule->courseCode->semester }}</td>
                         <td>{{ $schedule->day->day_name }}</td>
                         <td>{{ $schedule->timeSlot->start_time }}</td>
                         <td>{{ $schedule->timeSlot->end_time }}</td>
@@ -88,9 +82,6 @@
                         </td>
                   </tr>
                   @endif
-                  @endif
-                  @endforeach
-                  @endforeach
                   @endforeach
                 </tbody>
               </table>

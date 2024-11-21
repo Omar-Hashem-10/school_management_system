@@ -49,7 +49,7 @@
                 <ul class="nav-content collapse" id="questions-nav" data-bs-parent="#components-nav">
                     @foreach($course_codes as $id => $course_code)
                         <li>
-                            <a href="{{ route('dashboard.teacher.questions.index', ['course_level_id' => $id]) }}">
+                            <a href="{{ route('dashboard.teacher.questions.index', ['course_code_id' => $id]) }}">
                                 <i class="bi bi-circle"></i><span>{{ $course_code }}</span>
                             </a>
                         </li>

@@ -24,7 +24,7 @@
                     @csrf
                     @method('PUT')
                   <div class="col-12">
-                    <label for="level_name" class="form-label">Level Name</label>
+                    <label for="name" class="form-label">Level Name</label>
                     <input type="text" class="form-control" name="name" id="name" value="{{old('name', $level->name)}}">
                     @error('name')
                         <span class="text-danger">{{$message}}</span>
@@ -32,7 +32,7 @@
                   </div>
                   <div class="col-12">
                     <label for="amount" class="form-label">Level Name</label>
-                    <input type="text" class="form-control" name="amount" id="amount" value="{{old('amount', $level->amount)}}">
+                    <input type="number" class="form-control" name="amount" id="amount" value="{{old('amount', $level->amount)}}">
                     @error('amount')
                         <span class="text-danger">{{$message}}</span>
                     @enderror

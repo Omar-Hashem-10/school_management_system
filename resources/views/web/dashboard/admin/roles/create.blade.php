@@ -31,14 +31,6 @@
             @enderror
           </div>
           <div class="form-group">
-            <label for="base_salary">Base Salary</label>
-            <input type="decimal" name="base_salary" class="form-control" id="base_salary" placeholder="Enter Salary"
-              value="{{old('base_salary')}}">
-            @error('base_salary')
-            <span class="text-danger">{{$message}}</span>
-            @enderror
-          </div>
-          <div class="form-group">
             <label for="for">For</label>
             <select class="form-select form-control" aria-label="Default select example" name="for"
               value="{{old('for')}}">

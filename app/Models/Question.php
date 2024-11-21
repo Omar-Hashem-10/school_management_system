@@ -13,7 +13,7 @@ class Question extends Model
         'question_text',
         'question_type',
         'teacher_id',
-        'course_level_id',
+        'course_code_id',
     ];
 
     public function teacher()

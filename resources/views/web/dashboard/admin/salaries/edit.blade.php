@@ -28,7 +28,12 @@
                     <label for="person_id">Person</label>
                     <select class="form-select form-control" aria-label="Default select example" name="person_id"
                     value="{{ $salary->person_id }}">
-                        <option value="{{ $salary->person_type }}-{{ $salary->person_id }}" selected>{{ $salary->person->fullName()}}</option>
+                        <option value="{{ $salary->person_type }}-{{ $salary->person_id }}" selected>{{ $salary->person->name }}</option>
+                        @foreach($people as $type => $persons)
+                        @foreach($persons as $person)
+                        <option value="{{ $type }}-{{ $person->id }}">{{ $person->name }}</option>
+                        @endforeach
+                        @endforeach
                     </select>
                     @error('person_id')
                     <span class="text-danger">{{$message}}</span>

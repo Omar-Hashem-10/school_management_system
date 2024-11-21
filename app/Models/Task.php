@@ -13,7 +13,7 @@ class Task extends Model
         'start_date',
         'end_date',
         'full_grade',
-        'course_level_id',
+        'course_code_id',
         'teacher_id',
         'class_room_id',
     ];

@@ -15,7 +15,7 @@ class QuestionTrueFalseController extends Controller
     public function __invoke(Request $request)
     {
         $sideData = $this->getSideData();
-        $course_level_id = session('course_level_id');
-        return view('web.dashboard.teacher.questions.true_false_questions.create', $sideData , compact( 'course_level_id'));
+        $course_code_id = session('course_code_id');
+        return view('web.dashboard.teacher.questions.true_false_questions.create', $sideData , compact( 'course_code_id'));
     }
 }

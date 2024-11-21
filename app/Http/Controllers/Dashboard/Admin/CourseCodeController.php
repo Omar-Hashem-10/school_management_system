@@ -2,70 +2,75 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Models\Admin;
-use Illuminate\Http\Request;
+use App\Models\Level;
+use App\Models\CourseCode;
 use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CourseCodeRequest;
 
 class CourseCodeController extends Controller
 {
-    use  SideDataTraits;
+    use SideDataTraits;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('web.dashboard.admin.courses.index');
-        
+        $levels = Level::with('subjects')->get();
+        $course_codes = CourseCode::get();
+        $sideData = $this->getSideData();
+
+        return view('web.dashboard.admin.course_codes.index', array_merge($sideData, compact('levels', 'course_codes')));
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('web.dashboard.admin.courses_codes.create');
-        
+        $levels = Level::with('subjects')->get();
+
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.course_codes.create', $sideData, compact('levels'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CourseCodeRequest $request)
     {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        CourseCode::create($request->validated());
+        return redirect()->route('dashboard.admin.course_codes.index')->with('success', 'Created Course Code Successfully!');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(CourseCode $course_code)
     {
-        return view('web.dashboard.admin.courses_codes.edit');
-        
+        $sideData = $this->getSideData();
+        $levels = Level::with('subjects')->get();
+        return view('web.dashboard.admin.course_codes.edit', $sideData, compact('course_code', 'levels'));
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CourseCodeRequest $request, CourseCode $course_code)
     {
-        //
+        $course_code->update($request->validated());
+        return redirect()->route('dashboard.admin.course_codes.index')->with('success', 'Updated Course Code Successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(CourseCode $course_code)
     {
-        //
+        $course_code->delete();
+        return redirect()->route('dashboard.admin.course_codes.index')->with('success', 'Deleted Course Code Successfully!');
     }
 }

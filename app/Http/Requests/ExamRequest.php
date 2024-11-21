@@ -22,11 +22,11 @@ class ExamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'exam_name' => 'required|string|min:3|max:50',
+            'name' => 'required|string|min:3|max:50',
             'exam_date' => 'required|date',
             'exam_duration' => 'required|integer|min:1',
             'half_grade' => 'required|numeric|min:0',
-            'course_level_id' => 'required|exists:course_levels,id',
+            'course_code_id' => 'required|exists:course_codes,id',
             'teacher_id' => 'required|exists:teachers,id',
             'class_room_id' => 'required|exists:class_rooms,id',
         ];

@@ -25,7 +25,7 @@ class QuestionRequest extends FormRequest
             'question_text' => 'required|string',
             'question_type' => 'required|in:mcq,true_false',
             'teacher_id' => 'required|exists:teachers,id',
-            'course_level_id' => 'required|exists:course_levels,id',
+            'course_code_id' => 'required|exists:course_codes,id',
         ];
     }
 

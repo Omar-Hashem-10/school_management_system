@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Day;
-use App\Models\Course;
+use App\Models\Level;
 use App\Models\Schedule;
 use App\Models\TimeSlot;
 use App\Models\ClassRoom;
+use App\Models\CourseCode;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use App\Http\Requests\ScheduleRequest;
@@ -39,9 +40,7 @@ class ScheduleController extends Controller
 
         $schedules = $schedulesQuery->get();
 
-        $courses = Course::with('levels')->get();
-
-        return view('web.dashboard.admin.schedules.index', $sideData, compact('schedules', 'courses', 'days'));
+        return view('web.dashboard.admin.schedules.index', $sideData, compact('schedules', 'days'));
     }
 
 
@@ -50,14 +49,23 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        $courses = Course::with('levels')->get();
         $class_room = ClassRoom::where('id', session('class_room_id'))->first();
+
         session()->put('class_room_level', $class_room->level_id);
+
+        $levels = Level::where('id', session('class_room_level'))->with('subjects')->get();
+
+        $course_codes = CourseCode::get();
+
         $time_slots = TimeSlot::orderBy('start_time')->get();
+
         $sideData = $this->getSideData();
+
         $days = Day::get();
-        return view('web.dashboard.admin.schedules.create', $sideData, compact('courses', 'time_slots', 'days'));
+
+        return view('web.dashboard.admin.schedules.create', array_merge($sideData, compact('course_codes', 'time_slots', 'days', 'levels')));
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -74,10 +82,11 @@ class ScheduleController extends Controller
     public function edit(Schedule $schedule)
     {
         $sideData = $this->getSideData();
-        $courses = Course::with('levels')->get();
+        $levels = Level::where('id', session('class_room_level'))->with('subjects')->get();
         $days = Day::get();
         $time_slots = TimeSlot::orderBy('start_time')->get();
-        return view('web.dashboard.admin.schedules.edit', $sideData, compact('courses', 'schedule', 'time_slots', 'days'));
+        $course_codes = CourseCode::all();
+        return view('web.dashboard.admin.schedules.edit', $sideData, compact('levels', 'schedule', 'time_slots', 'days', 'course_codes'));
     }
 
     /**

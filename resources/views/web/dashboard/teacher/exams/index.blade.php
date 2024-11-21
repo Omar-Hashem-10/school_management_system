@@ -31,6 +31,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Exam Name</th>
+                            <th scope="col">Full Grade</th>
                             <th scope="col">Exam Date</th>
                             <th scope="col">Exam Duration</th>
                             <th scope="col">Actions</th>
@@ -40,7 +41,8 @@
                         @foreach ($exams as $exam)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $exam->exam_name }}</td>
+                            <td>{{ $exam->name }}</td>
+                            <td>{{ $exam->half_grade * 2 }}</td>
                             <td>{{ $exam->exam_date }}</td>
                             <td>{{ $exam->exam_duration }}</td>
                             <td>
