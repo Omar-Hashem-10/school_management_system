@@ -19,14 +19,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'phone',
+        'name',
         'email',
         'role_id',
         'password',
-        'type',
-        'gender',
+        'role_id',
     ];
 
     /**
@@ -57,13 +54,17 @@ public function student()
 {
     return $this->hasOne(Student::class, 'user_id', 'id');
 }
+public function employee()
+{
+    return $this->hasOne(Employee::class);
+}
 public function admin()
 {
     return $this->hasOne(Admin::class);
 }
 public function role()
 {
-    return $this->belongsTo(Role::class);
+    return $this->belongsTo(Role::class, 'role_id', 'id');
 }
 public function fullName(){
     return ucwords($this->first_name." ".$this->last_name);

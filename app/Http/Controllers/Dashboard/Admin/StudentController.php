@@ -24,6 +24,7 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
+
         $query = User::query()->where('type','student');
         if ($request->has( 'name') && $request->name != '') {
             $words = explode(' ', trim($request->name));

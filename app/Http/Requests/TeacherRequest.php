@@ -25,7 +25,7 @@ class TeacherRequest extends FormRequest
     {
         return [
             'teacher_name'        => 'required|string|max:255',
-            'email'               => 'required|unique:users,email|email',
+            'email'               => 'required|email',
             'phone'               => 'nullable|string',
             'image'               => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'user_id'             => 'nullable|integer|exists:users,id',

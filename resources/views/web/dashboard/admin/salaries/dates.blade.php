@@ -22,7 +22,7 @@
 
         <div class="card">
           <div class="card-header border-transparent">
-            <a href="{{ route('dashboard.admin.dates.create','salary') }}" class="btn btn-sm btn-info float-left">Place New
+            <a href="{{ route('dashboard.admin.dates.create') }}" class="btn btn-sm btn-info float-left">Place New
               Date</a>
           </div>
           <div class="card-body">

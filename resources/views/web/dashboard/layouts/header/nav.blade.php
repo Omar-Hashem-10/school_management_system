@@ -126,7 +126,7 @@
                 </a><!-- End Profile Iamge Icon -->
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>{{ucwords(auth()->user()->first_name)}}</h6>
+                        <h6>{{auth()->user()->name}}</h6>
                         <span>{{auth()->user()->role->role_name}}</span>
                     </li>
                     <li>
