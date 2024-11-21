@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-    @section('title','Login')
 @include('web.dashboard.layouts.header.head')
+@section('title','Login')
 <body>
+
     <main>
         <div class="container">
 

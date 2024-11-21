@@ -14,17 +14,16 @@ class Attendance extends Model
         'class_room_id',
     ];
 
-    public function classRoom()
-    {
-        return $this->belongsTo(ClassRoom::class, 'class_room_id', 'id');
-    }
+public function classRoom()
+{
+    return $this->belongsTo(ClassRoom::class, 'class_room_id', 'id');
+}
 
-    public function attendanceStudents()
+public function attendanceStudents()
     {
         return $this->hasMany(AttendanceStudent::class);
-    }   
-    public function date()
-    {
+    }
+    public function date(){
         $this->belongsTo(Date::class);
     }
 }

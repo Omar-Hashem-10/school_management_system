@@ -70,19 +70,6 @@
                                             @method('delete')
                                             <button class="btn btn-danger" type="submit">Delete</button>
                                           </form>
-<<<<<<< HEAD
-                                          <a href="{{ route('dashboard.admin.teachers.index') }}" class="btn btn-secondary">Back</a>
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
-                        @endforeach
-                    @endforeach
-                  </tbody>
-              </table>
-              <!-- End Table with stripped rows -->
-            </div>
-=======
                                         </td>
                                     </tr>
                                     @endif
@@ -94,7 +81,6 @@
                             <a href="{{ route('dashboard.admin.teachers.index') }}" class="btn btn-secondary">Back</a>
                             <!-- End Table with stripped rows -->
                         </div>
->>>>>>> c4c0e38b894c3dd74855721eb8be04f7a9a1936d
           </div>
         </div>
       </div>

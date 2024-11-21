@@ -1,16 +1,33 @@
 <ul class="sidebar-nav" id="sidebar-nav">
 
-  <li class="nav-item">
-    <a class="nav-link " href="{{ route('dashboard.admin.home.index') }}">
-      <i class="bi bi-grid"></i>
-      <span>Dashboard</span>
-    </a>
-  </li><!-- End Dashboard Nav -->
+    <li class="nav-item">
+      <a class="nav-link " href="{{ route('dashboard.admin.home.index') }}">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
         <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+        <!-- Attends Section -->
+        <li>
+            <a href="javascript:void(0)" class="nav-link" data-bs-toggle="collapse" data-bs-target="#attends-nav">
+                <i class="bi bi-circle"></i><span>Attends</span>
+            </a>
+            <ul class="nav-content collapse" id="attends-nav" data-bs-parent="#components-nav">
+                @foreach($classRooms as $classRoom)
+                    <li>
+                        <a href="{{ route('dashboard.admin.attends.index', ['class_room_id' => $classRoom->id]) }}">
+                            <i class="bi bi-circle"></i><span>{{ $classRoom->class_name }}</span>
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </li>
 
         <!-- Other sections -->
         <li>
@@ -101,25 +118,5 @@
         </li>
       </ul>
     </li>
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#attendances-nav" data-bs-toggle="collapse" href="#">
-        <i class="bi bi-menu-button-wide"></i><span>ِAttendances</span><i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="attendances-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="javascript:void(0)" class="nav-link" data-bs-toggle="collapse" data-bs-target="#attends-nav">
-            <i class="bi bi-circle"></i><span>Attendance Students</span>
-          </a>
-          <ul class="nav-content collapse" id="attends-nav" data-bs-parent="#attendances-nav">
-            @foreach($classRooms as $classRoom)
-            <li>
-              <a href="{{ route('dashboard.admin.attends.index', ['class_room_id' => $classRoom->id]) }}">
-                <i class="bi bi-circle"></i><span>{{ $classRoom->class_name }}</span>
-              </a>
-            </li>
-            @endforeach
-          </ul>
-        </li>
-    </li>
-</ul>
 
+</ul>

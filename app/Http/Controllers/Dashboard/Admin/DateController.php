@@ -12,12 +12,7 @@ use Illuminate\Http\Request;
 class DateController extends Controller
 {
     use SideDataTraits;
- public function create($bage){
-   if($bage=='salary'){
-      $route='dashboard.admin.salaries.show.dates';
-   }elseif($bage=='student_attend'){
-      $route='dashboard.admin.salaries.show.dates';
-   }
+ public function create(){
     $sideData = $this->getSideData();
     return view('web.dashboard.admin.dates.create',$sideData);
  }

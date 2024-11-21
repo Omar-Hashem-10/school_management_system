@@ -16,42 +16,26 @@ class UserSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         \App\Models\User::factory()->create([
-            'first_name' => 'Admin',
-            'last_name' => 'Ben Admin',
+            'name' => 'Admin',
             'email' => 'admin@app.com',
-            'phone'=>"01015616884",
-            'type'=>'admin',
-            'gender'=>'male',
             'password' => '123456789',
             'role_id' => 1,
         ]);
         \App\Models\User::factory()->create([
-            'first_name' => 'manager',
-            'last_name' => 'Ben manager',
-            'email' => 'manager@app.com',
-            'phone'=>"01015616884",
-            'type'=>'admin',
-            'gender'=>'male',
+            'name' => 'Manager',
+            'email' => 'Manager@app.com',
             'password' => '123456789',
             'role_id' => 2,
         ]);
         \App\Models\User::factory()->create([
-            'first_name' => 'teacher',
-            'last_name' => 'Ben teacher',
-            'email' => 'teacher@app.com',
-            'phone'=>"01015616884",
-            'type'=>'teacher',
-            'gender'=>'male',
+            'name' => 'Teacher',
+            'email' => 'Teacher@app.com',
             'password' => '123456789',
             'role_id' => 3,
         ]);
         \App\Models\User::factory()->create([
-            'first_name' => 'student',
-            'last_name' => 'Ben student',
-            'email' => 'student@app.com',
-            'phone'=>"01015616884",
-            'type'=>'student',
-            'gender'=>'male',
+            'name' => 'Student',
+            'email' => 'Student@app.com',
             'password' => '123456789',
             'role_id' => 4,
         ]);

@@ -37,8 +37,7 @@ class LoginController extends Controller
 
 
             if ($user->role && $user->role->for === 'teachers') {
-               
-                $this->getProfileData(Teacher::class); 
+                $this->getProfileData(Teacher::class);
                 return redirect()->intended('/dashboard/teacher/home');
             }
             if ($user->role && $user->role->for === 'students') {
