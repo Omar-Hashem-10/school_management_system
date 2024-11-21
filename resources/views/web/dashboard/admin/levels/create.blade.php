@@ -23,9 +23,9 @@
                 <form action="{{route('dashboard.admin.levels.store')}}" method="POST" class="row g-3">
                     @csrf
                   <div class="col-12">
-                    <label for="level_name" class="form-label">Level Name</label>
-                    <input type="text" class="form-control" name="level_name" id="level_name">
-                    @error('level_name')
+                    <label for="name" class="form-label">Level Name</label>
+                    <input type="text" class="form-control" name="name" id="name">
+                    @error('name')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                   </div>

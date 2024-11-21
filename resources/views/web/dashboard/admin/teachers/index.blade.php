@@ -46,11 +46,11 @@
                   @foreach ($teachers as $teacher )
                   <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
-                    <td>{{ $teacher->teacher_name }}</td>
+                    <td>{{ $teacher->first_name }}</td>
                     <td>{{ $teacher->email }}</td>
                     <td>{{ $teacher->phone }}</td>
                     <td>
-                      <img src="{{FileHelper::get_file_path($teacher->image,'user')}}"  class="rounded-circle" width="100" height="100">
+                      <img src="{{FileHelper::get_file_path($teacher->imageable,'user')}}"  class="rounded-circle" width="100" height="100">
                     </td>
                     <td>
                       <a class="btn btn-warning" href="{{route('dashboard.admin.teachers.edit',$teacher->id)}}">Edit</a>
@@ -61,7 +61,7 @@
                           <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
                       </div>
-                      <a class="btn btn-success" href="{{route('dashboard.admin.course_teachers.index',['teacher_id' => $teacher->id])}}">info</a>
+                      <a class="btn btn-success" href="{{route('dashboard.admin.course_teachers.index',['teacher_id' => $teacher->teacher->id])}}">info</a>
                     </td>
                   </tr>
                   @endforeach

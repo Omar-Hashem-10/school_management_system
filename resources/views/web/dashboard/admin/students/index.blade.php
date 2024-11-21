@@ -38,9 +38,9 @@
                   <div class="col-md-4">
                     <select name="class_room_id" class="form-control">
                       <option value="">Select Class</option>
-                      @foreach($classRooms as $classRoom)
+                      {{-- @foreach($classRooms as $classRoom)
                         <option value="{{ $classRoom->id }}" {{ request()->class_room_id == $classRoom->id ? 'selected' : '' }}>{{ $classRoom->class_name }}</option>
-                      @endforeach
+                      @endforeach --}}
                     </select>
                   </div>
                   <div class="col-md-4">
@@ -80,7 +80,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
-                    <th scope="col">Class Name</th>
+                    {{-- <th scope="col">Class Name</th> --}}
                     <th scope="col">Image</th>
                     <th scope="col">Actions</th>
                   </tr>
@@ -92,9 +92,9 @@
                     <td>{{ $student->student_name }}</td>
                     <td>{{ $student->email }}</td>
                     <td>{{ $student->phone }}</td>
-                    <td>{{ $student->classRoom->class_name }}</td>
+                    {{-- <td>{{ $student->classRoom->class_name }}</td> --}}
                     <td>
-                      <img src="{{ FileHelper::get_file_path($student->image, 'user') }}" class="rounded-circle" width="100" height="100">
+                      <img src="{{ FileHelper::get_file_path($student->imageable, 'user') }}" class="rounded-circle" width="100" height="100">
                     </td>
                     <td>
                       <a class="btn btn-warning" href="{{ route('dashboard.admin.students.edit', $student->id) }}">Edit</a>

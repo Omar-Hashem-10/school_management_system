@@ -30,21 +30,23 @@ class ExamQuestionsController extends Controller
     {
         $sideData = $this->getSideData();
 
+        $teacher = Teacher::find(session('teacher_id'));
 
-        $course_level_id = CourseTeacher::where('teacher_id', session('teacher_id'))
-            ->where('class_room_id', session('class_room_id'))
-            ->pluck('course_level_id');
+        $course_code_id = $teacher->courseCodes()
+                                        ->where('teacher_id', session('teacher_id'))
+                                        ->where('class_room_id', session('class_room_id'))
+                                        ->pluck('course_code_id')
+                                        ->first();
 
-
-            if ($course_level_id) {
+            if ($course_code_id) {
                 $questions = Question::where('teacher_id', session('teacher_id'))
-                ->where('course_level_id', $course_level_id)
+                ->where('course_code_id', $course_code_id)
                 ->get();
             } else {
                 $questions = collect();
             }
 
-        return view('web.dashboard.teacher.exam_questions.create', $sideData , compact('course_level_id', 'questions'));
+        return view('web.dashboard.teacher.exam_questions.create', $sideData , compact('course_code_id', 'questions'));
     }
 
     /**
@@ -90,16 +92,19 @@ class ExamQuestionsController extends Controller
      */
     public function edit(string $id)
     {
-        $course_level_id = CourseTeacher::where('teacher_id', session('teacher_id'))
-            ->where('class_room_id', session('class_room_id'))
-            ->pluck('course_level_id');
+        $teacher = Teacher::find(session(key: 'teacher_id'));
 
-        $questions_all = Question::where('teacher_id', session('teacher_id'))->where('course_level_id', $course_level_id)->get();
+            $course_code_id = $teacher->courseCodes()
+                                        ->where('teacher_id', session('teacher_id'))
+                                        ->where('class_room_id', session('class_room_id'))
+                                        ->pluck('course_code_id')
+                                        ->first();
+
+        $questions_all = Question::where('teacher_id', session('teacher_id'))->where('course_code_id', $course_code_id)->get();
 
         $exam = Exam::findOrFail($id);
         $exam_question_ids = $exam->questions->pluck('id')->toArray();
 
-        // هنا نضيف درجات الأسئلة التي تم تضمينها في الامتحان
         $exam_questions = $exam->questions()->withPivot('question_grade')->get();
 
         $questions_not_in_exam = $questions_all->filter(function ($question) use ($exam_question_ids) {

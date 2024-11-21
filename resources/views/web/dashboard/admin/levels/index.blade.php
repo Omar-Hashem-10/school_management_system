@@ -46,7 +46,7 @@
                     @foreach ($levels as $level)
                     <tr>
                         <th scope="row">{{$loop->iteration}}</th>
-                        <td>{{$level->level_name}}</td>
+                        <td>{{$level->name}}</td>
                         <td>{{$level->amount}}</td>
                         <td>{{$level->created_at}}</td>
                         <td>{{$level->updated_at}}</td>

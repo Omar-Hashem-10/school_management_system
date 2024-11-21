@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\CourseCode;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Schedule extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'day',
         'class_room_id',
-        'course_level_id',
+        'course_code_id',
         'time_slot_id',
         'day_id',
     ];
@@ -20,6 +20,11 @@ class Schedule extends Model
     public function classRoom()
     {
         return $this->belongsTo(ClassRoom::class, 'class_room_id', 'id');
+    }
+
+    public function courseCode()
+    {
+        return $this->belongsTo(CourseCode::class, 'course_code_id', 'id');
     }
 
     public function timeSlot()

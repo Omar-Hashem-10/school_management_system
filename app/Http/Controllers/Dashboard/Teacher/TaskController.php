@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard\Teacher;
 
-use App\Models\Feedback;
 use App\Models\Task;
+use App\Models\Teacher;
+use App\Models\Feedback;
 use App\Models\TaskSend;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
@@ -35,12 +36,18 @@ class TaskController extends Controller
     {
         $sideData = $this->getSideData();
 
-        $course_teacher = CourseTeacher::where('teacher_id', session('teacher_id'))
+        $teacher = Teacher::find(session('teacher_id'));
+
+        if ($teacher) {
+            $course_code_id = $teacher->courseCodes()
+                                        ->where('teacher_id', session('teacher_id'))
                                         ->where('class_room_id', session('class_room_id'))
+                                        ->pluck('course_code_id')
                                         ->first();
 
-        if ($course_teacher) {
-            session(['course_level_id' => $course_teacher->course_level_id]);
+            if ($course_code_id) {
+                session()->put('course_code_id', $course_code_id);
+            }
         }
 
         return view('web.dashboard.teacher.tasks.create', $sideData);
@@ -82,15 +89,6 @@ class TaskController extends Controller
     public function edit(Task $task)
     {
         $sideData = $this->getSideData();
-
-        $course_level = CourseTeacher::where('teacher_id', session('teacher_id'))
-        ->where('class_room_id', session('class_room_id'))
-        ->first();
-
-        if ($course_level) {
-        session(['course_level_id' => $course_level->id]);
-        }
-
         return view('web.dashboard.teacher.tasks.edit', $sideData, compact('task'));
     }
 

@@ -3,7 +3,7 @@
 
 namespace App\Traits;
 
-use App\Models\ClassRoom;
+use App\Models\Classroom;
 
 
 trait SideDataTraits

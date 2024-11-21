@@ -21,24 +21,40 @@ class ScheduleRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-    public function rules(): array
+    public function rules()
     {
         return [
             'class_room_id' => 'required|exists:class_rooms,id',
-            'course_level_id' => 'required|exists:course_levels,id',
-            'time_slot_id' => 'required|exists:time_slots,id',
-            'day_id' => 'required|exists:days,id',
+            'course_code_id' => [
+                'required',
+                'exists:course_codes,id',
+            ],
             'day_id' => [
                 'required',
                 'exists:days,id',
+            ],
+            'time_slot_id' => [
+                'required',
+                'exists:time_slots,id',
                 function ($attribute, $value, $fail) {
-                    $count = Schedule::where('day_id', $value)->count();
+                    // التحقق من وجود 'schedule' فقط عند التعديل (إذا كانت موجودة في الـ route)
+                    $schedule = $this->route('schedule');
 
-                    if ($count >= 5) {
-                        $fail('No more than 5 lectures can be added on the same day.');
+                    if ($schedule) {
+                        // إذا كان الكائن موجودًا، يتم التحقق من الوقت المشغول
+                        $scheduleId = $schedule->id;
+                        $isTimeSlotTaken = Schedule::where('day_id', $this->day_id)
+                            ->where('time_slot_id', $value)
+                            ->where('id', '!=', $scheduleId)
+                            ->exists();
+
+                        if ($isTimeSlotTaken) {
+                            $fail('The selected time slot is already taken for this day.');
+                        }
                     }
-                }
-            ]
+                    // إذا لم يكن هناك جدول 'schedule' في الـ route، يتجاوز التحقق
+                },
+            ],
         ];
     }
 

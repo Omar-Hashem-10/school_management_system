@@ -24,9 +24,9 @@
                     @csrf
                     @method('PUT')
                   <div class="col-12">
-                    <label for="class_name" class="form-label">Class Room Name</label>
-                    <input type="text" class="form-control" name="class_name" id="class_name" value="{{old('clas_name', $class_room->class_name)}}">
-                    @error('class_name')
+                    <label for="name" class="form-label">Class Room Name</label>
+                    <input type="text" class="form-control" name="name" id="name" value="{{old('name', $class_room->name)}}">
+                    @error('name')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                   </div>
@@ -36,7 +36,7 @@
                         <option value="">Select Level</option>
                         @foreach($levels as $levelItem)
                             <option value="{{ $levelItem->id }}" {{ $levelItem->id == $class_room->level_id ? 'selected' : '' }}>
-                                {{ $levelItem->level_name }}
+                                {{ $levelItem->name }}
                             </option>
                         @endforeach
                     </select>

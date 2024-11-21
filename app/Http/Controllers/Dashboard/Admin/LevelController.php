@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\Level;
-use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use App\Http\Requests\LevelRequest;
 use App\Http\Controllers\Controller;

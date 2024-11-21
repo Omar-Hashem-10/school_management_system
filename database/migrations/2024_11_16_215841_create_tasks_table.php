@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->decimal('full_grade');
-            $table->foreignId('course_level_id')->constrained('course_levels')->cascadeOnDelete();
+            $table->foreignId('course_code_id')->constrained('course_codes')->cascadeOnDelete();
             $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();
             $table->foreignId('class_room_id')->constrained('class_rooms')->cascadeOnDelete();
             $table->timestamps();

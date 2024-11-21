@@ -34,12 +34,18 @@ class ExamController extends Controller
      */
     public function create()
     {
-        $course_level = CourseTeacher::where('teacher_id', session('teacher_id'))
+        $teacher = Teacher::find(session('teacher_id'));
+
+        if ($teacher) {
+            $course_code_id = $teacher->courseCodes()
+                                        ->where('teacher_id', session('teacher_id'))
                                         ->where('class_room_id', session('class_room_id'))
+                                        ->pluck('course_code_id')
                                         ->first();
 
-        if ($course_level) {
-            session(['course_level_id' => $course_level->id]);
+            if ($course_code_id) {
+                session()->put('course_code_id', $course_code_id);
+            }
         }
 
         $sideData = $this->getSideData();
@@ -99,12 +105,18 @@ class ExamController extends Controller
      */
     public function edit(Exam $exam)
     {
-        $course_level = CourseTeacher::where('teacher_id', session('teacher_id'))
-        ->where('class_room_id', session('class_room_id'))
-        ->first();
+        $teacher = Teacher::find(session('teacher_id'));
 
-        if ($course_level) {
-        session(['course_level_id' => $course_level->id]);
+        if ($teacher) {
+            $course_code_id = $teacher->courseCodes()
+                                        ->where('teacher_id', session('teacher_id'))
+                                        ->where('class_room_id', session('class_room_id'))
+                                        ->pluck('course_code_id')
+                                        ->first();
+
+            if ($course_code_id) {
+                session()->put('course_code_id', $course_code_id);
+            }
         }
 
         $sideData = $this->getSideData();

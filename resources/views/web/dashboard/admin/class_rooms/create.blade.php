@@ -23,9 +23,9 @@
                 <form action="{{route('dashboard.admin.class_rooms.store')}}" method="POST" class="row g-3">
                     @csrf
                   <div class="col-12">
-                    <label for="class_name" class="form-label">Class Room Name</label>
-                    <input type="text" class="form-control" name="class_name" id="class_name" value="{{old('class_name')}}">
-                    @error('class_name')
+                    <label for="name" class="form-label">Class Room Name</label>
+                    <input type="text" class="form-control" name="name" id="class_name" value="{{old('name')}}">
+                    @error('name')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                   </div>
@@ -34,7 +34,7 @@
                     <select class="form-select" name="level_id" id="level_id">
                     <option value="">Select Level</option>
                     @foreach($levels as $level)
-                        <option value="{{ $level->id }}">{{ $level->level_name }}</option>
+                        <option value="{{ $level->id }}">{{ $level->name }}</option>
                     @endforeach
                     </select>
                     @error('level_id')

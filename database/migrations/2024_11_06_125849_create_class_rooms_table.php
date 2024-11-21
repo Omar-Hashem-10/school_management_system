@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('class_rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('class_name');
+            $table->string('name');
             $table->foreignId('level_id')->constrained('levels')->cascadeOnDelete();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
