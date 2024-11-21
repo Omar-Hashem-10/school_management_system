@@ -10,19 +10,17 @@ class Level extends Model
     use HasFactory;
 
     protected $fillable = [
-        'level_name',
+        'name',
         'amount',
     ];
 
-    public function courses()
+    public function subjects()
     {
-        return $this->belongsToMany(Course::class, 'course_levels', 'level_id', 'course_id')
-        ->withPivot('course_code', 'id')
-        ->withTimestamps();
+        return $this->belongsToMany(Subject::class, 'level_subjects', 'level_id', 'subject_id')->withPivot('id');
     }
 
-    public function classrooms()
+    public function classRooms()
     {
-        return $this->hasMany(Classroom::class, 'level_id', 'id');
+        return $this->hasMany(ClassRoom::class, 'level_id', 'id');
     }
 }

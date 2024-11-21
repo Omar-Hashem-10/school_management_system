@@ -46,8 +46,8 @@
                     @foreach ($class_rooms as $class_room)
                     <tr>
                         <th scope="row">{{$loop->iteration}}</th>
-                        <td>{{$class_room->class_name}}</td>
-                        <td>{{$class_room->level->level_name}}</td>
+                        <td>{{$class_room->name}}</td>
+                        <td>{{$class_room->level->name}}</td>
                         <td>{{$class_room->created_at}}</td>
                         <td>{{$class_room->updated_at}}</td>
                         <td>

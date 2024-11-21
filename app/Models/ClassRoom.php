@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class Classroom extends Model
+class ClassRoom extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'class_name',
+        'name',
         'level_id',
     ];
 
@@ -33,11 +33,12 @@ public function schedule()
     {
         return $this->hasOne(Schedule::class, 'classroom_id', 'id');
     }
-
-    public function courseTeachers()
+    public function courseCodes()
     {
-        return $this->hasMany(CourseTeacher::class, 'classroom_id');
+        return $this->belongsToMany(CourseCode::class, 'course_teachers', 'class_room_id', 'course_code_id')
+                    ->withPivot('teacher_id');
     }
+
 
     public function exams()
     {

@@ -34,8 +34,8 @@
             <form action="{{ route('dashboard.teacher.exams.store') }}" method="POST">
             @csrf
 
-            @if(session('course_level_id'))
-                    <input type="hidden" name="course_level_id" value="{{ session('course_level_id') }}">
+            @if(session('course_code_id'))
+                    <input type="hidden" name="course_code_id" value="{{ session('course_code_id') }}">
             @endif
             @if(session('class_room_id'))
                     <input type="hidden" name="class_room_id" value="{{ session('class_room_id') }}">
@@ -45,8 +45,8 @@
             @endif
 
             <div class="form-group mb-3">
-                <label for="exam_name">Exam Name</label>
-                <input type="text" name="exam_name" id="exam_name" class="form-control" placeholder="Enter exam name" required>
+                <label for="name">Exam Name</label>
+                <input type="text" name="name" id="name" class="form-control" placeholder="Enter exam name" required>
             </div>
 
             <div class="form-group mb-3">

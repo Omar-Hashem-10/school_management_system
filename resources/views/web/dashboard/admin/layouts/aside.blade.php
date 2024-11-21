@@ -19,13 +19,18 @@
           </a>
         </li>
         <li>
-          <a href="{{ route('dashboard.admin.courses.index') }}">
-            <i class="bi bi-circle"></i><span>Courses</span>
+          <a href="{{ route('dashboard.admin.subjects.index') }}">
+            <i class="bi bi-circle"></i><span>Subjects</span>
           </a>
         </li>
         <li>
-          <a href="{{ route('dashboard.admin.course_levels.index') }}">
-            <i class="bi bi-circle"></i><span>Course levels</span>
+          <a href="{{ route('dashboard.admin.level_subjects.index') }}">
+            <i class="bi bi-circle"></i><span>Level Subjects</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ route('dashboard.admin.course_codes.index') }}">
+            <i class="bi bi-circle"></i><span>Course Codes</span>
           </a>
         </li>
         <li>
@@ -52,7 +57,7 @@
                   @foreach($classRooms as $classRoom)
                       <li>
                           <a href="{{ route('dashboard.admin.schedules.index', ['class_room_id' => $classRoom->id]) }}">
-                              <i class="bi bi-circle"></i><span>{{ $classRoom->class_name }}</span>
+                              <i class="bi bi-circle"></i><span>{{ $classRoom->name }}</span>
                           </a>
                       </li>
                   @endforeach

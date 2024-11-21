@@ -34,9 +34,9 @@
 
         <form action="{{ route('dashboard.teacher.tasks.update', $task->id) }}" method="POST">
         @csrf
-        @method('PUT') {{-- لتحديد أن الطلب هو تحديث وليس إنشاء جديد --}}
+        @method('PUT')
 
-        <input type="hidden" name="course_level_id" value="{{ $task->course_level_id }}">
+        <input type="hidden" name="course_code_id" value="{{ $task->course_code_id }}">
         <input type="hidden" name="class_room_id" value="{{ $task->class_room_id }}">
         <input type="hidden" name="teacher_id" value="{{ $task->teacher_id }}">
 

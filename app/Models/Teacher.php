@@ -15,10 +15,19 @@ class Teacher extends Model
         'user_id',
         'role_id',
     ];
-    public function course()
+
+    public function subject()
     {
-        return $this->belongsTo(Course::class, 'course_id', 'id');
+        return $this->belongsTo(Subject::class, 'subject_id', 'id');
     }
+
+    public function courseCodes()
+    {
+        return $this->belongsToMany(CourseCode::class, 'course_teachers', 'teacher_id', 'course_code_id')
+                    ->withPivot('class_room_id', 'id');
+    }
+
+
     public function role()
     {
         return $this->belongsTo(Role::class);
@@ -49,11 +58,6 @@ class Teacher extends Model
     public function salaries()
     {
         return $this->morphMany(Salary::class, 'person');
-    }
-
-    public function courseTeachers()
-    {
-        return $this->hasMany(CourseTeacher::class, 'teacher_id');
     }
     public function calculateMonthlySalary($month, $year)
     {

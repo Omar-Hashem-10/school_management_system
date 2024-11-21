@@ -24,6 +24,10 @@ class AdminRequest extends FormRequest
     public function rules()
     {
         return [
+            'admin_name'          => 'required|string|max:255',
+            'email'               => 'required|email',
+            'phone'               => 'nullable|string',
+            'image'               => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'user_id'             => 'nullable|integer|exists:users,id',
             'role_id'             => 'required|integer|exists:roles,id',
             'password'            => 'required|min:8',

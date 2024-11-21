@@ -21,12 +21,12 @@ class QuestionController extends Controller
 
         $sideData = $this->getSideData();
 
-        $course_level_id = $request->query('course_level_id');
+        $course_code_id = $request->query('course_code_id');
 
-        if (!empty($course_level_id)) {
-            session(['course_level_id' => $course_level_id]);
+        if (!empty($course_code_id)) {
+            session(['course_code_id' => $course_code_id]);
         }
-        $questions = Question::where('course_level_id', session('course_level_id'))->paginate(5);
+        $questions = Question::where('course_code_id', session('course_code_id'))->paginate(5);
         return view('web.dashboard.teacher.questions.index', $sideData , compact('questions'));
     }
 

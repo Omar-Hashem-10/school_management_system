@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('exam_date');
             $table->integer('exam_duration');
             $table->decimal('half_grade', 5, 2)->nullable();
-            $table->foreignId('course_id')->constrained('courses')->cascadeOnDelete();
+            $table->foreignId('course_code_id')->constrained('course_codes')->cascadeOnDelete();
             $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();
             $table->timestamps();
         });

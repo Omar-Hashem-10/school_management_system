@@ -43,7 +43,9 @@ class StudentController extends Controller
         } else {
             $query->orderBy('id', 'desc');
         }
+
         $students = $query->paginate(10);
+
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.students.index', $sideData, compact('students'));
     }

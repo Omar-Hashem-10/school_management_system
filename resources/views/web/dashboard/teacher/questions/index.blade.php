@@ -23,11 +23,6 @@
             <div class="card-header border-transparent">
                 <a href="{{ route('dashboard.teacher.mcq') }}" class="btn btn-sm btn-success float-left ml-2">Create MCQ Question</a>
                 <a href="{{ route('dashboard.teacher.true_false') }}" class="btn btn-sm btn-warning float-left ml-2">Create True/False Question</a>
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                </div>
             </div>
 
             <div class="card-body">

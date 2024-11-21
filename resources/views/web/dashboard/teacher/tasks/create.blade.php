@@ -35,8 +35,8 @@
         <form action="{{ route('dashboard.teacher.tasks.store') }}" method="POST">
         @csrf
 
-        @if(session('course_level_id'))
-                <input type="hidden" name="course_level_id" value="{{ session('course_level_id') }}">
+        @if(session('course_code_id'))
+                <input type="hidden" name="course_code_id" value="{{ session('course_code_id') }}">
         @endif
         @if(session('class_room_id'))
                 <input type="hidden" name="class_room_id" value="{{ session('class_room_id') }}">

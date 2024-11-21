@@ -1,5 +1,5 @@
-@if (session('errors'))
+@if (session('error'))
 <script>
-    toastr.error("{{ session('errors') }}");
+    toastr.error("{{ session('error') }}");
 </script>
 @endif

@@ -22,10 +22,11 @@ class TimeSlotRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'lecture_number' => 'required|string',
-            'start_time' => 'required|date_format:H:i',
-            'end_time' => 'required|date_format:H:i|after:start_time',
+            'lecture_number' => 'required|string|unique:time_slots,lecture_number',
+            'start_time' => 'required|date_format:H:i|unique:time_slots,start_time',
+            'end_time' => 'required|date_format:H:i|after:start_time|unique:time_slots,end_time',
         ];
     }
+
 
 }

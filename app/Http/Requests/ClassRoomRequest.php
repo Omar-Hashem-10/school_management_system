@@ -22,7 +22,7 @@ class ClassRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'class_name' => 'required|string',
+            'name' => 'required|string',
             'level_id' => 'required|exists:levels,id',
         ];
     }

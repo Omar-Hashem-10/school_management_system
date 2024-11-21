@@ -26,7 +26,7 @@ class TaskRequest extends FormRequest
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'full_grade' => 'required|numeric|min:0',
-            'course_level_id' => 'required|exists:course_levels,id',
+            'course_code_id' => 'required|exists:course_codes,id',
             'teacher_id' => 'required|exists:teachers,id',
             'class_room_id' => 'required|exists:class_rooms,id',
         ];
