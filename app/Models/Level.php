@@ -21,8 +21,8 @@ class Level extends Model
         ->withTimestamps();
     }
 
-    public function classRooms()
+    public function classrooms()
     {
-        return $this->hasMany(ClassRoom::class, 'level_id', 'id');
+        return $this->hasMany(Classroom::class, 'level_id', 'id');
     }
 }

@@ -19,15 +19,10 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-
         <div class="card">
           <div class="card-header border-transparent">
-            <a href="{{ route('dashboard.admin.salaries.amounts',$date->id) }}" class="btn btn-sm btn-info float-left">All Amounts</a>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-            </div>
+            <a href="{{ route('dashboard.admin.salaries.amounts',$date->id) }}"
+              class="btn btn-sm btn-info float-left">All Amounts</a>
           </div>
           <div class="card-body">
             <!-- Table with stripped rows -->
@@ -49,14 +44,12 @@
                 @foreach($persons as $person)
                 <tr>
                   <th scope="row">{{ $loop->iteration }}</th>
+                  <td>{{ ($person->fullName()) }}</td>
                   @if($person->role['role_name']=='admin')
-                  <td>{{ ($person->admin_name) }}</td>
                   <td><span class="badge bg-danger">{{ $person->role['role_name'] }}</span></td>
                   @elseif ($person->role['role_name']=='manager')
-                  <td>{{ $person->admin_name }}</td>
                   <td><span class="badge bg-warning">{{ $person->role['role_name'] }}</span></td>
                   @elseif ($person->role['role_name']=='teacher')
-                  <td>{{ $person->teacher_name }}</td>
                   <td><span class="badge bg-success">teacher</span></td>
                   @else
                   <td>{{ $person->employee_name }}</td>
@@ -66,7 +59,8 @@
                   <td>{{ $person->amounts($date->month, $date->year) }}</td>
                   <td>{{ $person->calculateMonthlySalary($date->month, $date->year) }}</td>
                   <td>
-                    <a class="btn btn-warning" href="{{route('dashboard.admin.salaries.create',[$date->id,$person->id])}}">add amount</a>
+                    <a class="btn btn-warning"
+                      href="{{route('dashboard.admin.salaries.create',[$date->id,$person->id])}}">add amount</a>
                   </td>
                 </tr>
                 @endforeach

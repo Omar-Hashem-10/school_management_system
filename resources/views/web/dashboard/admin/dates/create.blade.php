@@ -10,7 +10,7 @@
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
             <li class="breadcrumb-item ">Users</li>
-            <li class="breadcrumb-item "><a href="{{ redirect()->back() }}">@yield('title')</a></li>
+            <li class="breadcrumb-item "><a href="{{route('dashboard.admin.salaries.show.dates')}}">@yield('title')</a></li>
             <li class="breadcrumb-item active">Create</li>
           </ol>
         </nav>
@@ -19,7 +19,7 @@
       <div class="card-header">
         <h3 class="card-title">Create date </h3>
       </div>
-      <form action="{{route('dashboard.admin.dates.store')}}" method="POST" enctype="multipart/form-data">
+      <form action="{{route('dashboard.admin.dates.store',$bage)}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
           <div class="form-group">

@@ -21,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role_id',
         'password',
         'role_id',
     ];
@@ -65,11 +66,36 @@ public function role()
 {
     return $this->belongsTo(Role::class, 'role_id', 'id');
 }
-
-public function setPasswordAttribute($value)
-{
-    if (!empty($value)) {
-        $this->attributes['password'] = Hash::make($value);
-    }
+public function fullName(){
+    return ucwords($this->first_name." ".$this->last_name);
+} 
+public function image(){
+    return $this->morphOne(Image::class, 'imageable');
 }
+public function salaries()
+{
+    return $this->morphMany(Salary::class, 'person');
+}
+public function amounts($month, $year)
+    {
+        $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
+
+        $adjustments = $date
+            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
+            : 0;
+
+        return $adjustments;
+    }
+    public function calculateMonthlySalary($month, $year)
+    {
+        $baseSalary = $this->role->base_salary;
+
+        $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
+
+        $adjustments = $date
+            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
+            : 0;
+
+        return $baseSalary + $adjustments;
+    }
 }
