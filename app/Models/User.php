@@ -58,6 +58,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Admin::class);
     }
+    public function guardian()
+    {
+        return $this->hasOne(Guardian::class);
+    }
     public function role()
     {
         return $this->belongsTo(Role::class);
@@ -73,6 +77,10 @@ class User extends Authenticatable
     public function salaries()
     {
         return $this->morphMany(Salary::class, 'person');
+    }
+    public function attends()
+    {
+        return $this->morphMany(Attend::class, 'attendable');
     }
     public function amounts($month, $year)
     {

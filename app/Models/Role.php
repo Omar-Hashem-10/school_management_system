@@ -12,7 +12,6 @@ class Role extends Model
     protected $fillable = [
         'role_name',
         'for',
-        'base_salary'
     ];
 
     public function users()
@@ -30,5 +29,9 @@ class Role extends Model
     public function employees()
     {
         return $this->hasMany(Employee::class);
+    }
+    public function guardians()
+    {
+        return $this->hasMany(Guardian::class);
     }
 }

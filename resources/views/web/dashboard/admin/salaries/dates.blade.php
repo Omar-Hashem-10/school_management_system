@@ -22,7 +22,7 @@
 
         <div class="card">
           <div class="card-header border-transparent">
-            <a href="{{ route('dashboard.admin.dates.create','salary') }}" class="btn btn-sm btn-info float-left">Place New
+            <a href="{{ route('dashboard.admin.dates.create') }}" class="btn btn-sm btn-info float-left">Place New
               Date</a>
           </div>
           <div class="card-body">
@@ -43,7 +43,16 @@
                   <td>{{ ($date->month)." - ".$date->year }}</td>
                   <td>
                     <a class="btn btn-warning" href="{{route('dashboard.admin.dates.edit',$date->id)}}">Edit</a>
-                    <a class="btn btn-primary d-inline" href="{{route('dashboard.admin.salaries.index',$date->id)}}">View</a>
+                    <a class="btn btn-primary d-inline"
+                      href="{{route('dashboard.admin.salaries.index',$date->id)}}">View</a>
+                    <div class="btn-group" role="group">
+                      <form class="d-inline" action="{{route('dashboard.admin.dates.destroy',$date->id)}}"
+                        method="post">
+                        @csrf
+                        @method('delete')
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                      </form>
+                    </div>
                   </td>
                 </tr>
                 @endforeach

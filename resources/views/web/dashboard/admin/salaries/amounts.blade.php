@@ -12,7 +12,8 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
         <li class="breadcrumb-item active">Users</li>
-        <li class="breadcrumb-item "><a href="{{ route('dashboard.admin.salaries.index',$date->id) }}">@yield('title')</a></li>
+        <li class="breadcrumb-item "><a
+            href="{{ route('dashboard.admin.salaries.index',$date->id) }}">@yield('title')</a></li>
       </ol>
     </nav>
   </div>
@@ -22,7 +23,8 @@
 
         <div class="card">
           <div class="card-header border-transparent">
-            <a href="{{ route('dashboard.admin.salaries.create',[$date->id,0]) }}" class="btn btn-sm btn-info float-left">Place New
+            <a href="{{ route('dashboard.admin.salaries.create',[$date->id,0,' ']) }}"
+              class="btn btn-sm btn-info float-left">Place New
               Amount</a>
           </div>
           <div class="card-body">
@@ -43,16 +45,19 @@
                 @foreach ($salaries as $salary )
                 <tr>
                   <th scope="row">{{ $loop->iteration }}</th>
-                  <td>{{ $salary->person->fullName() }}</td>
-                  @if($salary->person->role->role_name=='admin')
-                  <td><span class="badge bg-danger">{{ $salary->person->role->role_name }}</span></td>
-                  @elseif ($salary->person->role->role_name=='manager')
-                  <td><span class="badge bg-warning">{{ $salary->person->role->role_name }}</span></td>
-                  @elseif ($salary->person->role->role_name=='teacher')
-                  <td><span class="badge bg-success">teacher</span></td>
+                  @if ($salary->person_type=='App\Models\Employee')
+                  <td>{{ ($salary->person->name) }}</td>
+                  <td><span class="badge bg-primary">{{ $salary->person->possition }}</span></td>
+
                   @else
-                  <td>{{ $salary->person->employee_name }}</td>
-                  <td><span class="badge bg-primary">{{ $salary->person->role->role_name }}</span></td>
+                  <td>{{ ($salary->person->fullName()) }}</td>
+                  @if($salary->person->role['role_name']=='admin')
+                  <td><span class="badge bg-danger">{{ $salary->person->role['role_name'] }}</span></td>
+                  @elseif ($salary->person->role['role_name']=='manager')
+                  <td><span class="badge bg-warning">{{ $salary->person->role['role_name'] }}</span></td>
+                  @elseif ($salary->person->role['role_name']=='teacher')
+                  <td><span class="badge bg-success">teacher</span></td>
+                  @endif
                   @endif
                   <td>{{ $salary->amount }}</td>
                   <td>{{ $salary->created_at }}</td>

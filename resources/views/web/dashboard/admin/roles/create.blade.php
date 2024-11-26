@@ -46,6 +46,7 @@
               <option value="admins" >Admins</option>
               <option value="teachers" >Teachers</option>
               <option value="students" >Students</option>
+              <option value="parents" >Parents</option>
             </select>
             @error('for')
             <span class="text-danger">{{$message}}</span>

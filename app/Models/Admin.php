@@ -12,6 +12,7 @@ class Admin extends Model
     protected $fillable = [
         'role_id',
         'user_id',
+        'salary',
     ];
     public function user()
     {
@@ -27,12 +28,12 @@ class Admin extends Model
     }
     public function calculateMonthlySalary($month, $year)
     {
-        $baseSalary = $this->role->base_salary;
+        $baseSalary = $this->salary;
 
         $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
 
         $adjustments = $date
-            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
+            ? $this->user->salaries()->where('date_id', $date->id)->sum('amount')
             : 0;
 
         return $baseSalary + $adjustments;

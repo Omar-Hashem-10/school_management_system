@@ -1,6 +1,5 @@
 @extends('web.dashboard.master')
 @section('title','Salaries')
-
 @section('content')
 <main id="main" class="main">
     <div class="pagetitle">
@@ -9,7 +8,8 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
                 <li class="breadcrumb-item ">Users</li>
-                <li class="breadcrumb-item "><a href="{{route('dashboard.admin.salaries.index',$date->id)}}">@yield('title')</a>
+                <li class="breadcrumb-item "><a
+                        href="{{route('dashboard.admin.salaries.index',$date->id)}}">@yield('title')</a>
                 </li>
                 <li class="breadcrumb-item active">Create</li>
             </ol>
@@ -25,16 +25,26 @@
                 <div class="form-group">
                     <label for="person_id">Person</label>
                     <select class="form-select form-control" aria-label="Default select example" name="person_id"
-                    value="{{ old('person_id') }}">
+                        value="{{ old('person_id') }}">
                         @if ($user)
+                        @if($user['type']!='Employee')
                         <option value="{{ $user['type'] }}-{{ $user->id  }}">{{ $user->fullName() }}</option>
-                            @else
+                        @else 
+                        <option value="{{ $user['type'] }}-{{ $user->id  }}">{{ $user->name }}</option>
+                        @endif
+                        @else
                         <option value="">Select Person</option>
                         @endif
                         @if (!$user)
                         @foreach($people as $type => $persons)
                         @foreach($persons as $person)
-                        <option value="{{ $type }}-{{ $person->id }}">{{ $person->fullName() }}</option>
+                        @if ($type=='Employee')
+                        <?php $personType='Employee' ?>
+                        <option value="{{ $type }}-{{ $person->id  }}">{{ $person->name }}</option>
+                        @else
+                        <?php $personType='User' ?>
+                        <option value="{{ $type }}-{{ $person->id  }}">{{ $person->fullName() }}</option>
+                        @endif 
                         @endforeach
                         @endforeach
                         @endif
@@ -55,7 +65,7 @@
                     <select class="form-select form-control" aria-label="Default select example" name="date_id">
                         <option value="{{ $date->id }}">{{ $date->month ." - ".$date->year }}</option>
                     </select>
-                    </div>
+                </div>
                 @error('date_id')
                 <span class="text-danger">{{$message}}</span>
                 @enderror

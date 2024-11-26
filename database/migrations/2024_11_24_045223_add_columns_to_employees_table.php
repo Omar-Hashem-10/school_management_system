@@ -12,7 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
+            $table->enum('gender', ['male', 'female']);
+            $table->string('phone')->nullable();
+            $table->string('email')->unique();
         });
     }
 
@@ -22,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->dropForeign('employees_role_id_foreign');
+            //
         });
     }
 };

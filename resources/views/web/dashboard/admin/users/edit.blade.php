@@ -72,10 +72,10 @@
                         onchange="handleTypeChange()">
                         <option value="{{$user->type}}" selected>{{ucwords($user->type)}}</option>
                         @foreach ($types as $type)
-                        <option value="{{ $type }}" {{ old('type') == $type ? 'selected' : '' }}>
+                        <option value="{{ $type }}" {{ old('type')==$type ? 'selected' : '' }}>
                             {{ \App\Enums\UserTypesEnum::from($type)->label() }}
                         </option>
-                    @endforeach
+                        @endforeach
                     </select>
                     @error('type')
                     <span class="text-danger">{{$message}}</span>
@@ -107,6 +107,12 @@
                 </div>
 
                 <div class="form-group" id="teacher-inputs" style="display: none;">
+                    <label for="salary">salary</label>
+                    <input type="number" name="salary" class="form-control" id="salary" placeholder="Enter salary"
+                        value="{{$teacher->salary}}">
+                    @error('salary')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
                     <label for="teacher_subject">Subject</label>
                     <select class="form-select form-control" aria-label="Default select example" name="subject_id">
                         @if ($teacher)
@@ -134,7 +140,12 @@
                 </div>
 
                 <div class="form-group" id="admin-inputs" style="display: none;">
-                    
+                    <label for="salary">salary</label>
+                    <input type="number" name="salary" class="form-control" id="salary" placeholder="Enter salary"
+                        value="{{$teacher->salary}}">
+                    @error('salary')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="exampleInputFile">Image</label>
