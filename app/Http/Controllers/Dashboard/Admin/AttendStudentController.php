@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Models\Attendance;
+use App\Models\Date;
 use App\Models\Student;
+use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Models\AttendStudent;
 use App\Traits\SideDataTraits;
 use App\Models\AttendanceStudent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AttendanceStudentRequest;
+use App\Models\ClassRoom;
 
 class AttendStudentController extends Controller
 {
@@ -17,9 +19,12 @@ class AttendStudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Date $date,ClassRoom $class_room)
     {
-        //
+        // dd($date,$class_room);
+        $sideData = $this->getSideData();
+        $students = Student::where('class_room_id',$class_room->id)->orderBy('id','DESC')->paginate(10);
+        return view('web.dashboard.admin.attend_students.index',$sideData,compact('students','date','class_room'));
     }
 
     /**
@@ -27,9 +32,7 @@ class AttendStudentController extends Controller
      */
     public function create()
     {
-        $sideData = $this->getSideData();
-        $students = Student::where('class_room_id', session('class_room_id'))->get();
-        return view('web.dashboard.admin.attend_students.create', $sideData, compact('students'));
+      
     }
 
     /**
@@ -37,21 +40,7 @@ class AttendStudentController extends Controller
      */
     public function store(AttendanceStudentRequest $request)
     {
-        $attendanceData = $request->input('status');
-        $attendance_id = $request->input('attendance_id');
-        $class_room_id = $request->input('class_room_id');
-
-        foreach ($attendanceData as $student_id => $status) {
-            AttendanceStudent::create([
-                'attendance_id' => $attendance_id,
-                'class_room_id' => $class_room_id,
-                'student_id' => $student_id,
-                'status' => $status,
-            ]);
-        }
-
-        return redirect()->route('dashboard.admin.attends.index')
-                         ->with('success', 'Attendance successfully created.');
+        
     }
 
 
@@ -60,45 +49,26 @@ class AttendStudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($classRoom)
     {
-        //
+        session()->put('previous_url', url()->current());
+        $dates = Date::where('day', '!=',null)->get();
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.attend_students.dates', $sideData, compact('dates','classRoom'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
     {
-        $attendance = Attendance::findOrFail($id);
-        $sideData = $this->getSideData();
-        $attendance_students = AttendanceStudent::where('attendance_id', $attendance->id)->get();
-        return view('web.dashboard.admin.attend_students.edit', $sideData, compact('attendance_students', 'attendance'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AttendanceStudentRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $attendance = Attendance::findOrFail($id);
-
-        $statuses = $request->input('status');
-
-        if ($statuses) {
-            foreach ($statuses as $studentId => $status) {
-                $attendanceStudent = AttendanceStudent::where('attendance_id', $attendance->id)
-                                                        ->where('student_id', $studentId)
-                                                        ->first();
-
-                if ($attendanceStudent) {
-                    $attendanceStudent->status = $status;
-                    $attendanceStudent->save();
-                }
-            }
-        }
-
-        return redirect()->route('dashboard.admin.attends.index')->with('success', 'updated Attendance Students successfully');
+        
     }
 
     /**

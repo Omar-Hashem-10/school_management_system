@@ -18,8 +18,8 @@ class Date extends Model
     {
         return $this->hasMany(Salary::class);
     }
-    public function attendances()
+    public function attends()
     {
-        return $this->hasMany(Attendance::class);
+        return $this->hasMany(Attend::class);
     }
 }

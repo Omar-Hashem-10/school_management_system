@@ -17,27 +17,41 @@ use App\Http\Controllers\Dashboard\Admin\SalaryController;
 use App\Http\Controllers\Dashboard\Admin\StudentController;
 use App\Http\Controllers\Dashboard\Admin\SubjectController;
 use App\Http\Controllers\Dashboard\Admin\TeacherController;
+use App\Http\Controllers\Dashboard\Admin\EmployeeController;
+use App\Http\Controllers\Dashboard\Admin\GuardianController;
 use App\Http\Controllers\Dashboard\Admin\TimeSlotController;
 use App\Http\Controllers\Dashboard\Admin\ClassRoomController;
 use App\Http\Controllers\Dashboard\Admin\CourseCodeController;
+use App\Http\Controllers\Dashboard\Admin\AttendAdminController;
 use App\Http\Controllers\Dashboard\Admin\LevelSubjectController;
 use App\Http\Controllers\Dashboard\Admin\AttendStudentController;
+use App\Http\Controllers\Dashboard\Admin\AttendTeacherController;
 use App\Http\Controllers\Dashboard\Admin\CourseTeacherController;
+use App\Http\Controllers\Dashboard\Admin\AttendEmployeeController;
 
 Route::prefix('admin')->as('admin.')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::get('/home', HomeController::class)->name('home.index');
         Route::resource('/admins', AdminController::class);
         Route::resource('/teachers', TeacherController::class);
+        Route::resource('/guardians', GuardianController::class);
         Route::resource('/students', StudentController::class);
+        Route::resource('/employees', EmployeeController::class);
         Route::resource('/users', UserController::class);
         Route::resource('/roles', RoleController::class);
-        Route::resource('/attends', AttendController::class);
 
-        Route::get('/attends/{id}/{status?}', [AttendController::class, 'show'])->name('attends.show');
+        
+        Route::get('/attends/{date}/{person}/{type}/{status}', [AttendController::class, 'store'])->name('attends.store');
+        Route::get('/attends', [AttendController::class, 'index'])->name('attends.index');
 
-
-        Route::resource('/attend_students', AttendStudentController::class);
+        Route::get('/attend_students/{date}/{class_room}', [AttendStudentController::class,'index'])->name('attend_students.index');
+        Route::get('/attend_students/{class_room}', [AttendStudentController::class,'show'])->name('attend_students.show');
+        Route::get('/attend_admins/{date}', [AttendAdminController::class,'index'])->name('attend_admins.index');
+        Route::get('/attend_admins', [AttendAdminController::class,'show'])->name('attend_admins.show');
+        Route::get('/attend_teachers/{date}', [AttendTeacherController::class,'index'])->name('attend_teachers.index');
+        Route::get('/attend_teachers', [AttendTeacherController::class,'show'])->name('attend_teachers.show');
+        Route::get('/attend_employees/{date}', [AttendEmployeeController::class,'index'])->name('attend_employees.index');
+        Route::get('/attend_employees', [AttendEmployeeController::class,'show'])->name('attend_employees.show');
 
         // Route subjects
         Route::resource('/subjects', SubjectController::class);
@@ -62,7 +76,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         Route::get('/salaries/dates',[SalaryController::class, 'showDates'])->name('salaries.show.dates');
         Route::post('/salaries',[SalaryController::class, 'store'])->name('salaries.store');
-        Route::get('/salaries/create/{date}/{person}',[SalaryController::class, 'create'])->name('salaries.create');
+        Route::get('/salaries/create/{date}/{person}/{type}',[SalaryController::class, 'create'])->name('salaries.create');
         Route::get('/salaries/{salary}/edit',[SalaryController::class, 'edit'])->name('salaries.edit');
         Route::patch('/salaries/{salary}',[SalaryController::class, 'update'])->name('salaries.update');
         Route::delete('/salaries/{salary}/destroy',[SalaryController::class, 'destroy'])->name('salaries.destroy');
@@ -71,9 +85,10 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         Route::get('/dates/{date}/edit',[DateController::class, 'edit'])->name('dates.edit');
         Route::get('/dates',[DateController::class, 'index'])->name('dates.index');
-        Route::get('/dates/create/{bage}',[DateController::class, 'create'])->name('dates.create');
+        Route::get('/dates/create',[DateController::class, 'create'])->name('dates.create');
         Route::patch('/dates/{date}',[DateController::class, 'update'])->name('dates.update');
-        Route::post('/dates/{bage}',[DateController::class, 'store'])->name('dates.store');
+        Route::post('/dates',[DateController::class, 'store'])->name('dates.store');
+        Route::delete('/dates/{date}',[DateController::class, 'destroy'])->name('dates.destroy');
 
         Route::get('course-teachers/{teacher_id}', [CourseTeacherController::class, 'index'])->name('course_teachers.index');
 

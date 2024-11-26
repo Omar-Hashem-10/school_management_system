@@ -14,6 +14,7 @@ class Teacher extends Model
         'subject_id',
         'user_id',
         'role_id',
+        'salary'
     ];
 
     public function subject()
@@ -61,14 +62,13 @@ class Teacher extends Model
     }
     public function calculateMonthlySalary($month, $year)
     {
-        $baseSalary = $this->role->base_salary;
+        $baseSalary = $this->salary;
 
         $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
 
         $adjustments = $date
-            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
+            ? $this->user->salaries()->where('date_id', $date->id)->sum('amount')
             : 0;
-
         return $baseSalary + $adjustments;
     }
     public function amounts($month, $year)
@@ -76,7 +76,7 @@ class Teacher extends Model
         $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
 
         $adjustments = $date
-            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
+            ? $this->user->salaries()->where('date_id', $date->id)->sum('amount')
             : 0;
 
         return $adjustments;

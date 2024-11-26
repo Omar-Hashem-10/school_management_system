@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
+use App\Models\Date;
 use App\Models\Admin;
 use App\Models\Student;
 use App\Models\ClassRoom;
@@ -11,6 +12,7 @@ use App\Traits\SideDataTraits;
 use App\Models\AttendanceStudent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AttendRequest;
+use App\Models\Attend;
 
 class  AttendController extends Controller
 {
@@ -20,17 +22,17 @@ class  AttendController extends Controller
      */
     public function index(Request $request)
     {
-        $sideData = $this->getSideData();
+        // $sideData = $this->getSideData();
 
-        $class_room_id = $request->query('class_room_id');
+        // $class_room_id = $request->query('class_room_id');
 
-        if ($class_room_id) {
-            session()->put('class_room_id', $class_room_id);
-        }
+        // if ($class_room_id) {
+        //     session()->put('class_room_id', $class_room_id);
+        // }
 
-        $attendances = Attendance::where('class_room_id', session('class_room_id'))->get();
+        // $attendances = Attendance::where('class_room_id', session('class_room_id'))->get();
 
-        return view('web.dashboard.admin.attends.index', $sideData,  compact('attendances'));
+        // return view('web.dashboard.admin.attends.index', $sideData,  compact('attendances'));
     }
 
 
@@ -39,8 +41,8 @@ class  AttendController extends Controller
      */
     public function create()
     {
-        $sideData = $this->getSideData();
-        return view('web.dashboard.admin.attends.create', $sideData);
+        // $sideData = $this->getSideData();
+        // return view('web.dashboard.admin.attends.create', $sideData);
     }
 
 
@@ -48,11 +50,22 @@ class  AttendController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AttendRequest $request)
-    {
-        $attendance = Attendance::create($request->validated());
-        session()->put('attendance_id', $attendance->id);
-        return redirect()->route('dashboard.admin.attend_students.create')->with('success','Created Attendance Successfully!');
+    public function store(Date $date,$person,$type,$status)
+    {      
+        $data=[
+            'attendable_id'=>$person,
+            'attendable_type'=>$type,
+            'date_id'=>$date->id,
+            'status'=>$status,
+            'created_at'=>now(),
+            'updated_at'=>now(),
+        ];
+        $attend=Attend::where('date_id',$date->id)->where('attendable_id',$person)->first();
+        if($attend){
+            $attend->delete();
+        }
+        Attend::create($data);
+        return redirect()->back();
     }
 
     /**
@@ -61,18 +74,18 @@ class  AttendController extends Controller
     public function show($id, $status = null)
     {
 
-        $attendance = Attendance::findOrFail($id);
-        $sideData = $this->getSideData();
+        // $attendance = Attendance::findOrFail($id);
+        // $sideData = $this->getSideData();
 
-        $attendancesQuery = AttendanceStudent::where('attendance_id', $attendance->id);
+        // $attendancesQuery = AttendanceStudent::where('attendance_id', $attendance->id);
 
-        if ($status) {
-            $attendancesQuery->where('status', $status);
-        }
+        // if ($status) {
+        //     $attendancesQuery->where('status', $status);
+        // }
 
-        $attendances = $attendancesQuery->get();
+        // $attendances = $attendancesQuery->get();
 
-        return view('web.dashboard.admin.attends.show', $sideData, compact('attendance', 'attendances', 'status'));
+        // return view('web.dashboard.admin.attends.show', $sideData, compact('attendance', 'attendances', 'status'));
     }
 
 
@@ -81,9 +94,9 @@ class  AttendController extends Controller
      */
     public function edit($id)
     {
-        $attendance = Attendance::findOrFail($id);
-        $sideData = $this->getSideData();
-        return view('web.dashboard.admin.attends.edit', $sideData, compact('attendance'));
+        // $attendance = Attendance::findOrFail($id);
+        // $sideData = $this->getSideData();
+        // return view('web.dashboard.admin.attends.edit', $sideData, compact('attendance'));
 
     }
 
@@ -92,10 +105,10 @@ class  AttendController extends Controller
      */
     public function update(AttendRequest $request, $id)
     {
-        $attendance = Attendance::findOrFail($id);
+        // $attendance = Attendance::findOrFail($id);
 
-        $attendance->update($request->validated());
-        return redirect()->route('dashboard.admin.attends.index')->with('success','Updated Attendance Date Successfully!');
+        // $attendance->update($request->validated());
+        // return redirect()->route('dashboard.admin.attends.index')->with('success','Updated Attendance Date Successfully!');
     }
 
     /**
@@ -103,10 +116,10 @@ class  AttendController extends Controller
      */
     public function destroy($id)
     {
-        $attendance = Attendance::findOrFail($id);
+        // $attendance = Attendance::findOrFail($id);
 
-        $attendance->delete();
+        // $attendance->delete();
 
-        return redirect()->route('dashboard.admin.attends.index')->with('success', 'Deleted Attendance Successfully!');
+        // return redirect()->route('dashboard.admin.attends.index')->with('success', 'Deleted Attendance Successfully!');
     }
 }

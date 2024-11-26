@@ -1,6 +1,5 @@
 @extends('web.dashboard.master')
-
-@section('title','Admins')
+@section('title','Admin')
 
 @section('content')
 <main id="main" class="main">
@@ -23,20 +22,28 @@
         <form action="{{route('dashboard.admin.admins.update',$admin->id)}}" method="POST"
             enctype="multipart/form-data">
             @csrf
-            @method('PATCH')
+            @method("PATCH")
             <div class="card-body">
                 <div class="form-group">
-                    <label for="admin_name">Name</label>
-                    <input type="text" name="admin_name" class="form-control" id="name" placeholder="Enter Name"
-                        value="{{$admin->admin_name}}">
-                    @error('admin_name')
+                    <label for="first_name">First Name</label>
+                    <input type="text" name="first_name" class="form-control" id="first_name"
+                        placeholder="Enter First Name" value="{{$admin->user->first_name}}">
+                    @error('first_name')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name</label>
+                    <input type="text" name="last_name" class="form-control" id="last_name"
+                        placeholder="Enter Last Name" value="{{$admin->user->last_name}}">
+                    @error('last_name')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email"
-                        value="{{$admin->email}}">
+                        value="{{$admin->user->email}}">
                     @error('email')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
@@ -44,8 +51,48 @@
                 <div class="form-group">
                     <label for="phone">Phone</label>
                     <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter Phone"
-                        value="{{$admin->phone}}">
+                        value="{{$admin->user->phone}}">
                     @error('phone')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select class="form-select form-control" aria-label="Default select example" name="gender">
+                        <option value="{{$admin->user->gender}}" selected>{{$admin->user->gender}}</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    @error('gender')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="salary">salary</label>
+                    <input type="number" name="salary" class="form-control" id="salary" placeholder="Enter salary"
+                        value="{{$admin->salary}}">
+                    @error('salary')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="role_id">Role</label>
+                    <select class="form-select form-control" aria-label="Default select example" name="role_id">
+                        <option value="{{ $admin->role_id }}" selected>{{ $admin->role->role_name }}</option>
+                        @foreach ($roles as $role)
+                        <option value="{{ $role->id }}">{{ $role->role_name }}</option>
+                        @endforeach
+                    </select>
+                    @error('role_id')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="type">Select Type</label>
+                    <select class="form-select form-control" aria-label="Default select example" id="type" name="type">
+                        <option value="admin" selected>Admin</option>
+                    </select>
+                    @error('type')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
@@ -54,18 +101,6 @@
                     <input type="password" name="password" class="form-control" id="password"
                         placeholder="Enter Password" value="{{$admin->user->password}}">
                     @error('password')
-                    <span class="text-danger">{{$message}}</span>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="role_id">Role</label>
-                    <select class="form-select form-control" aria-label="Default select example" name="role_id">
-                        <option value="{{$admin->role->id}}" selected>{{$admin->role->role_name}}</option>
-                        @foreach ($roles as $role)
-                        <option value="{{ $role->id }}">{{ $role->role_name }}</option>
-                        @endforeach
-                    </select>
-                    @error('role_id')
                     <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>

@@ -22,7 +22,7 @@
 
         <div class="card">
           <div class="card-header border-transparent">
-            <a href="{{ route('dashboard.admin.users.create') }}" class="btn btn-sm btn-info float-left">Place New
+            <a href="{{ route('dashboard.admin.admins.create') }}" class="btn btn-sm btn-info float-left">Place New
               admin</a>
           </div>
           <div class="card-body">
@@ -37,6 +37,7 @@
                   <th scope="col">Phone</th>
                   <th scope="col">Image</th>
                   <th scope="col">Position</th>
+                  <th scope="col">Salary</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -44,11 +45,11 @@
                 @foreach ($admins as $admin )
                 <tr>
                   <th scope="row">{{ $loop->iteration }}</th>
-                  <td>{{ $admin->fullName() }}</td>
-                  <td>{{ $admin->email }}</td>
-                  <td>{{ $admin->phone }}</td>
+                  <td>{{ $admin->user->fullName() }}</td>
+                  <td>{{ $admin->user->email }}</td>
+                  <td>{{ $admin->user->phone }}</td>
                   <td>
-                    <img src="{{FileHelper::get_file_path($admin->image?->path,'user')}}"  class="rounded-circle" width="100" height="100">
+                    <img src="{{FileHelper::get_file_path($admin->user->image?->path,'user')}}"  class="rounded-circle" width="100" height="100">
                   </td>
                   @if ($admin->role->role_name =='admin')
                   <?php $badge='bg-danger'?>
@@ -56,10 +57,11 @@
                   <?php $badge='bg-warning'?>
                   @endif
                   <td><span class="badge {{$badge}}">{{$admin->role->role_name}}</span></td>
+                  <td>{{$admin->salary}}</td>
                   <td>
-                    <a class="btn btn-warning" href="{{route('dashboard.admin.users.edit',$admin->id)}}">Edit</a>
+                    <a class="btn btn-warning" href="{{route('dashboard.admin.admins.edit',$admin->id)}}">Edit</a>
                     <div class="btn-group" role="group">
-                      <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$admin->id)}}" method="post">
+                      <form class="d-inline" action="{{route('dashboard.admin.admins.destroy',$admin->id)}}" method="post">
                         @csrf
                         @method('delete')
                         <button class="btn btn-danger" type="submit">Delete</button>

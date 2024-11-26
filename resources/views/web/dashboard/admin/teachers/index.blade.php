@@ -21,7 +21,7 @@
 
           <div class="card">
             <div class="card-header border-transparent">
-              <a href="{{ route('dashboard.admin.users.create') }}" class="btn btn-sm btn-info float-left">Place New teacher</a>
+              <a href="{{ route('dashboard.admin.teachers.create') }}" class="btn btn-sm btn-info float-left">Place New teacher</a>
             </div>
             <div class="card-body">
               <!-- Table with stripped rows -->
@@ -34,6 +34,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Image</th>
+                    <th scope="col">Salary</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -47,10 +48,11 @@
                     <td>
                       <img src="{{FileHelper::get_file_path($teacher->user->image?->path,'user')}}"  class="rounded-circle" width="100" height="100">
                     </td>
+                    <td>{{ $teacher->salary }}</td>
                     <td>
-                      <a class="btn btn-warning" href="{{route('dashboard.admin.users.edit',$teacher->user->id)}}">Edit</a>
+                      <a class="btn btn-warning" href="{{route('dashboard.admin.teachers.edit',$teacher->id)}}">Edit</a>
                       <div class="btn-group" role="group">
-                        <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$teacher->user->id)}}" method="post">
+                        <form class="d-inline" action="{{route('dashboard.admin.teachers.destroy',$teacher->id)}}" method="post">
                           @csrf
                           @method('delete')
                           <button class="btn btn-danger" type="submit">Delete</button>

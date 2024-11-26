@@ -7,7 +7,11 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\course;
 use App\Models\Teacher;
+use App\Models\ClassRoom;
+use App\Traits\UserTrait;
+use App\Enums\SubjectsEnum;
 use Illuminate\Support\Arr;
+use App\Enums\UserTypesEnum;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +24,7 @@ use Illuminate\Support\Facades\Storage;
 class TeacherController extends Controller
 {
     use SideDataTraits;
+    use UserTrait;
     /**
      * Display a listing of the resource.
      */
@@ -34,21 +39,11 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        $role = Role::where('for',  'teachers')->first();
-        $roles = Role::where('for',  'teachers')->get();
-
-        if (!isset($role))
-            return redirect()->back()->with('error', 'Not Found Role To Create Teacher');
-
-        $course = Course::get()->first();
-        $courses = Course::get()->all();
-
-        if (!isset($course))
-            return redirect()->back()->with('error', 'Not Found Course To Create Teacher');
-
+        $subjects = SubjectsEnum::all();
+        $roles = Role::where('for', 'teachers')->get();
+        $class_rooms = ClassRoom::get();
         $sideData = $this->getSideData();
-
-        return view('web.dashboard.admin.teachers.create', $sideData, compact(['courses', 'course', 'roles', 'role']));
+        return view('web.dashboard.admin.teachers.create', $sideData, compact(['subjects', 'roles', 'class_rooms']));
     }
 
     /**
@@ -56,25 +51,18 @@ class TeacherController extends Controller
      */
     public function store(TeacherRequest $request)
     {
-
         $data = $request->validated();
-
-        $userData = [
-            'name' => $data['teacher_name'],
-            'email' => $data['email'],
-            'password' => $data['password'],
+        $user=$this->createUser( $request,$data);  
+        $teacherdata = [
             'role_id' => $data['role_id'],
+            'salary' => $data['salary'],
+            'experience' => $data['experience'],
+            'subject_id' => $data['subject_id'],
+            'created_at' => now(),
         ];
-        $data = Arr::except($data, ['password']);
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = $image->store('/teachers', 'public');
-            $data['image'] = $filename;
-        }
-        $user = User::create($userData);
-        $data['user_id'] = $user->id;
-        Teacher::create($data);
-        return redirect()->route('dashboard.admin.teachers.index')->with('success', 'teacher added successfully');
+        $teacherdata['user_id'] = $user->id;
+        Teacher::create($teacherdata);
+        return redirect()->back()->with('success',  'Teacher added successfully');
     }
 
     /**
@@ -82,11 +70,10 @@ class TeacherController extends Controller
      */
     public function edit(Teacher $teacher)
     {
-        $roles = Role::where('for',  'teachers')->get();
-        // dd($teacher);
-        $courses = Course::get()->all();
+        $subjects = SubjectsEnum::all();
+        $roles = Role::get()->all();
         $sideData = $this->getSideData();
-        return view('web.dashboard.admin.teachers.edit', $sideData, compact(['courses', 'teacher', 'roles']));
+        return view('web.dashboard.admin.teachers.edit', $sideData, compact('teacher', "roles", 'subjects'));
     }
 
     /**
@@ -94,30 +81,17 @@ class TeacherController extends Controller
      */
     public function update(TeacherRequest $request, Teacher $teacher)
     {
-        $data = $request->validated();
-        $userData = [
-            'name' => $data['teacher_name'],
-            'email' => $data['email'],
+        $user=$teacher->user; 
+        $data=$this->updateUser($request,$user);
+        $teacherdata = [
             'role_id' => $data['role_id'],
+            'salary' => $data['salary'],
+            'experience' => $data['experience'],
+            'subject_id' => $data['subject_id'],
+            'created_at' => now(),
         ];
-        if ($data['password'] == $teacher->user->password) {
-            $userData['password'] = $teacher->user->password;
-        } else {
-            $userData['password'] = $data['password'];
-        }
-
-        if ($request->hasFile('image')) {
-            if ($teacher->image) {
-                Storage::disk('public')->delete($teacher->image);
-            }
-            $image = $request->file('image');
-            $filename = $image->store('/teachers', 'public');
-            $data['image'] = $filename;
-        }
-        $data = Arr::except($data, ['password', 'role_id']);
-        User::where('id', $teacher->user_id)->update($userData);
-        Teacher::where('id', $teacher->id)->update($data);
-        return redirect()->route('dashboard.admin.teachers.index')->with('success', 'teacher updated successfully');
+        $teacher->update($teacherdata);
+        return redirect()->route('dashboard.admin.teachers.index')->with('success',  'Teacher added successfully');
     }
 
     /**
@@ -125,29 +99,19 @@ class TeacherController extends Controller
      */
     public function destroy(Teacher $teacher)
     {
-        $user = User::find($teacher->user_id);
-        $imagePath = $teacher->image ?? null;
-
         try {
-            DB::beginTransaction();
-
-            $teacher->delete();
-
-            if ($user) {
-                $user->delete();
+            $user = $teacher->user;
+            if ($teacher) {
+                $teacher->delete();
             }
-
-            if ($imagePath) {
-                Storage::disk('public')->delete($imagePath);
+            if ($user->image) {
+                Storage::disk('public')->delete($user->image?->path);
+                $user->image->delete();
             }
-
-            DB::commit();
-
-            return redirect()->back()->with('success', 'Teacher deleted successfully');
+            $user->delete();
+            return redirect()->back()->with('success', 'User deleted successfully');
         } catch (Exception $e) {
-            DB::rollBack();
-
-            return redirect()->back()->with('errors', 'This teacher cannot be deleted');
+            return redirect()->back()->with('errors', 'This User cannot be deleted');
         }
     }
 }

@@ -26,9 +26,12 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="person_id">Person</label>
-                    <select class="form-select form-control" aria-label="Default select example" name="person_id"
-                    value="{{ $salary->person_id }}">
+                    <select class="form-select form-control" aria-label="Default select example" name="person_id">
+                        @if ($salary->person_type ==="App\Models\Employee")
+                        <option value="{{ $salary->person_type }}-{{ $salary->person_id }}" selected>{{ $salary->person->name}}</option>
+                        @else
                         <option value="{{ $salary->person_type }}-{{ $salary->person_id }}" selected>{{ $salary->person->fullName()}}</option>
+                        @endif
                     </select>
                     @error('person_id')
                     <span class="text-danger">{{$message}}</span>

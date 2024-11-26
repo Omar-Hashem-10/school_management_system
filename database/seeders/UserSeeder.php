@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'phone'=>"01015616884",
             'type'=>'admin',
             'gender'=>'male',
-            'password' => '123456789',
+            'password' => Hash::make('123456789'),
             'role_id' => 1,
         ]);
         \App\Models\User::factory()->create([
@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             'phone'=>"01015616884",
             'type'=>'admin',
             'gender'=>'male',
-            'password' => '123456789',
+            'password' => Hash::make('123456789'),
             'role_id' => 2,
         ]);
         \App\Models\User::factory()->create([
@@ -42,7 +42,7 @@ class UserSeeder extends Seeder
             'phone'=>"01015616884",
             'type'=>'teacher',
             'gender'=>'male',
-            'password' => '123456789',
+            'password' => Hash::make('123456789'),
             'role_id' => 3,
         ]);
         \App\Models\User::factory()->create([
@@ -52,7 +52,7 @@ class UserSeeder extends Seeder
             'phone'=>"01015616884",
             'type'=>'student',
             'gender'=>'male',
-            'password' => '123456789',
+            'password' => Hash::make('123456789'),
             'role_id' => 4,
         ]);
     }
