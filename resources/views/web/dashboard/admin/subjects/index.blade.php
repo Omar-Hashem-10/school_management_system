@@ -16,10 +16,15 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-
+          <h3>Attendace For class </h3>
           <div class="card">
             <div class="card-header border-transparent">
               <a href="{{ route('dashboard.admin.subjects.create') }}" class="btn btn-sm btn-info float-left">Place New subjects</a>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
             </div>
             <div class="card-body">
               <!-- Table with stripped rows -->
@@ -31,12 +36,27 @@
                     <th scope="col">Subject Name</th>
                     <th scope="col">Created at</th>
                     <th scope="col">Updated at</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Subject Name</th>
+                    <th scope="col">Created at</th>
+                    <th scope="col">Updated at</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                     @foreach ($subjects as $subject)
                     <tr>
+                      <th scope="row">{{ $attendance->id }}</th>
+                      <td>{{ $attendance->attendance_date }}</td>
+                      <td>
+                        <a href="{{ route('dashboard.admin.attends.edit', $attendance->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="{{ route('dashboard.admin.attendace.student.index', $attendance->id) }}" class="btn btn-sm btn-info">View</a>
+                        <form action="{{ route('dashboard.admin.attends.destroy', $attendance->id) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        </form>
+                      </td>
                         <th scope="row">{{$loop->iteration}}</th>
                         <td>{{$subject->name}}</td>
                         <td>{{$subject->created_at}}</td>

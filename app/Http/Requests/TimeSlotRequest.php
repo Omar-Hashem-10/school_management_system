@@ -23,28 +23,27 @@ class TimeSlotRequest extends FormRequest
 
     public function rules(): array
     {
-        $timeSlotId = $this->route('time_slot'); // الحصول على معرف الـ time_slot من الـ route
+        $timeSlotId = $this->route('time_slot');
 
         return [
             'lecture_number' => [
                 'required',
                 'string',
-                Rule::unique('time_slots', 'lecture_number')->ignore($timeSlotId), // تجاهل السجل الحالي
+                Rule::unique('time_slots', 'lecture_number')->ignore($timeSlotId),
             ],
             'start_time' => [
                 'required',
                 'date_format:H:i',
-                Rule::unique('time_slots', 'start_time')->ignore($timeSlotId), // تجاهل السجل الحالي
+                Rule::unique('time_slots', 'start_time')->ignore($timeSlotId),
             ],
             'end_time' => [
                 'required',
                 'date_format:H:i',
                 'after:start_time',
-                Rule::unique('time_slots', 'end_time')->ignore($timeSlotId), // تجاهل السجل الحالي
+                Rule::unique('time_slots', 'end_time')->ignore($timeSlotId),
             ],
         ];
     }
-
 
 
 }

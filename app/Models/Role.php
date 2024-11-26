@@ -31,4 +31,8 @@ class Role extends Model
     {
         return $this->hasMany(Employee::class);
     }
+    public function guardians()
+    {
+        return $this->hasMany(Guardian::class);
+    }
 }

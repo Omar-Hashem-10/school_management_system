@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\AdminRequest;
-use App\Models\Admin;
+use Exception;
 use App\Models\Role;
 use App\Models\User;
-use App\Traits\SideDataTraits;
-use Exception;
-use Illuminate\Http\Request;
+use App\Models\Admin;
+use App\Traits\UserTrait;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use App\Traits\SideDataTraits;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\AdminRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -19,29 +20,25 @@ use Illuminate\Support\Facades\Storage;
 class AdminController extends Controller
 {
     use SideDataTraits;
+    use UserTrait;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $sideData = $this->getSideData();
-        $admins = User::where('type','admin')->orderBy('id', 'desc')->paginate(10);
-        return view('web.dashboard.admin.admins.index', $sideData , compact('admins'));
+        $admins = Admin::orderBy('id', 'desc')->paginate(10);
+        return view('web.dashboard.admin.admins.index', $sideData, compact('admins'));
     }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $role=Role::where('for',  'admins')->first();
-        $roles=Role::where('for',  'admins')->get();
-
-        if(!isset($role))
-        return redirect()->back()->with('error','Not Found Role To Create Teacher');
-
+        $roles = Role::where('for',  'admins')->get();
         $sideData = $this->getSideData();
 
-        return view('web.dashboard.admin.admins.create', $sideData ,compact(['roles','role']));
+        return view('web.dashboard.admin.admins.create', $sideData, compact(['roles']));
     }
 
     /**
@@ -49,23 +46,15 @@ class AdminController extends Controller
      */
     public function store(AdminRequest $request)
     {
-
         $data = $request->validated();
-        $userData = [
-            'name' => $data['admin_name'],
-            'email' => $data['email'],
-            'password' => $data['password'],
+        $user=$this->createUser( $request,$data);
+        $admindata = [
             'role_id' => $data['role_id'],
+            'salary' => $data['salary'],
+            'created_at' => now(),
         ];
-        $data = Arr::except($data, 'password');
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = $image->store('/admins', 'public');
-            $data['image'] = $filename;
-        }
-        $user = User::create($userData);
-        $data['user_id'] = $user->id;
-        Admin::create($data);
+        $admindata['user_id'] = $user->id;
+        Admin::create($admindata);
 
         return redirect()->route('dashboard.admin.admins.index')->with('success', 'admin added successfully');
     }
@@ -75,9 +64,9 @@ class AdminController extends Controller
      */
     public function edit(Admin $admin)
     {
-        $roles=Role::where('for', operator: 'admins')->get();
+        $roles = Role::where('for', operator: 'admins')->get();
         $sideData = $this->getSideData();
-        return view('web.dashboard.admin.admins.edit', $sideData , compact(['admin','roles']));
+        return view('web.dashboard.admin.admins.edit', $sideData, compact(['admin', 'roles']));
     }
 
     /**
@@ -85,30 +74,16 @@ class AdminController extends Controller
      */
     public function update(AdminRequest $request, Admin $admin)
     {
-        $data = $request->validated();
-        $userData = [
-            'name' => $data['admin_name'],
-            'email' => $data['email'],
-            'role_id' => $data['role_id'],
-        ];
-        if ($data['password'] == $admin->user->password) {
-            $userData['password'] = $admin->user->password;
-        } else {
-            $userData['password'] = $data['password'];
-        }
 
-        if ($request->hasFile('image')) {
-            if ($admin->image) {
-                Storage::disk('public')->delete($admin->image);
-            }
-            $image = $request->file('image');
-            $filename = $image->store('/admins', 'public');
-            $data['image'] = $filename;
-        }
-        $data = Arr::except($data, 'password');
-        User::where('id', $admin->user_id)->update($userData);
-        Admin::where('id', $admin->id)->update($data);
-        return redirect()->route('dashboard.admin.admins.index')->with('success', 'admin updated successfully');
+        $user = $admin->user;
+        $data = $this->updateUser($request, $user);
+        $admindata = [
+            'created_at' => now(),
+            'role_id' => $data['role_id'],
+            'salary' => $data['salary'],
+        ];
+        $admin->update($admindata);
+        return redirect()->route('dashboard.admin.admins.index')->with('success', 'Admin added successfully');
     }
 
     /**
@@ -116,26 +91,20 @@ class AdminController extends Controller
      */
     public function destroy(Admin $admin)
     {
-        $user= User::where('id',$admin->user_id)->find;
-        $imagePath = null;
-        if ($admin->image) {
-            $imagePath = $admin->image;
-        }
+
         try {
-            DB::beginTransaction();
-            $admin->delete();
-            if ($user) {
-                $user->delete();
+            $user = $admin->user;
+            if ($admin) {
+                $admin->delete();
             }
-            if ($imagePath) {
-                // Delete the image from storage
-                Storage::disk('public')->delete($imagePath);
+            if ($user->image) {
+                Storage::disk('public')->delete($user->image?->path);
+                $user->image->delete();
             }
-            DB::commit();
-            return redirect()->back()->with('success', 'admin deleted successfully');
+            $user->delete();
+            return redirect()->back()->with('success', 'Admin deleted successfully');
         } catch (Exception $e) {
-            DB::rollBack();
-            return redirect()->back()->with('errors', 'This admin can not be deleted');
+            return redirect()->back()->with('errors', 'This Admin cannot be deleted');
         }
     }
 }

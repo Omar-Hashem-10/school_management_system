@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ClassRoom extends Model
 {
     use HasFactory;
-
+    protected $table = 'class_rooms';
     protected $fillable = [
         'name',
         'level_id',
@@ -21,24 +21,18 @@ class ClassRoom extends Model
 
     public function students()
     {
-        return $this->hasMany(Student::class,'class_room_id','id');
-    }
-
-    public function attendances()
-    {
-        return $this->hasMany(Attendance::class, 'class_room_id', 'id');
+        return $this->hasMany(Student::class,'classroom_id','id');
     }
 
 public function schedule()
     {
-        return $this->hasOne(Schedule::class, 'class_room_id', 'id');
+        return $this->hasOne(Schedule::class, 'classroom_id', 'id');
     }
     public function courseCodes()
     {
         return $this->belongsToMany(CourseCode::class, 'course_teachers', 'class_room_id', 'course_code_id')
                     ->withPivot('teacher_id');
     }
-
 
     public function exams()
     {

@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\Level;
 use App\Models\Subject;
-use App\Traits\HelperFunctionsTrait;
+use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
+use App\Traits\HelperFunctionsTrait;
 use App\Http\Requests\LevelSubjectRequest;
 
 class LevelSubjectController extends Controller
@@ -86,7 +87,7 @@ class LevelSubjectController extends Controller
         $subject->levels()->updateExistingPivot($newLevelId, ['subject_id' => $newSubjectId]);
 
         return redirect()->route('dashboard.admin.level_subjects.index')
-                         ->with('success', 'تم تحديث مستوى المادة بنجاح!');
+                         ->with('success', 'Updated Subject Level successfully!');
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class TeacherRequest extends FormRequest
@@ -23,16 +24,18 @@ class TeacherRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'teacher_name'        => 'required|string|max:255',
-            'email'               => 'required|unique:users,email|email',
-            'phone'               => 'nullable|string',
-            'image'               => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
-            'user_id'             => 'nullable|integer|exists:users,id',
-            'role_id'             => 'nullable|integer|exists:roles,id',
-            'course_id'           => 'nullable|integer|exists:courses,id',
+        $userRules = UserRequest::rules();
+        $teacherRules = [
+            'subject_id'          => 'nullable|integer|exists:subjects,id',
             'experience'          => 'nullable|integer',
-            'password'            => 'required|min:8',
+            'salary'              => 'required|numeric',
+            'email'               => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore(($this->teacher) ? $this->teacher->user : null),
+            ],
         ];
+
+        return array_merge($userRules, $teacherRules);
     }
 }

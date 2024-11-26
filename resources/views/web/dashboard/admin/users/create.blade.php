@@ -65,6 +65,17 @@
                     @enderror
                 </div>
                 <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select class="form-select form-control" aria-label="Default select example" name="gender">
+                        <option value="" selected>Select gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    @error('gender')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label for="role_id">Role</label>
                     <select class="form-select form-control" aria-label="Default select example" name="role_id">
                         <option value="" selected>Select Role</option>
@@ -82,10 +93,10 @@
                         onchange="handleTypeChange()">
                         <option value="" disabled selected>Select Type</option>
                         @foreach ($types as $type)
-                        <option value="{{ $type }}" {{ old('type') == $type ? 'selected' : '' }}>
+                        <option value="{{ $type }}" {{ old('type')==$type ? 'selected' : '' }}>
                             {{ \App\Enums\UserTypesEnum::from($type)->label() }}
                         </option>
-                    @endforeach
+                        @endforeach
                     </select>
                     @error('type')
                     <span class="text-danger">{{$message}}</span>
@@ -111,8 +122,13 @@
                     <span class="text-danger">{{$message}}</span>
                     @enderror
                 </div>
-
                 <div class="form-group" id="teacher-inputs" style="display: none;">
+                    <label for="salary">salary</label>
+                    <input type="number" name="salary" class="form-control" id="salary" placeholder="Enter salary"
+                        value="{{old('salary')}}">
+                    @error('salary')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
                     <label for="teacher_subject">Subject</label>
                     <select class="form-select form-control" aria-label="Default select example" name="subject_id">
                         <option value="" selected>Select Subject</option>
@@ -132,7 +148,12 @@
                 </div>
 
                 <div class="form-group" id="admin-inputs" style="display: none;">
-                    
+                    <label for="salary">salary</label>
+                    <input type="number" name="salary" class="form-control" id="salary" placeholder="Enter salary"
+                        value="{{old('salary')}}">
+                    @error('salary')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="exampleInputFile">Image</label>

@@ -27,7 +27,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureRateLimiting();
-
         $this->routes(function () {
             Route::middleware('api')
                 ->prefix('api')
@@ -35,7 +34,9 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
-
+            Route::group(['prefix' => LaravelLocalization::setLocale(),
+                    'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ],
+                 ],function () {
                 Route::prefix('dashboard')->as('dashboard.')->group(function () {
                     Route::get('/toggle-locale', function () {
                         // Toggle between 'en' and 'ar'
@@ -53,6 +54,7 @@ class RouteServiceProvider extends ServiceProvider
 
                     Route::middleware('web')->group(base_path('routes/adminstrator.php'));
                 });
+            });
         });
     }
 

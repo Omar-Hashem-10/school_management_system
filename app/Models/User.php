@@ -58,19 +58,13 @@ class User extends Authenticatable
     {
         return $this->hasOne(Admin::class);
     }
+    public function guardian()
+    {
+        return $this->hasOne(Guardian::class);
+    }
     public function role()
     {
         return $this->belongsTo(Role::class);
-    }
-
-    public function contacts()
-{
-    return $this->hasMany(Contact::class, 'student_id', 'id');
-}
-
-public function contactReplies()
-    {
-        return $this->hasMany(ContactReply::class);
     }
     public function fullName()
     {
@@ -83,6 +77,10 @@ public function contactReplies()
     public function salaries()
     {
         return $this->morphMany(Salary::class, 'person');
+    }
+    public function attends()
+    {
+        return $this->morphMany(Attend::class, 'attendable');
     }
     public function amounts($month, $year)
     {

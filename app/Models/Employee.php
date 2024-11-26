@@ -10,44 +10,48 @@ class Employee extends Model
     use HasFactory;
 
     protected $fillable = [
-        'employee_name',
+        'name',
         'email',
         'phone',
-        'image',
-        'user_id',
-        'role_id',
+        'salary',
+        'possition',
+        'gender'
     ];
 
-    public function user()
-{
-    return $this->belongsTo(User::class);
-}
-public function salaries()
+    public function salaries()
     {
         return $this->morphMany(Salary::class, 'person');
     }
-    public function role()
-{
-    return $this->belongsTo(Role::class);
-}
-public function calculateMonthlySalary($month, $year)
+    public function image()
     {
-        $baseSalary = $this->role->base_salary;  
-        
+        return $this->morphOne(Image::class, 'imageable');
+    }
+    public function attends()
+    {
+        return $this->morphMany(Attend::class, 'attendable');
+    }
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+    public function calculateMonthlySalary($month, $year)
+    {
+        $baseSalary = $this->salary;
+
         $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
 
-        $adjustments = $date 
-            ? $this->salaries()->where('date_id', $date->id)->sum('amount') 
+        $adjustments = $date
+            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
             : 0;
 
         return $baseSalary + $adjustments;
     }
-public function amounts($month, $year)
-    {  
+    public function amounts($month, $year)
+    {
         $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
 
-        $adjustments = $date 
-            ? $this->salaries()->where('date_id', $date->id)->sum('amount') 
+        $adjustments = $date
+            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
             : 0;
 
         return $adjustments;

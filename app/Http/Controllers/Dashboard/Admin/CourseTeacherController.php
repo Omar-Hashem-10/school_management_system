@@ -7,10 +7,10 @@ use App\Models\Teacher;
 use App\Models\ClassRoom;
 use App\Models\CourseCode;
 use App\Traits\DataTraits;
-use App\Traits\HelperFunctionsTrait;
 use App\Traits\SideDataTraits;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Traits\HelperFunctionsTrait;
 use App\Http\Requests\CourseTeacherRequest;
 
 class CourseTeacherController extends Controller
@@ -81,6 +81,7 @@ class CourseTeacherController extends Controller
         return redirect()->route('dashboard.admin.course_teachers.create')
                             ->with('success', 'Created Successfully!');
     }
+
 
     /**
      * Show the form for editing the specified resource.

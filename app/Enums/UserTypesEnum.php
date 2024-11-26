@@ -8,6 +8,7 @@ enum UserTypesEnum: string
     case ADMIN = 'admin';
     case TEACHER ='teacher';
     case STUDENT ='student';
+    case PARENT ='parent';
 
     /**
      * Get a friendly name for the user type.
@@ -18,6 +19,7 @@ enum UserTypesEnum: string
             self::ADMIN => 'Admin',
             self::TEACHER => 'Teacher',
             self::STUDENT => 'Student',
+            self::PARENT => 'Parent',
         };
     }
 

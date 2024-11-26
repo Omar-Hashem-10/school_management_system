@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('feedback', function (Blueprint $table) {
+        Schema::create('attends', function (Blueprint $table) {
             $table->id();
-            $table->string('feedback_text');
-            $table->foreignId('teacher_id')->constrained('teachers')->cascadeOnDelete();
-            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
-            $table->foreignId('exam_id')->constrained('exams')->cascadeOnDelete();
+            $table->unsignedBigInteger('attendable_id');
+            $table->string('attendable_type');
+            $table->enum('status', ['present', 'absent', 'excused'])->default('absent');
+            $table->foreignId('date_id')->constrained('dates')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('feedback');
+        Schema::dropIfExists('attends');
     }
 };

@@ -87,14 +87,14 @@
                     <td>{{ $student->fullName() }}</td>
                     <td>{{ $student->email }}</td>
                     <td>{{ $student->phone }}</td>
-                    <td>{{ $student->student->classRoom->name}}</td>
+                    <td>{{ ($student->student)?$student->student->classRoom['name']:null}}</td>
                     <td>
                       <img src="{{ FileHelper::get_file_path($student->image?->path, 'user') }}" class="rounded-circle" width="100" height="100">
                     </td>
                     <td>
-                      <a class="btn btn-warning" href="{{ route('dashboard.admin.users.edit', $student->id) }}">Edit</a>
+                      <a class="btn btn-warning" href="{{ route('dashboard.admin.students.edit', ($student->student)?$student->student->id:$student->id) }}">Edit</a>
                       <div class="btn-group" role="group">
-                        <form class="d-inline" action="{{ route('dashboard.admin.users.destroy', $student->id) }}" method="post">
+                        <form class="d-inline" action="{{ route('dashboard.admin.students.destroy', ($student->student)?$student->student->id:$student->id) }}" method="post">
                           @csrf
                           @method('delete')
                           <button class="btn btn-danger" type="submit">Delete</button>

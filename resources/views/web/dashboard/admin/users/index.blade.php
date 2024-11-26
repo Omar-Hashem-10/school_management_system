@@ -52,17 +52,34 @@
                       height="100">
                   </td>
                   @if ($user->role->role_name =='admin')
-                  <?php $badge='bg-danger'?>
+                  <?php $badge='bg-danger';
+                  $id=($user->admin)?$user->admin->id:0;
+                  ?>
                   @elseif($user->role->role_name=='manager')
-                  <?php $badge='bg-warning'?>
+                  <?php $badge='bg-warning';
+                  $id=($user->admin)?$user->admin->id:0;
+                  ?>
                   @elseif($user->role->role_name=='teacher')
-                  <?php $badge='bg-success'?>
-                  @elseif($user->role->role_name=='student')
-                  <?php $badge='bg-primary'?>
+                  <?php $badge='bg-success';
+                  $id=($user->teacher)?$user->teacher->id:0;
+                  ?>
+                  @elseif($user->type=='student')
+                  <?php $badge='bg-primary';
+                  $id=($user->student)?$user->student->id:0;
+                  ?>
+                  @elseif($user->role->role_name=='parent')
+                  <?php $badge='bg-info';
+                  $user->type='guardian';
+                  if($user->guardian)
+                  $id=($user->guardian)?$user->guardian->id:0;
+                  else {
+                    $id=' ';
+                  }
+                  ?>
                   @endif
                   <td><span class="badge {{$badge}}">{{$user->role->role_name}}</span></td>
                   <td>
-                    <a class="btn btn-warning" href="{{route('dashboard.admin.users.edit',$user->id)}}">Edit</a>
+                    <a class="btn btn-warning" href="{{route('dashboard.admin.'.$user->type.'s.edit',$id)}}">Edit</a>
                     <div class="btn-group" role="group">
                       <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$user->id)}}"
                         method="post">
