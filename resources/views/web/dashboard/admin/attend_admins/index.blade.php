@@ -24,7 +24,7 @@
            <h3>Attendance Admins For {{ $date->day." - ".$date->month." - ".$date->year }}</h3>
           </div>
           <div class="card-body">
-            <!-- Table with stripped rows -->
+
             <table class="table table-striped">
 
               <thead>
