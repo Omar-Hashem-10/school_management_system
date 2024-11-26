@@ -38,8 +38,8 @@
                                 @foreach($students as $studentSend)
                                     <tr>
                                         <td>{{ $studentSend->student->id }}</td>
-                                        <td>{{ $studentSend->student->student_name }}</td>
-                                        <td>{{ $studentSend->student->email }}</td>
+                                        <td>{{ $studentSend->student->user->first_name }}</td>
+                                        <td>{{ $studentSend->student->user->email }}</td>
                                         <td>
                                             <a href="{{ $studentSend->task_link }}" target="_blank" class="btn btn-info btn-sm">View Task</a>
                                         </td>

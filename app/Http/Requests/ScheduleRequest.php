@@ -37,25 +37,22 @@ class ScheduleRequest extends FormRequest
                 'required',
                 'exists:time_slots,id',
                 function ($attribute, $value, $fail) {
-                    // التحقق من وجود 'schedule' فقط عند التعديل (إذا كانت موجودة في الـ route)
                     $schedule = $this->route('schedule');
 
-                    if ($schedule) {
-                        // إذا كان الكائن موجودًا، يتم التحقق من الوقت المشغول
-                        $scheduleId = $schedule->id;
-                        $isTimeSlotTaken = Schedule::where('day_id', $this->day_id)
-                            ->where('time_slot_id', $value)
-                            ->where('id', '!=', $scheduleId)
-                            ->exists();
+                    $query = Schedule::where('day_id', $this->day_id)
+                        ->where('time_slot_id', $value);
 
-                        if ($isTimeSlotTaken) {
-                            $fail('The selected time slot is already taken for this day.');
-                        }
+                    if ($schedule) {
+                        $query->where('id', '!=', $schedule->id);
                     }
-                    // إذا لم يكن هناك جدول 'schedule' في الـ route، يتجاوز التحقق
+
+                    if ($query->exists()) {
+                        $fail('The selected time slot is already taken for this day.');
+                    }
                 },
             ],
         ];
     }
+
 
 }

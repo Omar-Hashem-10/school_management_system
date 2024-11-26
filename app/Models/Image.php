@@ -9,10 +9,18 @@ class Image extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name', 'path', 'imageable_id','imageable_type','all_text'
-       ];    
+        'name',
+        'path',
+        'imageable_id',
+        'imageable_type',
+        'all_text'
+    ];
     public function imageable()
     {
         return $this->morphTo();
+    }
+    public function getUrlAttribute()
+    {
+        return  $this->path;
     }
 }

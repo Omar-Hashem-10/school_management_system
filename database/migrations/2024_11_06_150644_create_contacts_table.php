@@ -31,7 +31,7 @@ return new class extends Migration
                 'leave_requests'
             ]);
             $table->text('message');
-            $table->foreignId('student_id')->constrained('students')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

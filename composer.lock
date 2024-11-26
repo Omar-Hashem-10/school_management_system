@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7684554200a11fdb61dfb8490525e66c",
+    "content-hash": "acc9b855bf94a3edb29161cfb7404bb7",
     "packages": [
         {
             "name": "brick/math",
@@ -1889,6 +1889,82 @@
             "time": "2024-09-21T08:32:55+00:00"
         },
         {
+            "name": "mcamara/laravel-localization",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mcamara/laravel-localization.git",
+                "reference": "9b47bb7db4f6712564ceca448b4df8bb7c7e415a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mcamara/laravel-localization/zipball/9b47bb7db4f6712564ceca448b4df8bb7c7e415a",
+                "reference": "9b47bb7db4f6712564ceca448b4df8bb7c7e415a",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.2.0||~5.3.0||~5.4.0||~5.5.0||~5.6.0||~5.7.0||~5.8.0||^6.0||^7.0||^8.0||^9.0|^10.0||^11.0",
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "orchestra/testbench-browser-kit": "~3.4|~3.8|~4.0|^7.12|^8.5",
+                "phpunit/phpunit": "6.0.*|^8.0|^9.5.10|^10.0"
+            },
+            "suggest": {
+                "ext-intl": "*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Mcamara\\LaravelLocalization\\LaravelLocalizationServiceProvider"
+                    ],
+                    "aliases": {
+                        "LaravelLocalization": "Mcamara\\LaravelLocalization\\Facades\\LaravelLocalization"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Mcamara\\LaravelLocalization": "src/"
+                },
+                "classmap": []
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marc Cámara",
+                    "email": "mcamara88@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easy localization for Laravel",
+            "homepage": "https://github.com/mcamara/laravel-localization",
+            "keywords": [
+                "laravel",
+                "localization",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/mcamara/laravel-localization/issues",
+                "source": "https://github.com/mcamara/laravel-localization/tree/v2.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/iwasherefirst2",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/mcamara",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-03-13T08:44:33+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "3.7.0",
             "source": {
@@ -3366,6 +3442,65 @@
                 }
             ],
             "time": "2024-04-27T21:32:50+00:00"
+        },
+        {
+            "name": "srmklive/paypal",
+            "version": "1.11.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/srmklive/laravel-paypal.git",
+                "reference": "3b7a78f535c269921d47f6b67d50f3f2c962048a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/srmklive/laravel-paypal/zipball/3b7a78f535c269921d47f6b67d50f3f2c962048a",
+                "reference": "3b7a78f535c269921d47f6b67d50f3f2c962048a",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0|~7.0",
+                "illuminate/support": "~5.1|~5.2|~5.3|~5.4|~5.5|~5.6|~5.7|~5.8|~6.0|~7.0|~8.0|~9.0|~10.0|~11.0",
+                "nesbot/carbon": "~1.0|~2.0|~3.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Srmklive\\PayPal\\Providers\\PayPalServiceProvider"
+                    ],
+                    "aliases": {
+                        "PayPal": "Srmklive\\PayPal\\Facades\\PayPal"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Srmklive\\PayPal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Raza Mehdi",
+                    "email": "srmk@outlook.com"
+                }
+            ],
+            "description": "Laravel plugin For Processing Payments Through Paypal Express Checkout. Can Be Used Independently With Other Applications.",
+            "keywords": [
+                "http",
+                "laravel paypal",
+                "paypal",
+                "rest",
+                "web service"
+            ],
+            "support": {
+                "issues": "https://github.com/srmklive/laravel-paypal/issues",
+                "source": "https://github.com/srmklive/laravel-paypal/tree/1.11.11"
+            },
+            "time": "2024-06-18T07:54:17+00:00"
         },
         {
             "name": "symfony/console",

@@ -63,6 +63,15 @@
                   @endforeach
               </ul>
           </li>
+
+              <!-- Contact Section -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('dashboard.admin.contacts.index') }}">
+            <i class="bi bi-envelope"></i>
+            <span>Contact</span>
+        </a>
+    </li>
+    <!-- End Contact Section -->
       </ul>
     </li>
 

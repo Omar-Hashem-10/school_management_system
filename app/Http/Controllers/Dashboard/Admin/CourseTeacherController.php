@@ -7,6 +7,7 @@ use App\Models\Teacher;
 use App\Models\ClassRoom;
 use App\Models\CourseCode;
 use App\Traits\DataTraits;
+use App\Traits\HelperFunctionsTrait;
 use App\Traits\SideDataTraits;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -14,7 +15,7 @@ use App\Http\Requests\CourseTeacherRequest;
 
 class CourseTeacherController extends Controller
 {
-    use DataTraits, SideDataTraits;
+    use DataTraits, SideDataTraits, HelperFunctionsTrait;
     /**
      * Display a listing of the resource.
      */
@@ -55,62 +56,31 @@ class CourseTeacherController extends Controller
      */
     public function store(CourseTeacherRequest $request)
     {
-        $teacherId = $request->input('teacher_id');
-        $courseCodeId = $request->input('course_code_id');
-        $classRoomId = $request->input('class_room_id');
+        $teacher = Teacher::find($request->input('teacher_id'));
+        $courseCode = CourseCode::find($request->input('course_code_id'));
+        $classRoom = ClassRoom::find($request->input('class_room_id'));
 
-        $teacher = Teacher::find($teacherId);
-
-        if (!$teacher) {
-            return redirect()->route('dashboard.admin.course_teachers.create')
-                                ->with('error', 'Teacher not found.');
+        if (!$teacher || !$courseCode || !$classRoom) {
+            return $this->redirectWithError('dashboard.admin.course_teachers.create', 'Teacher, Course Code, or Class Room not found.');
         }
 
-        $existingRelation = $teacher->courseCodes()->where('course_code_id', $courseCodeId)->exists();
-
-        if ($existingRelation) {
-            return redirect()->route('dashboard.admin.course_teachers.create')
-                                ->with('error', 'This teacher is already assigned to this course.');
-        }
-
-        $courseCode = CourseCode::find($courseCodeId);
-
-        if (!$courseCode) {
-            return redirect()->route('dashboard.admin.course_teachers.create')
-                                ->with('error', 'Course code not found.');
+        if ($teacher->courseCodes()->where('course_code_id', $courseCode->id)->exists()) {
+            return $this->redirectWithError('dashboard.admin.course_teachers.create', 'This teacher is already assigned to this course.');
         }
 
         $levelSubjectId = $courseCode->level_subject_id;
+        $levelSubject = Level::whereHas('subjects', fn($query) => $query->where('level_subjects.id', $levelSubjectId))
+                                ->pluck('id')->first();
 
-        $levelSubject = Level::with(['subjects' => function ($query) use ($levelSubjectId) {
-            $query->where('level_subjects.id', $levelSubjectId);
-        }])->find($levelSubjectId);
-
-
-        if (!$levelSubject) {
-            return redirect()->route('dashboard.admin.course_teachers.create')
-                                ->with('error', 'Level subject not found.');
+        if (!$levelSubject || $levelSubject != $classRoom->level_id) {
+            return $this->redirectWithError('dashboard.admin.course_teachers.create', 'Invalid level subject or mismatch with class room level.');
         }
 
-        $classRoom = ClassRoom::find($classRoomId);
-
-        if (!$classRoom) {
-            return redirect()->route('dashboard.admin.course_teachers.create')
-                                ->with('error', 'Class room not found.');
-        }
-
-        if ($levelSubject->id != $classRoom->level_id) {
-            return redirect()->route('dashboard.admin.course_teachers.create')
-                                ->with('error', 'The level of the class room does not match the level of the course.');
-        }
-
-        $teacher->courseCodes()->attach($courseCodeId, ['class_room_id' => $classRoomId]);
+        $teacher->courseCodes()->attach($courseCode->id, ['class_room_id' => $classRoom->id]);
 
         return redirect()->route('dashboard.admin.course_teachers.create')
-                            ->with('success', 'Created Successfully!')
-                            ->with('level', $levelSubject);
+                            ->with('success', 'Created Successfully!');
     }
-
 
     /**
      * Show the form for editing the specified resource.
@@ -118,7 +88,7 @@ class CourseTeacherController extends Controller
     public function edit(string $id)
     {
         $course_teacher = DB::table('course_teachers')->where('id', $id)->first();
-                $levels = Level::with('subjects')->get();
+        $levels = Level::with('subjects')->get();
         $course_codes = CourseCode::get();
         $class_rooms = ClassRoom::get();
         $sideData = $this->getSideData();
@@ -130,58 +100,39 @@ class CourseTeacherController extends Controller
      */
     public function update(CourseTeacherRequest $request, string $id)
     {
-        $teacher = Teacher::findOrFail($request->teacher_id);
+        $teacher = Teacher::find($request->input('teacher_id'));
+        $courseCode = CourseCode::find($request->input('course_code_id'));
+        $classRoom = ClassRoom::find($request->input('class_room_id'));
 
-        $course_code_id = $request->course_code_id;
-        $class_room_id = $request->class_room_id;
-
-        $existingRelation = $teacher->courseCodes()
-                                    ->where('course_code_id', $course_code_id)
-                                    ->exists();
-
-        if ($existingRelation) {
-            return redirect()->back()->with('error', 'This course is already assigned to the teacher.');
+        if (!$teacher || !$courseCode || !$classRoom) {
+            return redirect()->route('dashboard.admin.course_teachers.edit', ['course_teacher' => $id])
+                                ->with('error', 'Teacher, Course Code, or Class Room not found.');
         }
 
-        $courseCode = CourseCode::find($course_code_id);
+        $existingRelation = $teacher->courseCodes()->where('course_code_id', $courseCode->id)->first();
 
-        if (!$courseCode) {
-            return redirect()->route('dashboard.admin.course_teachers.create')
-                             ->with('error', 'Course code not found.');
+        if ($existingRelation && $existingRelation->pivot->class_room_id == $classRoom->id) {
+            return redirect()->route('dashboard.admin.course_teachers.index', ['teacher_id' => $request->teacher_id])
+                                ->with('info', 'The course and class room are already assigned to this teacher.');
         }
 
         $levelSubjectId = $courseCode->level_subject_id;
+        $levelSubject = Level::whereHas('subjects', fn($query) => $query->where('level_subjects.id', $levelSubjectId))
+                                ->pluck('id')->first();
 
-        $levelSubject = Level::with(['subjects' => function ($query) use ($levelSubjectId) {
-            $query->where('level_subjects.id', $levelSubjectId);
-        }])->find($levelSubjectId);
-
-        if (!$levelSubject) {
-            return redirect()->route('dashboard.admin.course_teachers.create')
-                             ->with('error', 'Level subject not found.');
-        }
-
-        $classRoom = ClassRoom::find($class_room_id);
-
-        if (!$classRoom) {
-            return redirect()->route('dashboard.admin.course_teachers.create')
-                             ->with('error', 'Class room not found.');
-        }
-
-        if ($levelSubject->id != $classRoom->level_id) {
-            return redirect()->route('dashboard.admin.course_teachers.create')
-                             ->with('error', 'The level of the class room does not match the level of the course.');
+        if (!$levelSubject || $levelSubject != $classRoom->level_id) {
+            return redirect()->route('dashboard.admin.course_teachers.edit', ['course_teacher' => $id])
+                                ->with('error', 'Invalid level subject or mismatch with class room level.');
         }
 
         $teacher->courseCodes()->updateExistingPivot($id, [
-            'course_code_id' => $course_code_id,
-            'class_room_id' => $class_room_id,
+            'course_code_id' => $courseCode->id,
+            'class_room_id' => $classRoom->id,
         ]);
 
         return redirect()->route('dashboard.admin.course_teachers.index', ['teacher_id' => $request->teacher_id])
-                         ->with('success', 'Updated Successfully!');
+                            ->with('success', 'Updated Successfully!');
     }
-
 
 
     /**
@@ -194,7 +145,7 @@ class CourseTeacherController extends Controller
         $teacher->courseCodes()->wherePivot('id', $id)->detach();
 
         return redirect()->route('dashboard.admin.course_teachers.index', ['teacher_id' => session('teacher_id')])
-                         ->with('success', 'Deleted Successfully!');
+                            ->with('success', 'Deleted Successfully!');
     }
 
 

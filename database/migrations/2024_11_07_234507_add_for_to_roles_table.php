@@ -15,7 +15,6 @@ return new class extends Migration
             $table->enum('for',['admins','employees','teachers','students'])->default('employees');
         });
     }
-
     /**
      * Reverse the migrations.
      */

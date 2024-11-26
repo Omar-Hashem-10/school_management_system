@@ -22,11 +22,6 @@
           <div class="card">
             <div class="card-header border-transparent">
               <a href="{{ route('dashboard.admin.class_rooms.create') }}" class="btn btn-sm btn-info float-left">Create New Class</a>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
             </div>
             <div class="card-body">
               <!-- Table with stripped rows -->

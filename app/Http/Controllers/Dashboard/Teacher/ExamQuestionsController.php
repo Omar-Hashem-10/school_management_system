@@ -74,6 +74,11 @@ class ExamQuestionsController extends Controller
             return redirect()->back()->with('error', 'The total score is less than the required half grade.');
         }
 
+        if ($total_score != $exam->half_grade * 2) {
+            return redirect()->back()->with('error', 'The total score is exactly double the required half grade.');
+        }
+
+
         foreach ($question_ids as $question_id) {
             $score = isset($scores[$question_id]) ? $scores[$question_id] : 0;
             $exam->questions()->attach($question_id, ['question_grade' => $score]);

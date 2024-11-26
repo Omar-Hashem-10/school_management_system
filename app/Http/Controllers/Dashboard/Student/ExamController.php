@@ -17,9 +17,9 @@ class ExamController extends Controller
     public function index(Request $request)
     {
         $sideData = $this->getSideData();
-        $course_level_id = $request->query('course_level_id');
+        $course_code_id = $request->query('course_code');
 
-        $exams = Exam::where('course_level_id', $course_level_id)
+        $exams = Exam::where('course_code_id', $course_code_id)
             ->with(['grades' => function ($query) {
                 $query->where('student_id', auth()->user()->student->id);
             }])
@@ -30,7 +30,7 @@ class ExamController extends Controller
             ->pluck('exam_id')
             ->toArray();
 
-        session()->put('course_level_id', $course_level_id);
+        session()->put('course_code_id', $course_code_id);
 
         return view('web.dashboard.student.exam.index', $sideData, compact('exams', 'exam_ids'));
     }

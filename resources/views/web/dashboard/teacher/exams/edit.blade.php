@@ -51,8 +51,15 @@
         </div>
 
         <div class="form-group mb-3">
-            <label for="exam_date">Exam Date</label>
-            <input type="datetime-local" name="exam_date" id="exam_date" class="form-control" value="{{ old('exam_date', \Carbon\Carbon::parse($exam->exam_date)->format('Y-m-d\TH:i')) }}" required>
+            <label for="start_date">Start Date</label>
+            <input type="datetime-local" name="start_date" id="start_date" class="form-control"
+                   value="{{ old('start_date', date('Y-m-d\TH:i', strtotime($exam->start_date))) }}">
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="end_date">End Date</label>
+            <input type="datetime-local" name="end_date" id="end_date" class="form-control"
+                   value="{{ old('end_date', date('Y-m-d\TH:i', strtotime($exam->end_date))) }}">
         </div>
 
         <div class="form-group mb-3">

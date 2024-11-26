@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Models\Student;
 use App\Models\Schedule;
+use App\Models\CourseCode;
 use App\Traits\DataTraits;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -21,17 +22,15 @@ class HomeController extends Controller
 
         $this->getProfileData(Student::class);
 
-        $course_level_ids = Schedule::where('class_room_id', auth()->user()->student->class_room_id)
+        $course_code_ids = Schedule::where('class_room_id', auth()->user()->student->class_room_id)
             ->distinct()
-            ->pluck('course_level_id');
+            ->pluck('course_code_id');
 
-            $course_level_codes = DB::table('course_levels')
-            ->whereIn('id', $course_level_ids)
-            ->pluck('course_code', 'id');
+        $course_codes = CourseCode::whereIn('id', $course_code_ids)->pluck('code', 'id');
 
-            session()->put('course_level_codes', $course_level_codes);
+        session()->put('course_codes', $course_codes);
 
-        return view('web.dashboard.student.home.index', compact('course_level_codes'));
+        return view('web.dashboard.student.home.index', compact('course_codes'));
     }
 
 }

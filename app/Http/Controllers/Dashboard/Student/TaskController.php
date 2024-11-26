@@ -20,12 +20,12 @@ class TaskController extends Controller
     {
         $sideData = $this->getSideData();
 
-        $course_level_id = $request->query('course_level_id');
-        if ($course_level_id) {
-            session()->put('course_level_id', $course_level_id);
+        $course_code_id = $request->query('course_code');
+        if ($course_code_id) {
+            session()->put('course_code_id', $course_code_id);
         }
 
-        $tasks = Task::where('course_level_id', session('course_level_id'))
+        $tasks = Task::where('course_code_id', session('course_code_id'))
                      ->paginate(5);
 
         $taskLinks = TaskSend::where('student_id', session('student_id'))
@@ -58,29 +58,5 @@ class TaskController extends Controller
     {
         $task = TaskSend::create($request->validated());
         return redirect()->route('dashboard.student.task.index')->with('success', 'Send Task Successfully!');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

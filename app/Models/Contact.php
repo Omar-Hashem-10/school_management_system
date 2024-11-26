@@ -12,12 +12,16 @@ class Contact extends Model
     protected $fillable = [
         'subject',
         'message',
-        'student_id',
+        'user_id',
     ];
 
-    public function student()
+    public function user()
 {
-    return $this->belongsTo(Student::class, 'student_id', 'id');
+    return $this->belongsTo(User::class, 'user_id', 'id');
 }
 
+public function replies()
+    {
+        return $this->hasMany(ContactReply::class);
+    }
 }

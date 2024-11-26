@@ -42,10 +42,7 @@ public function taskSends()
         return $this->hasMany(TaskSend::class, 'student_id', 'id');
     }
 
-public function contacts()
-{
-    return $this->hasMany(Contact::class, 'student_id', 'id');
-}
+
 
 public function answers()
     {

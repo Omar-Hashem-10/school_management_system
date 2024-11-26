@@ -31,7 +31,7 @@
                             <!-- Course Code -->
                             <div class="form-group">
                                 <label for="code">Course Code</label>
-                                <input type="text" id="code" name="code" class="form-control @error('code') is-invalid @enderror" required>
+                                <input type="text" id="code" name="code" value="{{ old('code') }}" class="form-control @error('code') is-invalid @enderror" required>
                                 @error('code')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -41,21 +41,22 @@
                             <div class="form-group">
                                 <label for="semester">Semester</label>
                                 <select id="semester" name="semester" class="form-control @error('semester') is-invalid @enderror" required>
-                                    <option value="first">First</option>
-                                    <option value="second">Second</option>
+                                    <option value="first" {{ old('semester') == 'first' ? 'selected' : '' }}>First</option>
+                                    <option value="second" {{ old('semester') == 'second' ? 'selected' : '' }}>Second</option>
                                 </select>
                                 @error('semester')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
+                            <!-- Level Subject -->
                             <div class="form-group">
                                 <label for="level_subject_id">Select Level Subject</label>
                                 <select id="level_subject_id" name="level_subject_id" class="form-control @error('level_subject_id') is-invalid @enderror" required>
                                     <option value="">Select Subject</option>
                                     @foreach($levels as $level)
                                         @foreach($level->subjects as $subject)
-                                            <option value="{{ $subject->pivot->id }}">
+                                            <option value="{{ $subject->pivot->id }}" {{ old('level_subject_id') == $subject->pivot->id ? 'selected' : '' }}>
                                                 Level: {{ $level->name }} - Subject: {{ $subject->name }}
                                             </option>
                                         @endforeach
@@ -65,7 +66,6 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
 
                             <!-- Submit Button -->
                             <div class="form-group">

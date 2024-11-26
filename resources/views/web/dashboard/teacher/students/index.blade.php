@@ -20,46 +20,16 @@
         <div class="col-lg-12">
 
           <div class="card">
-            <div class="card-header border-transparent">
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
+            <div class="card-header">
+                <form method="GET" action="{{ route('dashboard.teacher.students.index') }}">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search by name" value="{{ request()->query('search') }}">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+
             </div>
             <div class="card-body">
-
-                <form method="GET" action="{{ route('dashboard.teacher.students.index', ['class_room_id' => session('class_room_id')]) }}" class="mb-3">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <input type="text" name="student_name" class="form-control" placeholder="Search by Name" value="{{ request()->student_name }}">
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-primary">Filter</button>
-                        </div>
-                    </div>
-                </form>
-
-                <form method="GET" action="{{ route('dashboard.teacher.students.index', ['class_room_id' => session('class_room_id')]) }}" class="mb-3">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <select name="sort_by" class="form-control">
-                                <option value="student_name" {{ request()->sort_by == 'student_name' ? 'selected' : '' }}>Sort by Name</option>
-                                <option value="email" {{ request()->sort_by == 'email' ? 'selected' : '' }}>Sort by Email</option>
-                                <option value="phone" {{ request()->sort_by == 'phone' ? 'selected' : '' }}>Sort by Phone</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <select name="order" class="form-control">
-                                <option value="asc" {{ request()->order == 'asc' ? 'selected' : '' }}>Ascending</option>
-                                <option value="desc" {{ request()->order == 'desc' ? 'selected' : '' }}>Descending</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <button type="submit" class="btn btn-primary">Sort</button>
-                        </div>
-                    </div>
-                </form>
 
                 <!-- Table with students -->
                 <table class="table table-striped">
@@ -78,10 +48,10 @@
                         @foreach ($students as $student)
                         <tr>
                             <th scope="row">{{ $loop->iteration }}</th>
-                            <td>{{ $student->student_name }}</td>
-                            <td>{{ $student->email }}</td>
-                            <td>{{ $student->phone }}</td>
-                            <td>{{ $student->classRoom->class_name }}</td>
+                            <td>{{ $student->user->first_name }} {{$student->user->last_name}}</td>
+                            <td>{{ $student->user->email }}</td>
+                            <td>{{ $student->user->phone }}</td>
+                            <td>{{ $student->classRoom->name }}</td>
                             <td>
                                 <img src="{{ FileHelper::get_file_path($student->image, 'user') }}" class="rounded-circle" width="100" height="100">
                             </td>

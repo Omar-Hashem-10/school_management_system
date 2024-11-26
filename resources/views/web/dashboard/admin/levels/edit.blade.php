@@ -32,7 +32,7 @@
                   </div>
                   <div class="col-12">
                     <label for="amount" class="form-label">Level Name</label>
-                    <input type="number" class="form-control" name="amount" id="amount" value="{{old('amount', $level->amount)}}">
+                    <input type="number" class="form-control" name="amount" id="amount" value="{{ old('amount', intval($level->amount)) }}">
                     @error('amount')
                         <span class="text-danger">{{$message}}</span>
                     @enderror

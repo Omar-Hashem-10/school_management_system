@@ -64,9 +64,9 @@
             <select class="form-select form-control" aria-label="Default select example" name="class_room_id"
               value="{{old('class_room_id')}}">
               @if($class)
-              <option value="{{ $class->id }}" selected>{{ $class->class_name }}</option>
+              <option value="{{ $class->id }}" selected>{{ $class->name }}</option>
               @foreach ($classes as $class)
-              <option value="{{ $class->id }}">{{ $class->class_name }}</option>
+              <option value="{{ $class->id }}">{{ $class->name }}</option>
               @endforeach
               @endif
             </select>

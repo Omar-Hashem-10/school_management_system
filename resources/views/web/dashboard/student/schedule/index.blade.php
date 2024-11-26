@@ -44,14 +44,18 @@
                                     });
                                 @endphp
                                 @if ($matching_schedule)
-                                    @foreach ($courses as $course)
-                                        @foreach ($course->levels as $level)
-                                            @if ($level->pivot->id == $matching_schedule->course_level_id)
-                                                {{ $course->course_name }} <br>
-                                                {{ $level->pivot->course_code}}
-                                            @endif
+                                @foreach ($course_codes_schedules as $course_code)
+                                    @foreach ($levels as $level)
+                                        @foreach ($level->subjects as $subject)
+                                                @if ($course_code->id == $matching_schedule->course_code_id && $course_code->level_subject_id == $subject->pivot->id)
+                                                    {{ $subject->name }} <br>
+                                                    {{ $course_code->code }}
+                                                @endif
+                                            @endforeach
                                         @endforeach
                                     @endforeach
+                                @else
+                                    <span>No class</span>
                                 @endif
                             </td>
                         @endforeach

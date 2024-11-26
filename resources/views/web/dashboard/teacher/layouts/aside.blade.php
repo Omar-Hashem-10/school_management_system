@@ -19,7 +19,7 @@
                 <ul class="nav-content collapse" id="students-nav" data-bs-parent="#components-nav">
                     @foreach($class_room_names as $class_room_id => $class_name)
                         <li>
-                            <a href="{{ route('dashboard.teacher.students.index', $class_room_id) }}">
+                            <a href="{{ route('dashboard.teacher.students.index',  ['class_room_id' => $class_room_id]) }}">
                                 <i class="bi bi-circle"></i><span>{{ $class_name }}</span>
                             </a>
                         </li>
@@ -71,6 +71,15 @@
                     @endforeach
                 </ul>
             </li>
+
+                <!-- Contact Section -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('dashboard.student.contact.index') }}">
+            <i class="bi bi-envelope"></i>
+            <span>Contact</span>
+        </a>
+    </li>
+    <!-- End Contact Section -->
 
         </ul>
     </li>

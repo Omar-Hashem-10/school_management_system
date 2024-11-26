@@ -86,7 +86,7 @@ class ScheduleController extends Controller
         $days = Day::get();
         $time_slots = TimeSlot::orderBy('start_time')->get();
         $course_codes = CourseCode::all();
-        return view('web.dashboard.admin.schedules.edit', $sideData, compact('levels', 'schedule', 'time_slots', 'days', 'course_codes'));
+        return view('web.dashboard.admin.schedules.edit', compact('levels', 'schedule', 'time_slots', 'days', 'course_codes') + $sideData);
     }
 
     /**

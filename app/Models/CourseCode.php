@@ -21,6 +21,12 @@ class CourseCode extends Model
         return $this->hasMany(Schedule::class, 'course_code_id', 'id');
     }
 
+    public function exams()
+{
+    return $this->hasMany(Exam::class, 'course_code_id', 'id');
+}
+
+
     public function teachers()
     {
         return $this->belongsToMany(Teacher::class, 'course_teachers', 'course_code_id', 'teacher_id')

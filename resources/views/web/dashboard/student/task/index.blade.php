@@ -55,7 +55,7 @@
                                 @endif
 
                                 @if(array_key_exists($task->id, $taskLinks))
-                                    <a href="{{ $taskLinks[$task->id] }}" class="btn btn-success btn-sm">
+                                    <a href="{{ $taskLinks[$task->id] }}" target="_blank" class="btn btn-success btn-sm">
                                         View Submission
                                     </a>
                                 @endif

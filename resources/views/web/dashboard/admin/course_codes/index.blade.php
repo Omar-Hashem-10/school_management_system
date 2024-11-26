@@ -22,11 +22,6 @@
                 <div class="card">
                     <div class="card-header border-transparent">
                         <a href="{{ route('dashboard.admin.course_codes.create') }}" class="btn btn-sm btn-info float-left">Place New course_code</a>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
                     </div>
                     <div class="card-body">
                         <table class="table table-striped">

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Dashboard\Teacher;
 
 use App\Models\Student;
-use App\Models\ClassRoom;
 use Illuminate\Http\Request;
-use App\Models\CourseTeacher;
 use App\Traits\SideDataTraits;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class TeacherStudentController extends Controller
@@ -15,26 +14,38 @@ class TeacherStudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($class_room_id, Request $request)
+    public function index(Request $request)
     {
-        session()->put("class_room_id", $class_room_id);
-
-        $query = Student::where('class_room_id', $class_room_id);
-
-        if ($request->has('student_name') && $request->student_name != '') {
-            $query->where('student_name', 'like', '%' . $request->student_name . '%');
+        $class_room_id = $request->query('class_room_id');
+        if($class_room_id)
+        {
+            session()->put("class_room_id", $class_room_id);
         }
 
-        if ($request->has('sort_by') && in_array($request->sort_by, ['student_name', 'email', 'phone'])) {
-            $query->orderBy($request->sort_by, $request->order ?? 'asc');
-        } else {
-            $query->orderBy('id', 'desc');
+        $search = $request->query('search');
+
+
+        $query = Student::where('class_room_id', session('class_room_id'))
+                        ->with('user', 'classRoom');
+
+        if ($search) {
+            $query->whereHas('user', function($query) use ($search) {
+                $query->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'like', '%' . $search . '%');
+            });
         }
 
         $students = $query->paginate(5);
 
         $sideData = $this->getSideData();
-
-        return view('web.dashboard.teacher.students.index', $sideData , compact('students'));
+        return view('web.dashboard.teacher.students.index', $sideData, compact('students'));
     }
+    public function show(Student $student)
+    {
+        $sideData = $this->getSideData();
+
+        $grades = $student->grades()->paginate(5);
+
+        return view('web.dashboard.teacher.students.show', $sideData, compact('student', 'grades'));
+    }
+
 }

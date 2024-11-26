@@ -20,7 +20,6 @@ class RoleController extends Controller
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.roles.index', $sideData ,compact('roles'));
     }
-
     /**
      * Show the form for creating a new resource.
      */

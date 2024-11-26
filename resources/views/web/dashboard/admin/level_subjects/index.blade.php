@@ -22,11 +22,6 @@
           <div class="card">
             <div class="card-header border-transparent">
               <a href="{{ route('dashboard.admin.level_subjects.create') }}" class="btn btn-sm btn-info float-left">Create New course Level</a>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
             </div>
             <div class="card-body">
               <!-- Table with stripped rows -->
@@ -53,7 +48,7 @@
                                 <form action="{{ route('dashboard.admin.level_subjects.destroy', ['subject' => $subject->id, 'level' => $level->id]) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                                 </form>
                             </td>
                         </tr>

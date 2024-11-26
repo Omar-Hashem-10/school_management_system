@@ -24,11 +24,6 @@
           <div class="card-header border-transparent">
             <a href="{{ route('dashboard.admin.dates.create','salary') }}" class="btn btn-sm btn-info float-left">Place New
               Date</a>
-            <div class="card-tools">
-              <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                <i class="fas fa-minus"></i>
-              </button>
-            </div>
           </div>
           <div class="card-body">
             <!-- Table with stripped rows -->
