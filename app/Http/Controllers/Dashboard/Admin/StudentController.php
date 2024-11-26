@@ -41,7 +41,7 @@ class StudentController extends Controller
                 $query->where('class_room_id', $class_room);
             })->get();
         }
-        if ($request->has('sort_by') && in_array($request->sort_by, ['name', 'email', 'phone'])) {
+            if ($request->has('sort_by') && in_array($request->sort_by, ['first_name', 'email', 'phone'])) {
 
             $query->orderBy($request->sort_by, $request->order ?? 'asc');
         } else {
@@ -50,8 +50,10 @@ class StudentController extends Controller
 
         $students = $query->paginate(10);
 
+        $class_rooms = ClassRoom::all();
+
         $sideData = $this->getSideData();
-        return view('web.dashboard.admin.students.index', $sideData, compact('students'));
+        return view('web.dashboard.admin.students.index', $sideData, compact('students', 'class_rooms'));
     }
 
 
@@ -73,7 +75,7 @@ class StudentController extends Controller
     public function store(StudentRequest $request)
     {
         $data = $request->validated();
-        $user=$this->createUser( $request,$data);  
+        $user=$this->createUser( $request,$data);
         $studentdata = [
             'guardian_id' => $request['guardian_id'],
             'user_id' => $user['id'],
@@ -103,7 +105,7 @@ class StudentController extends Controller
     public function update(StudentRequest $request, Student $student)
     {
         $user=$student->user;
-        $data=$this->updateUser($request,$user);        
+        $data=$this->updateUser($request,$user);
         $studentdata = [
             'guardian_id' => $data['guardian_id'],
             'user_id' => $user['id'],

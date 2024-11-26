@@ -24,14 +24,14 @@
                     @csrf
                   <div class="col-12">
                     <label for="name" class="form-label">Level Name</label>
-                    <input type="text" class="form-control" name="name" id="name">
+                    <input type="text" class="form-control" name="name" id="name" value="{{old('name')}}">
                     @error('name')
                         <span class="text-danger">{{$message}}</span>
                     @enderror
                   </div>
                   <div class="col-12">
                     <label for="amount" class="form-label">Level Amount</label>
-                    <input type="number" class="form-control" name="amount" id="amount">
+                    <input type="number" class="form-control" name="amount" id="amount" value="{{old('amount')}}">
                     @error('amount')
                         <span class="text-danger">{{$message}}</span>
                     @enderror

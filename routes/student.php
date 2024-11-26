@@ -4,6 +4,7 @@
 use App\Models\Feedback;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Dashboard\Student\ExamController;
 use App\Http\Controllers\Dashboard\Student\HomeController;
 use App\Http\Controllers\Dashboard\Student\TaskController;
@@ -25,6 +26,8 @@ Route::prefix('student')->as('student.')->group(function () {
         Route::get('/tasks/create/{taskId}', [TaskController::class, 'create'])->name('task.create');
 
         Route::get('/feedback/{feedbackId}', FeedbackController::class)->name('feedback');
+
+        Route::resource('/contact', ContactController::class);
 
     });
 });

@@ -33,8 +33,8 @@
                   <div class="col-md-4">
                     <select name="class_room_id" class="form-control">
                       <option value="">Select Class</option>
-                      @foreach($classRooms as $classRoom)
-                        <option value="{{ $classRoom->id }}" {{ request()->classRoom_id == $classRoom->id ? 'selected' : '' }}>{{ $classRoom->name }}</option>
+                      @foreach($class_rooms as $class_room)
+                        <option value="{{ $class_room->id }}" {{ request()->class_room_id == $class_room->id ? 'selected' : '' }}>{{ $class_room->name }}</option>
                       @endforeach
                     </select>
                   </div>

@@ -29,7 +29,7 @@
                         @if ($user)
                         @if($user['type']!='Employee')
                         <option value="{{ $user['type'] }}-{{ $user->id  }}">{{ $user->fullName() }}</option>
-                        @else 
+                        @else
                         <option value="{{ $user['type'] }}-{{ $user->id  }}">{{ $user->name }}</option>
                         @endif
                         @else
@@ -44,7 +44,7 @@
                         @else
                         <?php $personType='User' ?>
                         <option value="{{ $type }}-{{ $person->id  }}">{{ $person->fullName() }}</option>
-                        @endif 
+                        @endif
                         @endforeach
                         @endforeach
                         @endif

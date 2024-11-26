@@ -26,7 +26,7 @@
                     @method('PUT')
                   <div class="col-12">
                     <label for="name" class="form-label">Subject Name</label>
-                    <input type="text" class="form-control" name="name" id="name" value="{{old('course_name', $subject->name)}}">
+                    <input type="text" class="form-control" name="name" id="name" value="{{old('name', $subject->name)}}">
                     @error('name')
                         <span class="text-danger">{{$message}}</span>
                     @enderror

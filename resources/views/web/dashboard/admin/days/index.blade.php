@@ -21,16 +21,13 @@
           <div class="card">
             <div class="card-header border-transparent">
               <a href="{{ route('dashboard.admin.days.create') }}" class="btn btn-sm btn-info float-left">Add New Day</a>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
             </div>
             <div class="card-body">
               <!-- Table with stripped rows -->
-              <table class="table table-striped">
-
+              @if($days->isEmpty())
+                <p class="text-center font-weight-bold">No Data Available</p>
+              @else
+              <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
@@ -39,13 +36,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($days as $day )
+                  @foreach ($days as $day)
                   <tr>
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $day->day_name }}</td>
                     <td>
                       <div class="btn-group" role="group">
-                        <form class="d-inline" action="{{route('dashboard.admin.days.destroy',$day->id)}}" method="post">
+                        <form class="d-inline" action="{{ route('dashboard.admin.days.destroy', $day->id) }}" method="post">
                           @csrf
                           @method('delete')
                           <button class="btn btn-danger" type="submit">Delete</button>
@@ -56,8 +53,8 @@
                   @endforeach
                 </tbody>
               </table>
+              @endif
               <!-- End Table with stripped rows -->
-
             </div>
           </div>
 

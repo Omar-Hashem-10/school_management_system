@@ -32,7 +32,8 @@
                             <th scope="col">#</th>
                             <th scope="col">Exam Name</th>
                             <th scope="col">Full Grade</th>
-                            <th scope="col">Exam Date</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
                             <th scope="col">Exam Duration</th>
                             <th scope="col">Actions</th>
                         </tr>
@@ -43,7 +44,8 @@
                             <th scope="row">{{ $loop->iteration }}</th>
                             <td>{{ $exam->name }}</td>
                             <td>{{ $exam->half_grade * 2 }}</td>
-                            <td>{{ $exam->exam_date }}</td>
+                            <td>{{ $exam->start_date }}</td>
+                            <td>{{ $exam->end_date }}</td>
                             <td>{{ $exam->exam_duration }}</td>
                             <td>
                                 <!-- Show Button -->

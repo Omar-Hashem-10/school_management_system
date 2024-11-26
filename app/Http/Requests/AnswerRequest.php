@@ -22,10 +22,10 @@ class AnswerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'question_id' => 'nullable', 'integer', 'exists:questions,id',
-            'exam_id' => 'required', 'integer', 'exists:exams,id',
-            'student_id' => 'required', 'integer', 'exists:students,id',
-            'answer' => 'nullable', 'string', 'max:255',
+            'question_id' => 'nullable|exists:questions,id',
+            'exam_id' => 'required|exists:exams,id',
+            'student_id' => 'required|exists:students,id',
+            'answer' => 'nullable|max:255',
         ];
     }
 

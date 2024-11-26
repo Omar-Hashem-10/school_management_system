@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('exams', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->dateTime('exam_date');
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->integer('exam_duration');
             $table->decimal('half_grade', 5, 2)->nullable();
             $table->foreignId('course_code_id')->constrained('course_codes')->cascadeOnDelete();

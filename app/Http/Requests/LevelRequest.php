@@ -22,7 +22,7 @@ class LevelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|min:3|max:50',
+            'name' => 'required|string|min:3|max:50|unique:levels,name',
             'amount' => 'required|integer',
         ];
     }

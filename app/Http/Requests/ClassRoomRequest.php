@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ClassRoomRequest extends FormRequest
@@ -22,8 +23,14 @@ class ClassRoomRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => [
+                'required',
+                'string',
+                Rule::unique('class_rooms', 'name')
+                    ->ignore($this->route('class_room'), 'id'),
+            ],
             'level_id' => 'required|exists:levels,id',
         ];
     }
+
 }

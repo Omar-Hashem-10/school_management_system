@@ -23,7 +23,8 @@ class ExamRequest extends FormRequest
     {
         return [
             'name' => 'required|string|min:3|max:50',
-            'exam_date' => 'required|date',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after:start_date',
             'exam_duration' => 'required|integer|min:1',
             'half_grade' => 'required|numeric|min:0',
             'course_code_id' => 'required|exists:course_codes,id',

@@ -60,7 +60,7 @@ class UserController extends Controller
         ]);
         $data = $request->validated();
         $data['email']=$validate['email'];
-        $user=$this->createUser( $request,$data);  
+        $user=$this->createUser( $request,$data);
         if ($data['type'] == 'admin') {
             $admindata = [
                 'salary'=>$validate['salary'],
@@ -113,7 +113,7 @@ class UserController extends Controller
     public function update(User $user, UserRequest $request)
     {
 
-       
+
     }
 
     /**

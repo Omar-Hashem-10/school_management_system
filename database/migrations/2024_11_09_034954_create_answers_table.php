@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('exam_id')->constrained('exams')->onDelete('cascade');
             $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
             $table->string('answer');
-            $table->string('is_correct');
             $table->timestamps();
         });
     }

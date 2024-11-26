@@ -28,23 +28,24 @@
 
         <!-- Course Selection -->
         <div class="form-group">
-            <label for="course_id">Course Code</label>
-            <select class="form-select form-control" name="course_id" id="course_id">
+            <label for="course_code_id">Course Code</label>
+            <select class="form-select form-control" name="course_code_id" id="course_code_id">
                 <option disabled selected>Select Course</option>
                 @foreach ($levels as $level)
-                    @foreach ($level->subjects as $subject)
-                        @php
-                            $course = $courses->firstWhere('level_subject_id', $subject->pivot->id);
-                        @endphp
-                        @if ($course)
-                            <option value="{{ $course->id }}" {{ old('course_id', $schedule->course_id) == $course->id ? 'selected' : '' }}>
-                                {{ $course->code }} - {{ $level->name }} - {{ $subject->name }}
-                            </option>
-                        @endif
-                    @endforeach
+                @foreach ($level->subjects as $subject)
+                    @php
+                        $course = $course_codes->firstWhere('level_subject_id', $subject->pivot->id);
+                    @endphp
+                    @if ($course)
+                        <option value="{{ $course->id }}" {{ old('course_code_id', $schedule->course_code_id) == $course->id ? 'selected' : '' }}>
+                            {{ $course->code }} - {{ $level->name }} - {{ $subject->name }}
+                        </option>
+                    @endif
                 @endforeach
+            @endforeach
+
             </select>
-            @error('course_id')
+            @error('course_code_id')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>

@@ -17,6 +17,8 @@
         </a>
     </li>
     <!-- End Schedule Nav -->
+
+    <!-- Exam Section -->
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#exam-section" data-bs-toggle="collapse" href="#">
             <i class="bi bi-journal-text"></i>
@@ -24,9 +26,9 @@
             <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="exam-section" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            @foreach($course_level_codes as $id => $course_code)
+            @foreach($course_codes as $id => $course_code)
                 <li>
-                    <a href="{{ route('dashboard.student.exam.index', ['course_level_id' => $id]) }}">
+                    <a href="{{ route('dashboard.student.exam.index', ['course_code' => $id]) }}">
                         <i class="bi bi-circle"></i><span>{{ $course_code }}</span>
                     </a>
                 </li>
@@ -34,6 +36,7 @@
         </ul>
     </li>
 
+    <!-- Task Section -->
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#task-section" data-bs-toggle="collapse" href="#">
             <i class="bi bi-journal-text"></i>
@@ -41,9 +44,9 @@
             <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="task-section" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            @foreach($course_level_codes as $id => $course_code)
+            @foreach($course_codes as $id => $course_code)
                 <li>
-                    <a href="{{ route('dashboard.student.task.index', ['course_level_id' => $id]) }}">
+                    <a href="{{ route('dashboard.student.task.index', ['course_code' => $id]) }}">
                         <i class="bi bi-circle"></i><span>{{ $course_code }}</span>
                     </a>
                 </li>
@@ -51,5 +54,13 @@
         </ul>
     </li>
 
+    <!-- Contact Section -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('dashboard.student.contact.index') }}">
+            <i class="bi bi-envelope"></i>
+            <span>Contact</span>
+        </a>
+    </li>
+    <!-- End Contact Section -->
 
 </ul>

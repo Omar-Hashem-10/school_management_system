@@ -5,7 +5,7 @@
 @section('content')
 
 <main id="main" class="main">
-  
+
   <div class="pagetitle">
     <h1>Dashboard</h1>
     <nav>
@@ -22,7 +22,7 @@
 
         <div class="card">
           <div class="card-header border-transparent">
-            <a href="{{ route('dashboard.admin.admins.create') }}" class="btn btn-sm btn-info float-left">Place New
+            <a href="{{ route('dashboard.admin.users.create') }}" class="btn btn-sm btn-info float-left">Place New
               admin</a>
           </div>
           <div class="card-body">
@@ -59,9 +59,9 @@
                   <td><span class="badge {{$badge}}">{{$admin->role->role_name}}</span></td>
                   <td>{{$admin->salary}}</td>
                   <td>
-                    <a class="btn btn-warning" href="{{route('dashboard.admin.admins.edit',$admin->id)}}">Edit</a>
+                    <a class="btn btn-warning" href="{{route('dashboard.admin.users.edit',$admin->id)}}">Edit</a>
                     <div class="btn-group" role="group">
-                      <form class="d-inline" action="{{route('dashboard.admin.admins.destroy',$admin->id)}}" method="post">
+                      <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$admin->id)}}" method="post">
                         @csrf
                         @method('delete')
                         <button class="btn btn-danger" type="submit">Delete</button>

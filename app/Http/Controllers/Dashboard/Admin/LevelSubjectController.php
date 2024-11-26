@@ -7,19 +7,20 @@ use App\Models\Subject;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
+use App\Traits\HelperFunctionsTrait;
 use App\Http\Requests\LevelSubjectRequest;
 
 class LevelSubjectController extends Controller
 {
-    use  SideDataTraits;
+    use  SideDataTraits, HelperFunctionsTrait;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $subjects = Subject::with('levels')->get();
-
         $sideData = $this->getSideData();
+
+        $subjects = Subject::with('levels')->get();
 
         return view('web.dashboard.admin.level_subjects.index', $sideData, compact('subjects'));
     }
@@ -39,8 +40,16 @@ class LevelSubjectController extends Controller
      */
     public function store(LevelSubjectRequest $request)
     {
-        $subject = Subject::findOrFail($request->subject_id);
-        $level = Level::findOrFail($request->level_id);
+        $subject = Subject::find($request->subject_id);
+        $this->getError(!$subject, 'Subject not found. Please check the provided subject ID.');
+
+        $level = Level::find($request->level_id);
+        $this->getError(!$level, 'Level not found. Please check the provided level ID.');
+
+        if($subject->levels()->where('level_id', $level->id)->exists())
+        {
+            return redirect()->back()->with('error', 'This subject is already associated with this level.');
+        }
 
         $subject->levels()->attach($level->id);
 
@@ -52,10 +61,15 @@ class LevelSubjectController extends Controller
      */
     public function edit($subjectId, $levelId)
     {
-        $subject = Subject::findOrFail($subjectId);
-        $level = Level::findOrFail($levelId);
+        $subject = Subject::find($subjectId);
+        $this->getError(!$subject, 'Subject not found. Please check the provided subject ID.');
+
+        $level = Level::find($levelId);
+        $this->getError(!$level, 'Level not found. Please check the provided level ID.');
+
         $subjects = Subject::get();
         $levels = Level::get();
+
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.level_subjects.edit', $sideData, compact('subject', 'level', 'subjects', 'levels'));
     }
@@ -65,17 +79,16 @@ class LevelSubjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(LevelSubjectRequest $request, Subject $subject, Level $level)
+    public function update(LevelSubjectRequest $request, Subject $subject)
     {
         $newLevelId = $request->input('level_id');
         $newSubjectId = $request->input('subject_id');
 
-        $subject->levels()->sync([$newLevelId => ['subject_id' => $newSubjectId]]);
+        $subject->levels()->updateExistingPivot($newLevelId, ['subject_id' => $newSubjectId]);
 
         return redirect()->route('dashboard.admin.level_subjects.index')
                          ->with('success', 'Updated Subject Level successfully!');
     }
-
 
 
 
@@ -84,7 +97,8 @@ class LevelSubjectController extends Controller
      */
     public function destroy($subjectId, $levelId)
     {
-        $subject = Subject::findOrFail($subjectId);
+        $subject = Subject::find($subjectId);
+        $this->getError(!$subject, 'Subject not found. Please check the provided subject ID.');
 
         $subject->levels()->detach($levelId);
 

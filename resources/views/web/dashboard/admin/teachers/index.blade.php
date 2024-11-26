@@ -50,9 +50,9 @@
                     </td>
                     <td>{{ $teacher->salary }}</td>
                     <td>
-                      <a class="btn btn-warning" href="{{route('dashboard.admin.teachers.edit',$teacher->id)}}">Edit</a>
+                      <a class="btn btn-warning" href="{{route('dashboard.admin.users.edit',$teacher->user->id)}}">Edit</a>
                       <div class="btn-group" role="group">
-                        <form class="d-inline" action="{{route('dashboard.admin.teachers.destroy',$teacher->id)}}" method="post">
+                        <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$teacher->user->id)}}" method="post">
                           @csrf
                           @method('delete')
                           <button class="btn btn-danger" type="submit">Delete</button>

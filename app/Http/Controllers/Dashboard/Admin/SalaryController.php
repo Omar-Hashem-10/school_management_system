@@ -55,7 +55,7 @@ class SalaryController extends Controller
         if($type==='Employee'){
         $modelClass = 'App\\Models\\' . $type;
         }else{
-            $modelClass = 'App\\Models\\User';  
+            $modelClass = 'App\\Models\\User';
         }
         if (!class_exists($modelClass)) {
             return response()->json(['error' => 'Invalid type provided'], 400);
@@ -90,13 +90,13 @@ class SalaryController extends Controller
             $person = User::find($personId);
             if ($person) {
             $person->salaries()->create($data);
-        }    
+        }
         }
         return redirect()->route('dashboard.admin.salaries.index', $data['date_id'])->with('success', 'Amount created successfully.');
     }
     public function edit(Salary $salary)
     {
-        
+
         $sideData = $this->getSideData();
 
         return view('web.dashboard.admin.salaries.edit', $sideData, compact('salary'));

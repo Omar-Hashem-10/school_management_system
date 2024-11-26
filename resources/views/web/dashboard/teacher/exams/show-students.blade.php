@@ -22,11 +22,6 @@
 
                 <div class="card">
                     <div class="card-header border-transparent">
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
                     </div>
                     <div class="card-body">
                         <h3>Students Who Took Exams</h3>
@@ -42,8 +37,8 @@
                                 @forelse($students as $student)
                                     <tr>
                                         <td>{{ $student->id }}</td>
-                                        <td>{{ $student->student_name }}</td>
-                                        <td>{{ $student->email }}</td>
+                                        <td>{{ $student->user->first_name }} {{ $student->user->last_name }}</td>
+                                        <td>{{ $student->user->email }}</td>
                                     </tr>
                                 @empty
                                     <tr>

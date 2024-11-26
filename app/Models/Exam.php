@@ -11,7 +11,8 @@ class Exam extends Model
 
     protected $fillable = [
         'name',
-        'exam_date',
+        'start_date',
+        'end_date',
         'exam_duration',
         'half_grade',
         'course_code_id',
@@ -30,9 +31,14 @@ class Exam extends Model
     ->withTimestamps();
 }
 
-public function grades()
+    public function grades()
+    {
+        return $this->hasMany(Grade::class, 'exam_id', 'id');
+    }
+
+    public function courseCode()
 {
-    return $this->hasMany(Grade::class, 'exam_id', 'id');
+    return $this->belongsTo(CourseCode::class, 'course_code_id', 'id');
 }
 
 public function feedbacks()

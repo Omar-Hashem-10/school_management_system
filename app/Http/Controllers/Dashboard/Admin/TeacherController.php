@@ -52,7 +52,7 @@ class TeacherController extends Controller
     public function store(TeacherRequest $request)
     {
         $data = $request->validated();
-        $user=$this->createUser( $request,$data);  
+        $user=$this->createUser( $request,$data);
         $teacherdata = [
             'role_id' => $data['role_id'],
             'salary' => $data['salary'],
@@ -81,7 +81,7 @@ class TeacherController extends Controller
      */
     public function update(TeacherRequest $request, Teacher $teacher)
     {
-        $user=$teacher->user; 
+        $user=$teacher->user;
         $data=$this->updateUser($request,$user);
         $teacherdata = [
             'role_id' => $data['role_id'],

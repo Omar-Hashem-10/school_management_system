@@ -27,6 +27,8 @@
                         <tr>
                             <th>#</th>
                             <th>Exam Name</th>
+                            <th>Start Exam</th>
+                            <th>Exam End</th>
                             <th>Duration</th>
                             <th>Exam Grade</th>
                             <th>Actions</th>
@@ -36,11 +38,13 @@
                         @forelse($exams as $exam)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $exam->exam_name }}</td>
+                                <td>{{ $exam->name }}</td>
+                                <td>{{ $exam->start_date }}</td>
+                                <td>{{ $exam->end_date }}</td>
                                 <td>{{ $exam->exam_duration }} minutes</td>
                                 <td>{{ $exam->half_grade * 2 }}</td>
                                 <td>
-                                    @if(\Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($exam->exam_date)))
+                                    @if(\Carbon\Carbon::now()->between(\Carbon\Carbon::parse($exam->start_date), \Carbon\Carbon::parse($exam->end_date)) || \Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($exam->end_date)))
                                         @if(in_array($exam->id, $exam_ids))
                                             @php
                                                 $grade = $exam->grades->first() ? $exam->grades->first()->grade : null;
@@ -49,23 +53,34 @@
                                                 View Answer
                                             </a>
                                             @if($grade !== null)
-                                                <span class="badge bg-info text-dark">Grade: {{ $grade }}</span>
+                                                @php
+                                                    $half_grade = $exam->half_grade;
+                                                    $grade_class = 'bg-info';
+                                                    if ($grade < $half_grade) {
+                                                        $grade_class = 'bg-danger';
+                                                    } elseif ($grade == $half_grade) {
+                                                        $grade_class = 'bg-warning';
+                                                    }
+                                                @endphp
+                                                <span class="badge {{ $grade_class }} text-dark">Grade: {{ $grade }}</span>
                                             @endif
                                         @else
                                             <a href="{{ route('dashboard.student.exam.show', $exam->id) }}" class="btn btn-primary btn-sm">Start Exam</a>
                                         @endif
-                                    @else
+                                    @elseif(\Carbon\Carbon::now()->gte(\Carbon\Carbon::parse($exam->end_date)))
+                                        <span class="text-muted">You have missed the exam</span>
+                                    @elseif(\Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($exam->start_date)))
                                         <span class="text-muted">Not available yet</span>
                                     @endif
                                 </td>
+
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center">No exams available for this course.</td>
+                                <td colspan="7" class="text-center">No exams available for this course.</td>
                             </tr>
                         @endforelse
                     </tbody>
-
                 </table>
             </div>
           </div>

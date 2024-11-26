@@ -22,14 +22,12 @@
           <div class="card">
             <div class="card-header border-transparent">
               <a href="{{ route('dashboard.admin.time_slots.create') }}" class="btn btn-sm btn-info float-left">Add New Time Slot</a>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
             </div>
             <div class="card-body">
               <!-- Table with stripped rows -->
+              @if($time_slots->isEmpty())
+                <p class="text-center font-weight-bold">No Data Available</p>
+              @else
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -61,6 +59,7 @@
                   @endforeach
                 </tbody>
               </table>
+              @endif
               <!-- End Table with stripped rows -->
             </div>
           </div>

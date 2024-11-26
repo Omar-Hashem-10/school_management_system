@@ -34,7 +34,6 @@ public function schedule()
                     ->withPivot('teacher_id');
     }
 
-
     public function exams()
     {
         return $this->hasMany(Exam::class);

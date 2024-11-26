@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DayController;
+use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\Admin\DateController;
@@ -23,6 +24,7 @@ use App\Http\Controllers\Dashboard\Admin\TimeSlotController;
 use App\Http\Controllers\Dashboard\Admin\ClassRoomController;
 use App\Http\Controllers\Dashboard\Admin\CourseCodeController;
 use App\Http\Controllers\Dashboard\Admin\AttendAdminController;
+use App\Http\Controllers\Dashboard\Admin\ContactReplyController;
 use App\Http\Controllers\Dashboard\Admin\LevelSubjectController;
 use App\Http\Controllers\Dashboard\Admin\AttendStudentController;
 use App\Http\Controllers\Dashboard\Admin\AttendTeacherController;
@@ -40,7 +42,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('/users', UserController::class);
         Route::resource('/roles', RoleController::class);
 
-        
+
         Route::get('/attends/{date}/{person}/{type}/{status}', [AttendController::class, 'store'])->name('attends.store');
         Route::get('/attends', [AttendController::class, 'index'])->name('attends.index');
 
@@ -85,7 +87,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
 
         Route::get('/dates/{date}/edit',[DateController::class, 'edit'])->name('dates.edit');
         Route::get('/dates',[DateController::class, 'index'])->name('dates.index');
-        Route::get('/dates/create',[DateController::class, 'create'])->name('dates.create');
+        Route::get('/dates/create/{bage}',[DateController::class, 'create'])->name('dates.create');
         Route::patch('/dates/{date}',[DateController::class, 'update'])->name('dates.update');
         Route::post('/dates',[DateController::class, 'store'])->name('dates.store');
         Route::delete('/dates/{date}',[DateController::class, 'destroy'])->name('dates.destroy');
@@ -102,6 +104,17 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('/time_slots', TimeSlotController::class);
         Route::resource('/schedules', ScheduleController::class);
 
+        Route::resource('/contacts', ContactReplyController::class)->except('create', 'edit', 'update');
+
+        // Route for creating a reply to a contact message
+        Route::get('/contacts/{contact}/create-reply', [ContactReplyController::class, 'createReply'])->name('contacts.createReply');
+
+        // Route for editing a reply to a contact message
+        Route::get('/contacts/{contact}/edit-reply', [ContactReplyController::class, 'editReply'])->name('contacts.editReply');
+
+        // في Route
+        Route::put('/contacts/{contactReply}', [ContactReplyController::class, 'update'])->name('contacts.update');
+
         Route::post('/logout', LogoutController::class)->name('logout');
     });
 });
@@ -112,5 +125,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/change-password/{user}', [ProfileController::class, 'changePassword'])->name('profile.update.password');
     Route::delete('profile/image/{user}', [ProfileController::class, 'destroyImage'])->name('profile.destroy.image');
 });
-Route::get('login', [LoginController::class, 'show'])->name('login.show');
-Route::post('login', [LoginController::class, 'authenticate'])->name('login');
+    Route::get('login', [LoginController::class, 'show'])->name('login.show');
+    Route::post('login', [LoginController::class, 'authenticate'])->name('login');
+
+
+        //paypal test
+    Route::get('/payment', [PayPalController::class, 'payment'])->name('payment');
+    Route::get('/payment/success', [PayPalController::class, 'success'])->name('payment.success');
+    Route::get('/cancel', [PayPalController::class, 'cancel'])->name('payment.cancel');
+

@@ -47,7 +47,7 @@ class AdminController extends Controller
     public function store(AdminRequest $request)
     {
         $data = $request->validated();
-        $user=$this->createUser( $request,$data);  
+        $user=$this->createUser( $request,$data);
         $admindata = [
             'role_id' => $data['role_id'],
             'salary' => $data['salary'],

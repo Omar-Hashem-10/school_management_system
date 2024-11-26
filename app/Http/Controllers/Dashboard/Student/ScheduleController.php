@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Models\Day;
+use App\Models\Level;
 use App\Models\Course;
+use App\Models\Subject;
 use App\Models\Schedule;
 use App\Models\TimeSlot;
-use App\Traits\SideDataTraits;
+use App\Models\CourseCode;
 use Illuminate\Http\Request;
+use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
 
 class ScheduleController extends Controller
@@ -22,15 +25,16 @@ class ScheduleController extends Controller
         $class_id = auth()->user()->student->class_room_id;
 
         $schedules = Schedule::where('class_room_id', $class_id)
-                    ->join('time_slots', 'schedules.time_slot_id', '=', 'time_slots.id')
-                    ->orderBy('time_slots.start_time')
-                    ->select('schedules.*')
                     ->get();
 
         $time_slots = TimeSlot::get();
         $days = Day::get();
-        $courses = Course::with('levels')->get();
+        $levels = Level::with('subjects')->get();
 
-        return view('web.dashboard.student.schedule.index', $sideData, compact('schedules', 'time_slots', 'courses', 'days'));
+        $course_codes_schedules = CourseCode::get();
+
+        $course_codes = session('course_codes');
+
+        return view('web.dashboard.student.schedule.index', array_merge($sideData, compact('schedules', 'time_slots', 'levels', 'days', 'course_codes', 'course_codes_schedules')));
     }
 }
