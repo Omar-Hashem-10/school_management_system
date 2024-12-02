@@ -43,9 +43,19 @@ class TeacherStudentController extends Controller
     {
         $sideData = $this->getSideData();
 
-        $grades = $student->grades()->paginate(5);
+        $courseCodeId = auth()->user()->teacher->courseCodes()
+            ->wherePivot('class_room_id', session('class_room_id'))
+            ->first()?->id;
 
-        return view('web.dashboard.teacher.students.show', $sideData, compact('student', 'grades'));
+        $grades = $student->grades()
+            ->whereHas('exam', function ($query) use ($courseCodeId) {
+                $query->where('course_code_id', $courseCodeId);
+            })
+            ->paginate(5);
+
+        return view('web.dashboard.teacher.students.show', $sideData, compact('student', 'grades', 'courseCodeId'));
     }
+
+
 
 }

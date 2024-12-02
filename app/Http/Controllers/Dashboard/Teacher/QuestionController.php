@@ -26,7 +26,7 @@ class QuestionController extends Controller
         if (!empty($course_code_id)) {
             session(['course_code_id' => $course_code_id]);
         }
-        $questions = Question::where('course_code_id', session('course_code_id'))->paginate(5);
+        $questions = Question::where('course_code_id', session('course_code_id'))->where('teacher_id', session('teacher_id'))->paginate(5);
         return view('web.dashboard.teacher.questions.index', $sideData , compact('questions'));
     }
 

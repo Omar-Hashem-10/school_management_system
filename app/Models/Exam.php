@@ -18,6 +18,7 @@ class Exam extends Model
         'course_code_id',
         'teacher_id',
         'class_room_id',
+        'academic_year_id',
     ];
 
     public function teacher()
@@ -54,5 +55,10 @@ public function classRoom()
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class);
     }
 }

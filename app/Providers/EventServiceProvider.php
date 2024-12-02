@@ -2,6 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\EducationPaymentEvent;
+use App\Events\SendMailToGuardianEvent;
+use App\Listeners\SendEducationPaymentConfirmation;
+use App\Listeners\SendEducationPaymentConfirmationListener;
+use App\Listeners\SendMailToGuardianListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +22,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        EducationPaymentEvent::class => [
+            SendEducationPaymentConfirmationListener::class,
+        ],
+        SendMailToGuardianEvent::class => [
+            SendMailToGuardianListener::class,
         ],
     ];
 

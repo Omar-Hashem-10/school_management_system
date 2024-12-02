@@ -14,6 +14,11 @@
 
       <!-- Other sections -->
       <li>
+        <a href="{{ route('dashboard.admin.academic-years.index') }}">
+          <i class="bi bi-circle"></i><span>Academic years</span>
+        </a>
+      </li>
+      <li>
         <a href="{{ route('dashboard.admin.levels.index') }}">
           <i class="bi bi-circle"></i><span>Levels</span>
         </a>

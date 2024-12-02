@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Models\Teacher;
 use App\Models\Feedback;
 use App\Models\TaskSend;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
 use App\Traits\SideDataTraits;
@@ -20,12 +21,17 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
+        $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+
+        if ($academicYear) {
+            session()->put('academic_year_id', $academicYear->id);
+        }
         $sideData = $this->getSideData();
         $class_room_id = $request->query('class_room_id');
         if (!empty($class_room_id)) {
             session(['class_room_id' => $class_room_id]);
         }
-        $tasks = Task::where('teacher_id', session('teacher_id'))->where('class_room_id', session('class_room_id'))->paginate(5);
+        $tasks = Task::where('teacher_id', session('teacher_id'))->where('class_room_id', session('class_room_id'))->where('academic_year_id', session('academic_year_id'))->paginate(5);
         return view('web.dashboard.teacher.tasks.index', $sideData, compact('tasks'));
     }
 

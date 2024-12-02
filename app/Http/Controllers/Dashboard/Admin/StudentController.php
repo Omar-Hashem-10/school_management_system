@@ -104,17 +104,21 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, Student $student)
     {
-        $user=$student->user;
-        $data=$this->updateUser($request,$user);
+        $user = $student->user;
+        $data = $this->updateUser($request, $user);
+
         $studentdata = [
             'guardian_id' => $data['guardian_id'],
             'user_id' => $user['id'],
             'class_room_id' => $data['class_room_id'],
-            'created_at' => now(),
         ];
-        Student::where('id', $user['id'])->update($studentdata);
-        return redirect()->route('dashboard.admin.students.index')->with('success', $data['type'] . ' added successfully');
+
+        Student::where('id', $student->id)->update($studentdata);
+
+        return redirect()->route('dashboard.admin.students.index')
+            ->with('success', $data['type'] . ' updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.

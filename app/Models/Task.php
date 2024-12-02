@@ -16,6 +16,7 @@ class Task extends Model
         'course_code_id',
         'teacher_id',
         'class_room_id',
+        'academic_year_id',
     ];
 
     public function feedback()
@@ -39,4 +40,8 @@ class Task extends Model
         return $this->hasMany(TaskSend::class);
     }
 
+        public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class);
+    }
 }

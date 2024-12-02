@@ -20,6 +20,6 @@ class Attend extends Model
     }
     public function date()
     {
-        $this->belongsTo(Date::class);
+        return $this->belongsTo(Date::class, 'date_id');
     }
 }

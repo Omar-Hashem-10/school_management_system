@@ -18,7 +18,11 @@ return new class extends Migration
             $table->enum('semester', ['first', 'second']);
             $table->timestamps();
         });
+
+        // قم بإنشاء قيد فريد مركب على الأعمدة (code و level_subject_id)
+        DB::statement('ALTER TABLE course_codes ADD CONSTRAINT unique_course_codes UNIQUE (code, level_subject_id)');
     }
+
 
     /**
      * Reverse the migrations.

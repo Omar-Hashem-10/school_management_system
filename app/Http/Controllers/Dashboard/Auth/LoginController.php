@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Auth;
 use App\Models\Admin;
 use App\Models\Student;
 use App\Models\Teacher;
+use App\Models\Guardian;
 use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -35,10 +36,16 @@ class LoginController extends Controller
                 return redirect()->intended('/dashboard/admin/home');
             }
 
+            if($user->role && $user->role->for === 'parents')
+            {
+                $this->getProfileData(Guardian::class);
+                return redirect()->intended('/dashboard/guardian/home');
+            }
+
 
             if ($user->role && $user->role->for === 'teachers') {
-               
-                $this->getProfileData(Teacher::class); 
+
+                $this->getProfileData(Teacher::class);
                 return redirect()->intended('/dashboard/teacher/home');
             }
             if ($user->role && $user->role->for === 'students') {
