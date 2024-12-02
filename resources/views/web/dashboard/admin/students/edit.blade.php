@@ -117,6 +117,14 @@
                     @enderror
                 </div>
                 <div class="form-group">
+                    <label for="relation">Relation</label>
+                    <input type="text" name="relation" class="form-control" id="relation"
+                        placeholder="Enter relation" value="{{$student->relation}}">
+                    @error('relation')
+                    <span class="text-danger">{{$message}}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
                     <label for="exampleInputFile">Image</label>
                     <div class="input-group">
                         <div class="custom-file">

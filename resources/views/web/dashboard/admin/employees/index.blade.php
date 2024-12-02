@@ -56,7 +56,9 @@
                   <td>{{ $employee->possition }}</td>
                   <td>{{ $employee->salary }}</td>
                   <td>
-                    <a class="btn btn-warning" href="{{route('dashboard.admin.employees.edit',$employee->id)}}">Edit</a>
+                    
+                  <a class="btn btn-warning" href="{{route('dashboard.admin.employees.edit',$employee->id)}}">Edit</a>
+                    @can('isAdmin')
                     <div class="btn-group" role="group">
                       <form class="d-inline" action="{{route('dashboard.admin.employees.destroy',$employee->id)}}" method="post">
                         @csrf
@@ -64,6 +66,7 @@
                         <button class="btn btn-danger" type="submit">Delete</button>
                       </form>
                     </div>
+                  @endcan
                   </td>
                 </tr>
                 @endforeach

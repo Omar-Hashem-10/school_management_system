@@ -14,7 +14,6 @@ trait UserTrait
 {
     public function createUser($request,$data)
     {
-
         $userData = Arr::only($data, [
             'first_name',
             'last_name',
@@ -51,9 +50,10 @@ trait UserTrait
             'last_name',
             'email',
             "phone",
-            'type',
             "password",
             "role_id",
+            'gender',
+            'type',
         ]);
         $userData['password'] = Hash::make($userData['password']);
         if ($request->hasFile('image')) {

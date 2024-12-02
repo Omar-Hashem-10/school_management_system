@@ -15,10 +15,10 @@ class AdminSeeder extends Seeder
     {
         DB::table('admins')->insert([
             ['user_id' => 1,
-            'role_id' => 1,
+            'role_id' => 6,
             'created_at' => now(),],
             ['user_id' => 2,
-            'role_id' => 2,
+            'role_id' => 7,
             'created_at' => now(),]
         ]            
         );

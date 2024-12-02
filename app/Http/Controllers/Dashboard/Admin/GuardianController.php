@@ -46,7 +46,7 @@ class GuardianController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UserRequest $request)
+    public function store(GuardianRequest $request)
     {
         $data = $request->validated();
         $user = $this->createUser( $request,$data);

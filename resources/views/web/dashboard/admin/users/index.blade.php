@@ -80,6 +80,8 @@
                   <td><span class="badge {{$badge}}">{{$user->role->role_name}}</span></td>
                   <td>
                     <a class="btn btn-warning" href="{{route('dashboard.admin.'.$user->type.'s.edit',$id)}}">Edit</a>
+                    @can('isAdmin')
+                      
                     <div class="btn-group" role="group">
                       <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$user->id)}}"
                         method="post">
@@ -88,6 +90,7 @@
                         <button class="btn btn-danger" type="submit">Delete</button>
                       </form>
                     </div>
+                    @endcan
                   </td>
                 </tr>
                 @endforeach

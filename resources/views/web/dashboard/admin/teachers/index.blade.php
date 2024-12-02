@@ -50,7 +50,9 @@
                     </td>
                     <td>{{ $teacher->salary }}</td>
                     <td>
-                      <a class="btn btn-warning" href="{{route('dashboard.admin.users.edit',$teacher->user->id)}}">Edit</a>
+                      <a class="btn btn-warning" href="{{route('dashboard.admin.teachers.edit',$teacher->id)}}">Edit</a>
+                      @can('isAdmin')
+                        
                       <div class="btn-group" role="group">
                         <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$teacher->user->id)}}" method="post">
                           @csrf
@@ -58,6 +60,7 @@
                           <button class="btn btn-danger" type="submit">Delete</button>
                         </form>
                       </div>
+                      @endcan
                       <a class="btn btn-success" href="{{route('dashboard.admin.course_teachers.index',['teacher_id' => $teacher->id])}}">info</a>
                     </td>
                   </tr>
