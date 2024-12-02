@@ -27,11 +27,12 @@ class CourseCode extends Model
 }
 
 
-    public function teachers()
-    {
-        return $this->belongsToMany(Teacher::class, 'course_teachers', 'course_code_id', 'teacher_id')
-                    ->withPivot('class_room_id', 'id');
-    }
+public function teachers()
+{
+    return $this->belongsToMany(Teacher::class, 'course_teachers', 'course_code_id', 'teacher_id')
+                ->withPivot('class_room_id', 'id')
+                ->distinct();
+}
 
 public function classRooms()
 {

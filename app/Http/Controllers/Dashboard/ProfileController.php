@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Employee;
+use App\Models\Guardian;
 use App\Traits\DataTraits;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
@@ -31,6 +32,8 @@ class ProfileController extends Controller
             $this->getProfileData(Teacher::class);
         } elseif (Gate::allows('isStudent')) {
             $this->getProfileData(Student::class);
+        } elseif (Gate::allows('isGuardian')) {
+            $this->getProfileData(Guardian::class);
         }else{
             $this->getProfileData(Employee::class);
         }
@@ -95,7 +98,7 @@ class ProfileController extends Controller
     }
     public function update(Request $request,$id)
     {
-        
+
         $data=$request->validate([
             'name'=>'required|string|max:255',
             'phone'=>'nullable|string',

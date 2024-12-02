@@ -67,7 +67,7 @@
                   <td>
                     <a class="btn btn-warning" href="{{route('dashboard.admin.guardians.edit',$guardian->id)}}">Edit</a>
                     <div class="btn-group" role="group">
-                      <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$guardian->user->id)}}"
+                      <form class="d-inline" action="{{route('dashboard.admin.guardians.destroy',$guardian->user->id)}}"
                         method="post">
                         @csrf
                         @method('delete')

@@ -91,16 +91,18 @@
                     <td>
                       <img src="{{ FileHelper::get_file_path($student->image?->path, 'user') }}" class="rounded-circle" width="100" height="100">
                     </td>
-                    <td>
-                      <a class="btn btn-warning" href="{{ route('dashboard.admin.students.edit', ($student->student)?$student->student->id:$student->id) }}">Edit</a>
-                      <div class="btn-group" role="group">
-                        <form class="d-inline" action="{{ route('dashboard.admin.students.destroy', ($student->student)?$student->student->id:$student->id) }}" method="post">
-                          @csrf
-                          @method('delete')
-                          <button class="btn btn-danger" type="submit">Delete</button>
-                        </form>
-                      </div>
+                    <<td>
+                        <a class="btn btn-warning" href="{{ route('dashboard.admin.students.edit', ($student->student)?$student->student->id:$student->id) }}">Edit</a>
+                        <div class="btn-group" role="group">
+                            <form class="d-inline" action="{{ route('dashboard.admin.students.destroy', ($student->student)?$student->student->id:$student->id) }}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </div>
+                        <a class="btn btn-info" href="{{ route('dashboard.admin.students.sendMailForm', $student->id) }}">Send Mail</a>
                     </td>
+
                   </tr>
                   @endforeach
                 </tbody>

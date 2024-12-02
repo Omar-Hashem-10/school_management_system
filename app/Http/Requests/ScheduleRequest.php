@@ -40,19 +40,18 @@ class ScheduleRequest extends FormRequest
                     $schedule = $this->route('schedule');
 
                     $query = Schedule::where('day_id', $this->day_id)
-                        ->where('time_slot_id', $value);
+                        ->where('time_slot_id', $value)
+                        ->where('class_room_id', $this->class_room_id);
 
                     if ($schedule) {
                         $query->where('id', '!=', $schedule->id);
                     }
 
                     if ($query->exists()) {
-                        $fail('The selected time slot is already taken for this day.');
+                        $fail('The selected time slot is already taken for this day in the same class room.');
                     }
                 },
             ],
         ];
     }
-
-
 }

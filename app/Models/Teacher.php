@@ -25,7 +25,8 @@ class Teacher extends Model
     public function courseCodes()
     {
         return $this->belongsToMany(CourseCode::class, 'course_teachers', 'teacher_id', 'course_code_id')
-                    ->withPivot('class_room_id', 'id');
+                    ->withPivot('class_room_id', 'id')
+                    ->distinct();
     }
 
 

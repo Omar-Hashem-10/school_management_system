@@ -25,7 +25,7 @@ class TaskController extends Controller
             session()->put('course_code_id', $course_code_id);
         }
 
-        $tasks = Task::where('course_code_id', session('course_code_id'))
+        $tasks = Task::where('course_code_id', session('course_code_id'))->where('class_room_id', auth()->user()->student->class_room_id)
                      ->paginate(5);
 
         $taskLinks = TaskSend::where('student_id', session('student_id'))

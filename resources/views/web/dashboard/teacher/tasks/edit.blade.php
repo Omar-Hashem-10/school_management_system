@@ -36,6 +36,7 @@
         @csrf
         @method('PUT')
 
+        <input type="hidden" name="academic_year_id" value="{{ session('academic_year_id') }}">
         <input type="hidden" name="course_code_id" value="{{ $task->course_code_id }}">
         <input type="hidden" name="class_room_id" value="{{ $task->class_room_id }}">
         <input type="hidden" name="teacher_id" value="{{ $task->teacher_id }}">

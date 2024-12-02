@@ -59,7 +59,7 @@
                   <td><span class="badge {{$badge}}">{{$admin->role->role_name}}</span></td>
                   <td>{{$admin->salary}}</td>
                   <td>
-                    <a class="btn btn-warning" href="{{route('dashboard.admin.users.edit',$admin->id)}}">Edit</a>
+                    <a class="btn btn-warning" href="{{route('dashboard.admin.admins.edit',$admin->id)}}">Edit</a>
                     <div class="btn-group" role="group">
                       <form class="d-inline" action="{{route('dashboard.admin.users.destroy',$admin->id)}}" method="post">
                         @csrf

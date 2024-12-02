@@ -23,4 +23,9 @@ class Level extends Model
     {
         return $this->hasMany(ClassRoom::class, 'level_id', 'id');
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'level_id', 'id');
+    }
 }

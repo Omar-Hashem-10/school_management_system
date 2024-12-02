@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard\Student;
 
 use App\Models\Exam;
 use App\Models\Answer;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
@@ -19,7 +20,14 @@ class ExamController extends Controller
         $sideData = $this->getSideData();
         $course_code_id = $request->query('course_code');
 
-        $exams = Exam::where('course_code_id', $course_code_id)
+        $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+
+        if ($academicYear) {
+            session()->put('academic_year_id', $academicYear->id);
+        }
+
+        $exams = Exam::where('course_code_id', $course_code_id)->where('class_room_id', auth()->user()->student->class_room_id)
+            ->where('academic_year_id', session('academic_year_id'))
             ->with(['grades' => function ($query) {
                 $query->where('student_id', auth()->user()->student->id);
             }])

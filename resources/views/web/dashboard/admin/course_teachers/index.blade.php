@@ -39,32 +39,39 @@
                             </thead>
                             <tbody>
                                 @foreach ($course_teachers as $course_teacher)
-                                    @foreach ($course_teacher->classRooms as $classRoom)
-                                        <tr>
-                                            <th scope="row">{{ $loop->iteration }}</th>
-                                            <td>{{ $course_teacher->code }}</td>
-                                            <td>{{ $classRoom->name ?? 'N/A' }}</td>
-                                            <td>
-                                                @foreach ($course_teacher->teachers as $teacher)
-                                                    {{ $teacher->user->first_name }} @if (!$loop->last), @endif
-                                                @endforeach
-                                                @if ($course_teacher->teachers->isEmpty())
-                                                    N/A
+                                    <tr>
+                                        <th scope="row">{{ $loop->iteration }}</th>
+                                        <td>{{ $course_teacher->code }}</td>
+                                        <td>
+                                            @foreach ($course_teacher->classRooms as $classRoom)
+                                                @if ($course_teacher->pivot->class_room_id == $classRoom->id)
+                                                    {{ $classRoom->name }}
                                                 @endif
-                                            </td>
-                                            <td>{{ $course_teacher->semester }}</td>
-                                            <td>{{ $course_teacher->created_at }}</td>
-                                            <td>{{ $course_teacher->updated_at }}</td>
-                                            <td>
-                                                <a href="{{ route('dashboard.admin.course_teachers.edit', $course_teacher->pivot->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                                                <form action="{{ route('dashboard.admin.course_teachers.destroy', $course_teacher->pivot->id) }}" method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                                </form>
-                                                                                            </td>
-                                        </tr>
-                                    @endforeach
+                                            @endforeach
+                                            @if ($course_teacher->classRooms->isEmpty())
+                                                N/A
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($course_teacher->pivot->teacher_id && $course_teacher->teachers->firstWhere('id', $course_teacher->pivot->teacher_id))
+                                                {{ $course_teacher->teachers->firstWhere('id', $course_teacher->pivot->teacher_id)->user->first_name }}
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
+
+                                        <td>{{ $course_teacher->semester }}</td>
+                                        <td>{{ $course_teacher->created_at }}</td>
+                                        <td>{{ $course_teacher->updated_at }}</td>
+                                        <td>
+                                            <a href="{{ route('dashboard.admin.course_teachers.edit', $course_teacher->pivot->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                            <form action="{{ route('dashboard.admin.course_teachers.destroy', $course_teacher->pivot->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
