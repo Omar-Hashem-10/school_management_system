@@ -71,7 +71,6 @@
 
             <!-- Table with stripped rows -->
             <table class="table table-striped">
-
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -109,6 +108,7 @@
                       </form>
                       @endcanany
                     </div>
+                    <a class="btn btn-info" href="{{ route('dashboard.admin.students.sendMailForm', $student->id) }}">Send Mail</a>
                   </td>
                 </tr>
                 @endforeach

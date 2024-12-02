@@ -22,4 +22,9 @@ class Guardian extends Model
     public function role(){
         return $this->belongsTo(Role::class,'role_id');
     }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

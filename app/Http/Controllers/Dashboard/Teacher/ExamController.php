@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard\Teacher;
 
+use App\Models\AcademicYear;
 use App\Models\Exam;
 use App\Models\Answer;
 use App\Models\Student;
@@ -20,12 +21,18 @@ class ExamController extends Controller
      */
     public function index(Request $request)
     {
+        $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+
+        if ($academicYear) {
+            session()->put('academic_year_id', $academicYear->id);
+        }
+
         $class_room_id = $request->query('class_room_id');
         if (!empty($class_room_id)) {
             session(['class_room_id' => $class_room_id]);
         }
         $sideData = $this->getSideData();
-        $exams = Exam::where('class_room_id', session('class_room_id'))->where('teacher_id', session('teacher_id'))->paginate(5);
+        $exams = Exam::where('class_room_id', session('class_room_id'))->where('teacher_id', session('teacher_id'))->where('academic_year_id', session('academic_year_id'))->paginate(5);
         return view('web.dashboard.teacher.exams.index', $sideData, compact('exams'));
     }
 
@@ -49,7 +56,6 @@ class ExamController extends Controller
         }
 
         $sideData = $this->getSideData();
-
 
         return view('web.dashboard.teacher.exams.create', $sideData);
     }

@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\Admin\LevelController;
+use App\Http\Controllers\API\Admin\SubjectController;
+use App\Http\Controllers\API\Admin\ClassRoomController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::apiResource('/levels', LevelController::class);
+Route::apiResource('/subjects', SubjectController::class);
+Route::apiResource('/classrooms', ClassRoomController::class);

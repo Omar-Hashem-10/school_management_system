@@ -23,5 +23,9 @@
     @include('web.dashboard.student.layouts.aside')
 @endcan
 
+@can('isGuardian')
+    @include('web.dashboard.guardian.layouts.aside')
+@endcan
+
 
 </aside><!-- End Sidebar-->

@@ -27,6 +27,16 @@
     </div>
     <div class="card card-primary">
         <div class="card-header">
+            @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
             <h3 class="card-title">Create User</h3>
         </div>
         <form action="{{route('dashboard.admin.users.store')}}" method="POST" enctype="multipart/form-data">

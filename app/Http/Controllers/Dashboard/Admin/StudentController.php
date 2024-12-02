@@ -105,8 +105,9 @@ class StudentController extends Controller
      */
     public function update(StudentRequest $request, Student $student)
     {
-        $user=$student->user;
-        $data=$this->updateUser($request,$user);
+        $user = $student->user;
+        $data = $this->updateUser($request, $user);
+
         $studentdata = [
             'guardian_id' => $data['guardian_id'],
             'user_id' => $user['id'],

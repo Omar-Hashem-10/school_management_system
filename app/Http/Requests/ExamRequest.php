@@ -30,6 +30,7 @@ class ExamRequest extends FormRequest
             'course_code_id' => 'required|exists:course_codes,id',
             'teacher_id' => 'required|exists:teachers,id',
             'class_room_id' => 'required|exists:class_rooms,id',
+            'academic_year_id' => 'required|exists:academic_years,id',
         ];
     }
 

@@ -35,6 +35,9 @@
             <form action="{{ route('dashboard.teacher.exams.store') }}" method="POST">
             @csrf
 
+            @if(session('academic_year_id'))
+                <input type="hidden" name="academic_year_id" value="{{ session('academic_year_id') }}">
+            @endif
             @if(session('course_code_id'))
                 <input type="hidden" name="course_code_id" value="{{ session('course_code_id') }}">
             @endif

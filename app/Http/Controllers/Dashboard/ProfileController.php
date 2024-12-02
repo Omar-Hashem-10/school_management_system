@@ -37,6 +37,8 @@ class ProfileController extends Controller
             $this->getProfileData(Teacher::class);
         } elseif (Gate::allows('isStudent')) {
             $this->getProfileData(Student::class);
+        } elseif (Gate::allows('isGuardian')) {
+            $this->getProfileData(Guardian::class);
         }else{
             $this->getProfileData(Guardian::class);
         }

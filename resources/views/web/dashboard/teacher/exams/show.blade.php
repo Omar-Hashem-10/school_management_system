@@ -32,6 +32,7 @@
                                     <th>Question</th>
                                     <th>Options</th>
                                     <th>Is Correct</th>
+                                    <th>Question Grade</th>
                                 </tr>
                             </thead>
                             <tbody>
