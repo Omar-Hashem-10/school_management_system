@@ -182,7 +182,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Srmklive\PayPal\Providers\PayPalServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
         /*
          * Package Service Providers...
          */

@@ -31,7 +31,14 @@ class SalaryController extends Controller
     }
     public function amounts(Date $date)
     {
-        $salaries = Salary::where('date_id', $date->id)->with('person')->orderBy('id', 'desc')->get()->all();
+        $allSalaries= Salary::where('date_id', $date->id)->with('person')->orderBy('id', 'desc')->get()->all();
+        $salaries=[];
+        // dd($salaries);
+        foreach($allSalaries as $salary){
+            if($salary->person){
+                array_push($salaries,$salary);
+            }
+        }
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.salaries.amounts', $sideData, compact('salaries', 'date'));
     }

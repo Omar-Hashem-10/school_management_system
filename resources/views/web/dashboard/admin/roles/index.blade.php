@@ -31,7 +31,6 @@
                     <th scope="col">#</th>
                     <th scope="col">Role</th>
                     <th scope="col">For</th>
-                    <th scope="col">Base Salary</th>
                     <th scope="col">Actions</th>
                   </tr>
                 </thead>
@@ -41,7 +40,6 @@
                     <th scope="row">{{ $loop->iteration }}</th>
                     <td>{{ $role->role_name }}</td>
                     <td>{{ $role->for }}</td>
-                    <td>{{ $role->base_salary }}</td>
                     <td>
                       <a class="btn btn-warning" href="{{route('dashboard.admin.roles.edit',$role->id)}}">Edit</a>
                       <div class="btn-group" role="group">

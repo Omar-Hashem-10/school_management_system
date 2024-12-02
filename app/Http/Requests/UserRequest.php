@@ -40,6 +40,7 @@ class UserRequest extends FormRequest
     {
         return [
             'password.required' => __('custom.validation.password.required'),
+            'password.confirm' => __('custom.validation.password.confirm'),
         ];
     }
 }

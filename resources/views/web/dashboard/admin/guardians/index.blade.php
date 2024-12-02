@@ -66,6 +66,7 @@
                   </td>
                   <td>
                     <a class="btn btn-warning" href="{{route('dashboard.admin.guardians.edit',$guardian->id)}}">Edit</a>
+                    @canany('isAdmin','isManager')
                     <div class="btn-group" role="group">
                       <form class="d-inline" action="{{route('dashboard.admin.guardians.destroy',$guardian->user->id)}}"
                         method="post">
@@ -74,6 +75,7 @@
                         <button class="btn btn-danger" type="submit">Delete</button>
                       </form>
                     </div>
+                    @endcanany
                   </td>
                 </tr>
                 @endforeach

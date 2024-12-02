@@ -27,8 +27,9 @@ class StudentRequest extends FormRequest
         $userRules = UserRequest::rules(); 
 
         $studentRules = [
-            'class_room_id'       => 'nullable|integer|exists:class_rooms,id',
-            'guardian_id'         => 'nullable|integer|exists:guardians,id',
+            'class_room_id'       => 'required|integer|exists:class_rooms,id',
+            'guardian_id'         => 'required|integer|exists:guardians,id',
+            'relation'            => 'required',
             'email' => [
                 'required',
                 'email',
