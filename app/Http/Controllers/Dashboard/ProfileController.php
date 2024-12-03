@@ -10,14 +10,19 @@ use App\Models\Teacher;
 use App\Models\Employee;
 use App\Models\Guardian;
 use App\Traits\DataTraits;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\ProfileRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\ProfileImageRequest;
+use App\Http\Requests\ProfilePasswordRequest;
 
 class ProfileController extends Controller
 {
@@ -35,120 +40,56 @@ class ProfileController extends Controller
         } elseif (Gate::allows('isGuardian')) {
             $this->getProfileData(Guardian::class);
         }else{
-            $this->getProfileData(Employee::class);
+            $this->getProfileData(Guardian::class);
         }
         return view('web.dashboard.profile.index', $sideData);
     }
-    public function updateImage(Request $request, string $id)
+    public function updateImage(ProfileImageRequest $request, string $id)
     {
 
-        $data = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-        if (Gate::allows('isAdmin') || Gate::allows('isManager')) {
-            $person = Admin::findOrFail($id);
-        } elseif (Gate::allows('isTeacher')) {
-            $person = Teacher::findOrFail($id);
-        } elseif (Gate::allows('isStudent')) {
-            $person = Student::findOrFail($id);
-        }else{
-            $person = Employee::findOrFail($id);
-        }
-        // dd($person,$model);
+        $user=Auth::user();
+        
         if ($request->hasFile('image')) {
-            if ($person->image) {
-                Storage::disk('public')->delete($person->image);
+            if ($user->image) {
+                Storage::delete('public/' . $user->image->path);
+                $user->image()->delete();
             }
             $image = $request->file('image');
-            if (Gate::allows('isAdmin') || Gate::allows('isManager')) {
-                $filename = $image->store('/admins', 'public');
-            } elseif (Gate::allows('isTeacher')) {
-                $filename = $image->store('/teachers', 'public');
-            } elseif (Gate::allows('isStudent')) {
-                $filename = $image->store('/students', 'public');
-            }else{
-                $filename = $image->store('/employees', 'public');
+            $filename = $image->store('/users', 'public');
+            if (!$user) {
+                return back()->with('error', 'User not found');
             }
-
-            $data['image'] = $filename;
+            $user->image()->create([
+                'path' => $filename,
+            ]);
         }
-        $person->image = $data['image'];
-        $person->save();
-        session('user')[0]['image'] = $person->image;
         return redirect()->route('dashboard.profile.index')->with('success', 'image updated successfully');
     }
     public function destroyImage($id)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isManager')) {
-            $person = Admin::findOrFail($id);
-        } elseif (Gate::allows('isTeacher')) {
-            $person = Teacher::findOrFail($id);
-        } elseif (Gate::allows('isStudent')) {
-            $person = Student::findOrFail($id);
-        }else{
-            $person = Employee::findOrFail($id);
+        $user=Auth::user();
+        if ($user->image) {
+            Storage::delete('public/' . $user->image->path);
+            $user->image()->delete();
         }
-        if ($person->image) {
-            Storage::disk('public')->delete($person->image);
-        }
-        $person->image = null;
-        $person->save();
-        session('user')[0]['image'] = $person->image;
         return redirect()->back()->with('success', 'image deleted successfully');
     }
-    public function update(Request $request,$id)
+    public function update(ProfileRequest $request,$id)
     {
-
-        $data=$request->validate([
-            'name'=>'required|string|max:255',
-            'phone'=>'nullable|string',
-            'email'=>'required','email',
-            Rule::unique('users','email')->ignore(auth()->user()->id),
-        ]);
+        $data=$request->validated();
+        // dd($data);
+        // $data=Arr::except($data,'image');
         try{
-        $userData = [
-            'name' => $data['name'],
-            'email' => $data['email'],
-        ];
-        if (Gate::allows('isAdmin') || Gate::allows('isManager')) {
-            $person = Admin::findOrFail($id);
-            $data['admin_name']=$data['name'];
-        } elseif (Gate::allows('isTeacher')) {
-            $person = Teacher::findOrFail($id);
-            $data['teacher_name']=$data['name'];
-        } elseif (Gate::allows('isStudent')) {
-            $person = Student::findOrFail($id);
-            $data['student_name']=$data['name'];
-        }else{
-            $person = Employee::findOrFail($id);
-            $data['employee_name']=$data['name'];
-        }
-        User::where('id',$person->user_id)->update($userData);
-        session('user')[0]['name'] = $data['name'];
-        unset($data['name']);
-        foreach($data as $key => $value){
-            $person[$key]=$value;
-            session('user')[0][$key] = $person[$key];
-        }
-        $person->save();
+        $user=Auth::user();
+        $user->update($data);
     }catch(Exception $e){
         return redirect()->back()->with('error','the email is exist before');
 }
         return redirect()->back()->with('success', 'the data updated successfully');
     }
-    public function changePassword(Request $request, User $user)
+    public function changePassword(ProfilePasswordRequest $request, User $user)
     {
-        $request->validate([
-            'currentPassword'=>['required',
-            function ($attribute, $value, $fail) {
-                if (!Hash::check($value, auth()->user()->password)) {
-                    return $fail('The Current password is not correct.');
-                }
-            },
-        ],
-            'password'=>'required|confirmed',
-            'password_confirmation'=>'required'
-        ]);
+        
         $data=['password'=>Hash::make($request->password)];
         User::where('id', $user->id)->update($data);
         return redirect()->back()->with('success', 'the password updated successfully');

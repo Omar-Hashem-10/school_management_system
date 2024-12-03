@@ -36,7 +36,6 @@
                 <tbody>
                     @foreach ($subjects as $subject)
                     <tr>
-                      </td>
                         <th scope="row">{{$loop->iteration}}</th>
                         <td>{{$subject->name}}</td>
                         <td>{{$subject->created_at}}</td>

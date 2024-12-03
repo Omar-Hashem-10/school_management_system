@@ -80,6 +80,7 @@ class StudentController extends Controller
             'guardian_id' => $request['guardian_id'],
             'user_id' => $user['id'],
             'class_room_id' => $request['class_room_id'],
+            'relation'=>$data['relation'],
             'created_at' => now(),
         ];
         Student::create($studentdata);
@@ -111,15 +112,13 @@ class StudentController extends Controller
             'guardian_id' => $data['guardian_id'],
             'user_id' => $user['id'],
             'class_room_id' => $data['class_room_id'],
+            'relation'=>$data['relation'],
+            'created_at' => now(),
         ];
-
-        Student::where('id', $student->id)->update($studentdata);
-
-        return redirect()->route('dashboard.admin.students.index')
-            ->with('success', $data['type'] . ' updated successfully');
+        // dd($studentdata);
+        $student->update($studentdata);
+        return redirect()->route('dashboard.admin.students.index')->with('success', $data['type'] . ' added successfully');
     }
-
-
     /**
      * Remove the specified resource from storage.
      */

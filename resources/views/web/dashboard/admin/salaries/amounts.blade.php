@@ -45,12 +45,11 @@
                 @foreach ($salaries as $salary )
                 <tr>
                   <th scope="row">{{ $loop->iteration }}</th>
-                  @if ($salary->person_type=='App\Models\Employee')
+                  @if ($salary['person_type'] == "App\Models\Employee")
                   <td>{{ ($salary->person->name) }}</td>
                   <td><span class="badge bg-primary">{{ $salary->person->possition }}</span></td>
-
-                  @else
-                  <td>{{ ($salary->person->fullName()) }}</td>
+                  @elseif ($salary['person_type'] == "App\Models\User")
+                  <td>{{ $salary->person->fullName() }}</td>
                   @if($salary->person->role['role_name']=='admin')
                   <td><span class="badge bg-danger">{{ $salary->person->role['role_name'] }}</span></td>
                   @elseif ($salary->person->role['role_name']=='manager')

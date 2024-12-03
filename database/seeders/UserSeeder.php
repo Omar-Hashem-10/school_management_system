@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'type'=>'admin',
             'gender'=>'male',
             'password' => Hash::make('123456789'),
-            'role_id' => 1,
+            'role_id' => 6,
         ]);
         \App\Models\User::factory()->create([
             'first_name' => 'manager',
@@ -33,27 +33,27 @@ class UserSeeder extends Seeder
             'type'=>'admin',
             'gender'=>'male',
             'password' => Hash::make('123456789'),
-            'role_id' => 2,
+            'role_id' => 7,
         ]);
-        \App\Models\User::factory()->create([
-            'first_name' => 'teacher',
-            'last_name' => 'Ben teacher',
-            'email' => 'teacher@app.com',
-            'phone'=>"01015616884",
-            'type'=>'teacher',
-            'gender'=>'male',
-            'password' => Hash::make('123456789'),
-            'role_id' => 3,
-        ]);
-        \App\Models\User::factory()->create([
-            'first_name' => 'student',
-            'last_name' => 'Ben student',
-            'email' => 'student@app.com',
-            'phone'=>"01015616884",
-            'type'=>'student',
-            'gender'=>'male',
-            'password' => Hash::make('123456789'),
-            'role_id' => 4,
-        ]);
+        // \App\Models\User::factory()->create([
+        //     'first_name' => 'teacher',
+        //     'last_name' => 'Ben teacher',
+        //     'email' => 'teacher@app.com',
+        //     'phone'=>"01015616884",
+        //     'type'=>'teacher',
+        //     'gender'=>'male',
+        //     'password' => Hash::make('123456789'),
+        //     'role_id' => 3,
+        // ]);
+        // \App\Models\User::factory()->create([
+        //     'first_name' => 'student',
+        //     'last_name' => 'Ben student',
+        //     'email' => 'student@app.com',
+        //     'phone'=>"01015616884",
+        //     'type'=>'student',
+        //     'gender'=>'male',
+        //     'password' => Hash::make('123456789'),
+        //     'role_id' => 4,
+        // ]);
     }
 }

@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function __invoke()
     {
-        abort_if(!(Gate::allows('isAdmin') || Gate::allows('isManager')),403) ;
+        abort_if(!(Gate::allows('isAdmin') || Gate::allows('isManager')|| Gate::allows('isHR')|| Gate::allows('isAcademicAffairs')),403) ;
             $classRooms = ClassRoom::all();
             $sideData = $this->getSideData();
             return view('web.dashboard.admin.home.index',$sideData, compact('classRooms'));
