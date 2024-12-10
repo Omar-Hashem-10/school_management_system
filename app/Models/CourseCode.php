@@ -40,4 +40,14 @@ public function classRooms()
                 ->withPivot('teacher_id');
 }
 
+public function tasks()
+{
+    return $this->hasMany(Task::class, 'course_code_id');
+}
+
+public function certificates()
+{
+    return $this->belongsToMany(Certificate::class, 'certificate_courses', 'course_code_id', 'certificate_id')
+                ->withPivot('subject_marks');
+}
 }

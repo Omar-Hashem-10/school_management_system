@@ -13,6 +13,7 @@ class TaskSend extends Model
         'task_link',
         'task_id',
         'student_id',
+        'academic_year_id',
     ];
     public function task()
     {
@@ -23,4 +24,9 @@ class TaskSend extends Model
     {
         return $this->belongsTo(Student::class, 'student_id', 'id');
     }
+
+    public function academicYear()
+{
+    return $this->belongsTo(AcademicYear::class);
+}
 }

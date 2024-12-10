@@ -42,7 +42,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role && $user->role->role_name === 'parent';
         });
         Gate::define('isAcademicAffairs', function (User $user) {
-            return $user->role && $user->role->role_name === 'academic affairs';
+            return $user->role && $user->role->role_name === 'academic affairs';
         });
         Gate::define('isHR', function (User $user) {
             return $user->role && $user->role->role_name === 'HR';

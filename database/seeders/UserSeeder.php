@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'type'=>'admin',
             'gender'=>'male',
             'password' => Hash::make('123456789'),
-            'role_id' => 6,
+            'role_id' => 1,
         ]);
         \App\Models\User::factory()->create([
             'first_name' => 'manager',
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'type'=>'admin',
             'gender'=>'male',
             'password' => Hash::make('123456789'),
-            'role_id' => 7,
+            'role_id' => 2,
         ]);
         // \App\Models\User::factory()->create([
         //     'first_name' => 'teacher',

@@ -1,18 +1,17 @@
 @extends('web.dashboard.master')
 
 @section('parent', 'Users')
-@section('title', 'Task Results')
+@section('title', 'Task Grades')
 
 @section('content')
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1>Task Results for {{ $student->name }}</h1>
+        <h1>Task Grades for {{ $student->user->first_name . ' ' . $student->user->last_name }}</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
                 <li class="breadcrumb-item active">Tasks</li>
-                <li class="breadcrumb-item active">Results</li>
-                <li class="breadcrumb-item active">{{ $student->name }}</li>
+                <li class="breadcrumb-item active">Grades</li>
             </ol>
         </nav>
     </div>
@@ -22,9 +21,29 @@
             <div class="col-lg-12">
                 <div class="card shadow-lg border-light rounded">
                     <div class="card-header bg-primary text-white">
-                        <h3 class="card-title">Task Results for Student: {{ $student->name }}</h3>
+                        <h3 class="card-title">Task Grades for Student: {{ $student->user->first_name . ' ' . $student->user->last_name }}</h3>
                     </div>
                     <div class="card-body">
+
+                        <!-- Filter Form -->
+                        <form method="GET" action="{{ route('dashboard.guardian.task-grade.show', $student->id) }}" class="mb-4">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <select name="academic_year_id" class="form-control">
+                                        <option value="">Select Academic Year</option>
+                                        @foreach($academicYears as $year)
+                                            <option value="{{ $year->id }}" {{ request()->academic_year_id == $year->id ? 'selected' : '' }}>
+                                                {{ $year->year }} - Semester {{ $year->semester }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                </div>
+                            </div>
+                        </form>
+
                         <!-- Displaying Errors if Any -->
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -42,11 +61,17 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <p><strong>Name:</strong> {{ $student->user->first_name }} {{ $student->user->last_name }}</p>
+                                    <p><strong>Email:</strong> {{ $student->user->email }}</p>
                                     <p><strong>Student ID:</strong> {{ $student->id }}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p><strong>Email:</strong> {{ $student->user->email }}</p>
-                                    <p><strong>Grade Level:</strong> {{ $student->classRoom->level->name }}</p>
+                                    @if ($task)
+                                    <p><strong>Grade Level:</strong> {{ $task->classRoom->level->name }}</p>
+                                    @else
+                                    <p><strong>Grade Level:</strong> {{ $student->classRoom->level->name}}</p>
+                                    @endif
+                                    <p><strong>Grade Semester:</strong> {{ $selectedAcademicYear->semester }}</p>
+                                    <p><strong>Year:</strong> {{ $selectedAcademicYear->year }}</p>
                                 </div>
                             </div>
                         </div>
@@ -55,25 +80,15 @@
                         <h5 class="text-success mb-3">Task Results:</h5>
                         @foreach($feedbacks as $feedback)
                             <div class="task-result mb-4 p-3 border rounded shadow-sm">
-                                <h6 class="text-primary">Task Name: {{ $feedback->task->task_name }}</h6>
+                                <h6 class="text-primary">Task Name: {{ $feedback->task->name }}</h6>
+                                <p><strong>Year:</strong> {{ $feedback->task->academicYear->year }}</p>
+                                <p><strong>Semester:</strong> {{ $feedback->task->academicYear->semester }}</p>
                                 <p><strong>Grade:</strong>
-                                    @if($feedback->task_grade)
-                                        @php
-                                            $task_color = 'bg-danger';
-                                            if ($feedback->task_grade > $feedback->task->full_grade / 2) {
-                                                $task_color = 'bg-success';
-                                            } elseif ($feedback->task_grade == $feedback->task->full_grade / 2) {
-                                                $task_color = 'bg-warning';
-                                            }
-                                        @endphp
-                                        <span class="badge {{ $task_color }}">{{ $feedback->task_grade }}</span>
-                                        <span class="badge bg-info">Out of: {{ $feedback->task->full_grade }}</span>
-                                    @else
-                                        <span class="badge bg-warning">Not Graded</span>
-                                    @endif
+                                    <span class="badge bg-success">{{ $feedback->grade }}</span>
+                                    <span class="badge bg-info">Out of: {{ $feedback->task->max_grade }}</span>
                                 </p>
-                                <p><strong>Submission Date:</strong>
-                                    {{ $feedback->task->submission_date ?? $feedback->created_at->format('Y-m-d') }}
+                                <p><strong>Task Due Date:</strong>
+                                    {{ $feedback->task->due_date ?? $feedback->created_at->format('Y-m-d') }}
                                 </p>
                             </div>
                         @endforeach

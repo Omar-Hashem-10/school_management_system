@@ -45,7 +45,14 @@
                             <td>{{ $task->full_grade }}</td>
                             <td>
                                 @if(\Carbon\Carbon::now()->between(\Carbon\Carbon::parse($task->start_date), \Carbon\Carbon::parse($task->end_date)))
-                                    <a href="{{ route('dashboard.student.task.create', ['taskId' => $task->id]) }}" class="btn btn-primary btn-sm">Submit Task</a>
+                                    @php
+                                        $taskSent = \App\Models\TaskSend::where('task_id', $task->id)->where('student_id', session('student_id'))->first();
+                                    @endphp
+                                    @if($taskSent)
+                                        <a href="{{ route('dashboard.student.task.edit', ['taskId' => $task->id]) }}" class="btn btn-warning btn-sm">Update Task</a>
+                                    @else
+                                        <a href="{{ route('dashboard.student.task.create', ['taskId' => $task->id]) }}" class="btn btn-primary btn-sm">Submit Task</a>
+                                    @endif
                                 @elseif(\Carbon\Carbon::now()->gt(\Carbon\Carbon::parse($task->end_date)))
                                     @if(!in_array($task->id, $task_ids))
                                         <span class="text-danger">You missed submitting this task.</span>
@@ -81,7 +88,6 @@
                                     <span class="badge bg-secondary">Grade not available</span>
                                 @endif
                             </td>
-
                         </tr>
                         @endforeach
 

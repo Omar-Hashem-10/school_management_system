@@ -55,7 +55,7 @@
                   <?php $badge='bg-danger'?>
                   @elseif($admin->role->role_name=='manager')
                   <?php $badge='bg-warning'?>
-                  @elseif($admin->role->role_name=='academic affairs')
+                  @elseif($admin->role->role_name=='academic affairs')
                   <?php $badge='bg-primary'?>
                   @elseif($admin->role->role_name=='HR')
                   <?php $badge='bg-success'?>

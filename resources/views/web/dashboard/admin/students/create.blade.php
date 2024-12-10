@@ -22,6 +22,7 @@
         <form action="{{route('dashboard.admin.students.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
+                <input type="hidden" name="start_academic_year_id" value="{{ $academicYear->id }}">
                 <div class="form-group">
                     <label for="first_name">First Name</label>
                     <input type="text" name="first_name" class="form-control" id="first_name"

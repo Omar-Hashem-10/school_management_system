@@ -25,6 +25,7 @@ class TaskSendRequest extends FormRequest
             'task_link' => 'required|url',
             'task_id' => 'required|exists:tasks,id',
             'student_id' => 'required|exists:students,id',
+            'academic_year_id' => 'required|exists:academic_years,id',
         ];
     }
 
