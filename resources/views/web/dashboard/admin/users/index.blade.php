@@ -59,6 +59,14 @@
                   <?php $badge='bg-warning';
                   $id=($user->admin)?$user->admin->id:0;
                   ?>
+                  @elseif($user->role->role_name=='HR')
+                  <?php $badge='bg-warning';
+                  $id=($user->admin)?$user->admin->id:0;
+                  ?>
+                  @elseif($user->role->role_name=='academic affairs')
+                  <?php $badge='bg-warning';
+                  $id=($user->admin)?$user->admin->id:0;
+                  ?>
                   @elseif($user->role->role_name=='teacher')
                   <?php $badge='bg-success';
                   $id=($user->teacher)?$user->teacher->id:0;

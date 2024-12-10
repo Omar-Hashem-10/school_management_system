@@ -26,10 +26,10 @@
             <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="exam-section" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            @foreach($course_codes as $id => $course_code)
+            @foreach(session('student')->classRoom->courseCodes as $id => $course_code)
                 <li>
                     <a href="{{ route('dashboard.student.exam.index', ['course_code' => $id]) }}">
-                        <i class="bi bi-circle"></i><span>{{ $course_code }}</span>
+                        <i class="bi bi-circle"></i><span>{{ $course_code->code }}</span>
                     </a>
                 </li>
             @endforeach
@@ -44,10 +44,10 @@
             <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="task-section" class="nav-content collapse" data-bs-parent="#sidebar-nav">
-            @foreach($course_codes as $id => $course_code)
+            @foreach(session('student')->classRoom->courseCodes as $id => $course_code)
                 <li>
                     <a href="{{ route('dashboard.student.task.index', ['course_code' => $id]) }}">
-                        <i class="bi bi-circle"></i><span>{{ $course_code }}</span>
+                        <i class="bi bi-circle"></i><span>{{ $course_code->code }}</span>
                     </a>
                 </li>
             @endforeach

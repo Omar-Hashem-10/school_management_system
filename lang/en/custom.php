@@ -23,6 +23,7 @@ return [
             'Employees'             => 'Employees',
             'Students'              => 'Students',
         ],
+        'AcademicYears'            =>'Academic Years',
         'Managements'               => 'Managements',
         'Teachers'                  => 'Teachers',
         'Students'                  => 'Students',

@@ -12,12 +12,21 @@
       <i class="bi bi-menu-button-wide"></i><span>{{ __('custom.aside.Managements') }}</span><i
         class="bi bi-chevron-down ms-auto"></i>
     </a>
-    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+    <ul id="components-nav" class="nav-content collapse {{ (Route::is('dashboard.admin.schedules.*')
+    ||Route::is('dashboard.admin.academic-years.*')
+    ||Route::is('dashboard.admin.levels.*')
+    ||Route::is('dashboard.admin.subjects.*')
+    ||Route::is('dashboard.admin.level_subjects.*')
+    ||Route::is('dashboard.admin.course_codes.*')
+    ||Route::is('dashboard.admin.class_rooms.*')
+    ||Route::is('dashboard.admin.days.*')
+    ||Route::is('dashboard.admin.time_slots.*')
+    ) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
 
       <!-- Other sections -->
       <li>
         <a href="{{ route('dashboard.admin.academic-years.index') }}">
-          <i class="bi bi-circle"></i><span>Academic years</span>
+          <i class="bi bi-circle"></i><span>{{ __('custom.aside.AcademicYears') }}</span>
         </a>
       </li>
       <li>
@@ -78,7 +87,16 @@
     <a class="nav-link collapsed" data-bs-target="#users-nav" data-bs-toggle="collapse" href="#">
       <i class="ri-group-line"></i><span>{{ __('custom.aside.Users') }}</span><i class="bi bi-chevron-down ms-auto"></i>
     </a>
-    <ul id="users-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+    <ul id="users-nav" class="nav-content collapse {{ (Route::is('dashboard.admin.admins.*')
+    ||Route::is('dashboard.admin.users.*')
+    ||Route::is('dashboard.admin.students.*')
+    ||Route::is('dashboard.admin.employees.*')
+    ||Route::is('dashboard.admin.guardians.*')
+    ||Route::is('dashboard.admin.roles.*')
+    ||Route::is('dashboard.admin.teachers.*')
+    ||Route::is('dashboard.admin.salaries.*')
+    ) ? 'show' : '' }}"
+      data-bs-parent="#sidebar-nav">
       @can('isAdmin')
       <li>
         <a href="{{ route('dashboard.admin.admins.index') }}">
@@ -115,7 +133,7 @@
         <a href="{{ route('dashboard.admin.salaries.show.dates') }}">
           <i class="bi bi-circle"></i><span>{{ __('custom.aside.Salaries') }}</span>
         </a>
-      </li>   
+      </li>
       @endcannot
 
       @cannot('isHR')
@@ -129,7 +147,7 @@
           <i class="bi bi-circle"></i><span>{{ __('custom.aside.Guardians') }}</span>
         </a>
       </li>
-     @endcannot
+      @endcannot
 
     </ul>
   </li>
@@ -138,13 +156,17 @@
       <i class="bi bi-menu-button-wide"></i><span>{{ __('custom.aside.Attendance.Attendance') }}</span><i
         class="bi bi-chevron-down ms-auto"></i>
     </a>
-    <ul id="attendances-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+    <ul id="attendances-nav" class="nav-content collapse {{ (Route::is('dashboard.admin.attend_teachers.*')
+    ||Route::is('dashboard.admin.attend_students.*')
+    ||Route::is('dashboard.admin.attend_admins.*')
+    ||Route::is('dashboard.admin.attend_employees.*')
+    ) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
       @cannot('isHR')
       <li>
-        <a href="javascript:void(0)" class="nav-link" data-bs-toggle="collapse" data-bs-target="#attendStudent-nav">
+        <a href="javascript:void(0)" class="nav-link " data-bs-toggle="collapse" data-bs-target="#attendStudent-nav">
           <i class="bi bi-circle"></i><span>{{ __('custom.aside.Attendance.Students') }}</span>
         </a>
-        <ul class="nav-content collapse" id="attendStudent-nav" data-bs-parent="#attendances-nav">
+        <ul class="nav-content collapse {{ (Route::is('dashboard.admin.attend_students.*')) ? 'show' : '' }}" id="attendStudent-nav" data-bs-parent="#attendances-nav">
           @foreach($classRooms as $classRoom)
           <li>
             <a href="{{ route('dashboard.admin.attend_students.show', $classRoom->id) }}">
@@ -160,7 +182,10 @@
         <a href="javascript:void(0)" class="nav-link" data-bs-toggle="collapse" data-bs-target="#attendEmployee-nav">
           <i class="bi bi-circle"></i><span>{{ __('custom.aside.Attendance.Employees') }}</span>
         </a>
-        <ul class="nav-content collapse" id="attendEmployee-nav" data-bs-parent="#attendances-nav">
+        <ul class="nav-content collapse {{ (Route::is('dashboard.admin.attend_teachers.*')
+            ||Route::is('dashboard.admin.attend_admins.*')
+            ||Route::is('dashboard.admin.attend_employees.*')
+            ) ? 'show' : '' }}" id="attendEmployee-nav" data-bs-parent="#attendances-nav">
           <li>
             <a href="{{ route('dashboard.admin.attend_teachers.show') }}">
               <i class="bi bi-circle"></i><span>{{ __('custom.aside.Teachers') }}</span>

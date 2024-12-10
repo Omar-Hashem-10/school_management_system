@@ -107,7 +107,6 @@ class StudentController extends Controller
     {
         $user = $student->user;
         $data = $this->updateUser($request, $user);
-
         $studentdata = [
             'guardian_id' => $data['guardian_id'],
             'user_id' => $user['id'],
@@ -115,7 +114,6 @@ class StudentController extends Controller
             'relation'=>$data['relation'],
             'created_at' => now(),
         ];
-        // dd($studentdata);
         $student->update($studentdata);
         return redirect()->route('dashboard.admin.students.index')->with('success', $data['type'] . ' added successfully');
     }
