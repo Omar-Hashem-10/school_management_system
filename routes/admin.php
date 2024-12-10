@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DayController;
+use App\Http\Controllers\PayPalController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\Dashboard\ProfileController;
@@ -154,9 +155,7 @@ Route::middleware('auth')->group(function () {
 Route::get('login', [LoginController::class, 'show'])->name('login.show');
 Route::post('login', [LoginController::class, 'authenticate'])->name('login');
 
-
 // //paypal test
 // Route::get('/payment', [PayPalController::class, 'payment'])->name('payment');
 // Route::get('/payment/success', [PayPalController::class, 'success'])->name('payment.success');
 // Route::get('/cancel', [PayPalController::class, 'cancel'])->name('payment.cancel');
-

@@ -1,44 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Admin;
+namespace App\Http\Controllers\Api\Admin;
 
 use Exception;
-use App\Models\Role;
-use App\Models\User;
 use App\Models\Admin;
 use App\Traits\UserTrait;
-use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
-use App\Traits\SideDataTraits;
-use Illuminate\Support\Facades\DB;
+use App\Traits\JsonResponseTrait;
 use App\Http\Requests\AdminRequest;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
-    use SideDataTraits;
-    use UserTrait;
+    use JsonResponseTrait , UserTrait;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $sideData = $this->getSideData();
-        $admins = Admin::with(['user.image', 'role'])->orderBy('id', 'desc')->paginate(10);
-        return view('web.dashboard.admin.admins.index', $sideData, compact('admins'));
-    }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $roles = Role::where('for',  'admins')->get();
-        $sideData = $this->getSideData();
-
-        return view('web.dashboard.admin.admins.create', $sideData, compact(['roles']));
+        $admins = Admin::orderBy('id', 'DESC')->get();
+        return $this->responseSuccess('Data Retrieved Successfully!', $admins->toArray());
     }
 
     /**
@@ -54,19 +37,16 @@ class AdminController extends Controller
             'created_at' => now(),
         ];
         $admindata['user_id'] = $user->id;
-        Admin::create($admindata);
-
-        return redirect()->route('dashboard.admin.admins.index')->with('success', 'admin added successfully');
+        $admin = Admin::create($admindata);
+        return $this->responseSuccess('Added Successfully!', $admin->toArray());
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource.
      */
-    public function edit(Admin $admin)
+    public function show(Admin $admin)
     {
-        $roles = Role::where('for', operator: 'admins')->get();
-        $sideData = $this->getSideData();
-        return view('web.dashboard.admin.admins.edit', $sideData, compact(['admin', 'roles']));
+        return $this->responseSuccess('Data Retrieved Successfully!', $admin->toArray());
     }
 
     /**
@@ -74,7 +54,6 @@ class AdminController extends Controller
      */
     public function update(AdminRequest $request, Admin $admin)
     {
-
         $user = $admin->user;
         $data = $this->updateUser($request, $user);
         $admindata = [
@@ -83,7 +62,7 @@ class AdminController extends Controller
             'salary' => $data['salary'],
         ];
         $admin->update($admindata);
-        return redirect()->route('dashboard.admin.admins.index')->with('success', 'Admin added successfully');
+        return $this->responseSuccess('Updated Successfully!', $admin->toArray());
     }
 
     /**
@@ -102,9 +81,9 @@ class AdminController extends Controller
                 $user->image->delete();
             }
             $user->delete();
-            return redirect()->back()->with('success', 'Admin deleted successfully');
+            return $this->responseSuccess('Deleted Successfully!');
         } catch (Exception $e) {
-            return redirect()->back()->with('errors', 'This Admin cannot be deleted');
+            return $this->responseFailure("Cannot Delete This Teacher",404);
         }
     }
 }

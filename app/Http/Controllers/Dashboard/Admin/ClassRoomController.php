@@ -17,7 +17,7 @@ class ClassRoomController extends Controller
      */
     public function index()
     {
-        $class_rooms = ClassRoom::paginate(5);
+        $class_rooms = ClassRoom::with(['level'])->paginate(5);
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.class_rooms.index', $sideData , compact('class_rooms'));
     }

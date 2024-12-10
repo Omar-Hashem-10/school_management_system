@@ -23,6 +23,7 @@ return [
             'Employees'             => 'حضور الموظفين',
             'Students'              => 'حضور الطلاب',
         ],
+        'AcademicYears'             =>'السنوات الدراسيه',
         'Managements'               => 'الاداره',
         'Teachers'                  => 'المدرسين',
         'Students'                  => 'الطلاب',
