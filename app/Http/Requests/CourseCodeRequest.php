@@ -25,13 +25,13 @@ class CourseCodeRequest extends FormRequest
     {
         return [
             'code' => [
-                'required',
-                'string',
-                'max:255',
-                Rule::unique('course_codes')->ignore($this->route('course_code'))->where(function ($query) {
-                    return $query->where('level_subject_id', $this->level_subject_id);
-                }),
-            ],
+            'required',
+            'string',
+            'max:255',
+            Rule::unique('course_codes')
+                ->where('code', $this->code)
+                ->ignore($this->route('course_code')),
+        ],
             'semester' => 'required|in:first,second',
             'level_subject_id' => [
                 'required',

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\Level;
+use App\Models\Subject;
 use App\Models\Teacher;
 use App\Models\ClassRoom;
 use App\Models\CourseCode;
@@ -47,11 +48,11 @@ class CourseTeacherController extends Controller
      */
     public function create()
     {
-        $levels = Level::with('subjects')->get();
+        $subjects = Subject::with('levels')->get();
         $course_codes = CourseCode::get();
         $class_rooms = ClassRoom::get();
         $sideData = $this->getSideData();
-        return view('web.dashboard.admin.course_teachers.create', array_merge($sideData, ['course_codes' => $course_codes], ['class_rooms' => $class_rooms], ['levels' => $levels]));
+        return view('web.dashboard.admin.course_teachers.create', array_merge($sideData, ['course_codes' => $course_codes], ['class_rooms' => $class_rooms], ['subjects' => $subjects]));
     }
 
     /**

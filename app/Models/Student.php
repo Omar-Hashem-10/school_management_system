@@ -15,6 +15,7 @@ class Student extends Model
         'class_room_id',
         'user_id',
         'relation',
+        'start_academic_year_id',
     ];
 
     public function classRoom()
@@ -66,6 +67,16 @@ class Student extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class, 'start_academic_year_id');
+    }
+
+    public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
     }
 
 }

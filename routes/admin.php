@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DayController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\CertificateSubjectController;
 use App\Http\Controllers\Dashboard\Admin\DateController;
 use App\Http\Controllers\Dashboard\Admin\HomeController;
 use App\Http\Controllers\Dashboard\Admin\RoleController;
@@ -27,9 +29,12 @@ use App\Http\Controllers\Dashboard\Admin\AttendAdminController;
 use App\Http\Controllers\Dashboard\Admin\AcademicYearController;
 use App\Http\Controllers\Dashboard\Admin\ContactReplyController;
 use App\Http\Controllers\Dashboard\Admin\LevelSubjectController;
+use App\Http\Controllers\Dashboard\Guardian\ExamGradeController;
+use App\Http\Controllers\Dashboard\Guardian\TaskGradeController;
 use App\Http\Controllers\Dashboard\Admin\AttendStudentController;
 use App\Http\Controllers\Dashboard\Admin\AttendTeacherController;
 use App\Http\Controllers\Dashboard\Admin\CourseTeacherController;
+use App\Http\Controllers\Dashboard\Guardian\AttendanceController;
 use App\Http\Controllers\Dashboard\Admin\AttendEmployeeController;
 
 Route::prefix('admin')->as('admin.')->group(function () {
@@ -40,7 +45,7 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('/guardians', GuardianController::class);
         Route::resource('/students', StudentController::class);
         Route::resource('/employees', EmployeeController::class);
-        
+
         // Route::group(['middleware' => ['auth']], function () {
             Route::resource('/users', UserController::class);
             Route::resource('/roles', RoleController::class);
@@ -113,6 +118,8 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('/days', DayController::class);
         Route::resource('/time_slots', TimeSlotController::class);
         Route::resource('/schedules', ScheduleController::class);
+        Route::delete('/schedules', [ScheduleController::class, 'deleteAll'])->name('schedules.deleteAll');
+
 
         Route::resource('/contacts', ContactReplyController::class)->except('create', 'edit', 'update');
 
@@ -121,6 +128,18 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::get('/contacts/{contact}/edit-reply', [ContactReplyController::class, 'editReply'])->name('contacts.editReply');
 
         Route::put('/contacts/{contactReply}', [ContactReplyController::class, 'update'])->name('contacts.update');
+
+        Route::get('/exam-grade/{student}', ExamGradeController::class)->name('exam-grade.show');
+
+        Route::get('/task-grade/{student}', TaskGradeController::class)->name('task-grade.show');
+
+        Route::get('/attendance/{student}', AttendanceController::class)->name('attendance.show');
+
+        // Certificates
+        Route::resource('/certificates', CertificateController::class);
+
+        // Certificate Subjects
+        Route::resource('/certificate_subjects', CertificateSubjectController::class);
 
         Route::post('/logout', LogoutController::class)->name('logout');
     });
@@ -136,8 +155,8 @@ Route::get('login', [LoginController::class, 'show'])->name('login.show');
 Route::post('login', [LoginController::class, 'authenticate'])->name('login');
 
 
-//paypal test
-Route::get('/payment', [PayPalController::class, 'payment'])->name('payment');
-Route::get('/payment/success', [PayPalController::class, 'success'])->name('payment.success');
-Route::get('/cancel', [PayPalController::class, 'cancel'])->name('payment.cancel');
+// //paypal test
+// Route::get('/payment', [PayPalController::class, 'payment'])->name('payment');
+// Route::get('/payment/success', [PayPalController::class, 'success'])->name('payment.success');
+// Route::get('/cancel', [PayPalController::class, 'cancel'])->name('payment.cancel');
 

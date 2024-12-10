@@ -109,4 +109,11 @@ class ScheduleController extends Controller
         return redirect()->route('dashboard.admin.schedules.index', ['day_filter' => $dayFilterId])
         ->with('success', 'Deleted Schedule Successfully!');
     }
+
+    public function deleteAll()
+    {
+        Schedule::truncate();
+        return redirect()->route('dashboard.admin.schedules.index')->with('success', 'All schedules have been deleted successfully!');
+    }
+
 }

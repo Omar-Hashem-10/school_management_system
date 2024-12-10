@@ -95,21 +95,30 @@
                       width="100" height="100">
                   </td>
                   <td>
-                    <a class="btn btn-warning"
-                      href="{{ route('dashboard.admin.students.edit', ($student->student)?$student->student->id:$student->id) }}">Edit</a>
-                    <div class="btn-group" role="group">
-                      @canany('isAdmin','isManager')
-                      <form class="d-inline"
-                        action="{{ route('dashboard.admin.students.destroy', ($student->student)?$student->student->id:$student->id) }}"
-                        method="post">
-                        @csrf
-                        @method('delete')
-                        <button class="btn btn-danger" type="submit">Delete</button>
-                      </form>
-                      @endcanany
+                    <div class="dropdown">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownActions" data-bs-toggle="dropdown" aria-expanded="false">
+                        Actions
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownActions">
+                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.task-grade.show', $student->student->id) }}">Show Task Grade</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.exam-grade.show', $student->student->id) }}">Show Exam Grade</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.attendance.show', $student->student->id) }}">Show Attendance</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.certificates.index', ['student_id' => $student->student->id]) }}">Certificate</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.students.edit', ($student->student)?$student->student->id:$student->id) }}">Edit</a></li>
+                        @canany('isAdmin', 'isManager')
+                        <li>
+                          <form class="dropdown-item" action="{{ route('dashboard.admin.students.destroy', ($student->student)?$student->student->id:$student->id) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button class="dropdown-item" type="submit">Delete</button>
+                          </form>
+                        </li>
+                        @endcanany
+                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.students.sendMailForm', $student->id) }}">Send Mail</a></li>
+                      </ul>
                     </div>
-                    <a class="btn btn-info" href="{{ route('dashboard.admin.students.sendMailForm', $student->id) }}">Send Mail</a>
                   </td>
+
                 </tr>
                 @endforeach
               </tbody>

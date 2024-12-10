@@ -23,6 +23,7 @@
             @csrf
             @method('PATCH')
             <div class="card-body">
+                <input type="hidden" name="start_academic_year_id" value="{{ $student->start_academic_year_id }}">
                 <div class="form-group">
                     <label for="first_name">First Name</label>
                     <input type="text" name="first_name" class="form-control" id="first_name"

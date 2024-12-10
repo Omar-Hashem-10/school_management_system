@@ -13,6 +13,7 @@ class Grade extends Model
         'grade',
         'student_id',
         'exam_id',
+        'academic_year_id',
     ];
 
     public function exam()
@@ -24,5 +25,10 @@ public function student()
 {
     return $this->belongsTo(Student::class, 'student_id', 'id');
 }
+
+public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class);
+    }
 
 }

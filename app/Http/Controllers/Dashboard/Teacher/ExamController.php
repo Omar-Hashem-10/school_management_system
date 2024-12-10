@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Teacher;
 use App\Models\AcademicYear;
 use App\Models\Exam;
 use App\Models\Answer;
+use App\Models\Question;
 use App\Models\Student;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -55,6 +56,11 @@ class ExamController extends Controller
             }
         }
 
+        if (Question::where('course_code_id', session('course_code_id'))->doesntExist()) {
+            return redirect()->back()->with('error', 'No Questions In The Course Code');
+        }
+
+
         $sideData = $this->getSideData();
 
         return view('web.dashboard.teacher.exams.create', $sideData);
@@ -96,10 +102,9 @@ class ExamController extends Controller
 
         $students = Student::whereIn('id', function ($query) use ($exam) {
             $query->select('student_id')
-                  ->from('answers')
-                  ->where('exam_id', $exam->id)
-                  ->distinct();
-        })->paginate(5);
+                  ->from('grades')
+                  ->where('exam_id', $exam->id);
+            })->paginate(5);
 
 
         return view('web.dashboard.teacher.exams.show-students', $sideData, compact('students', 'exam'));

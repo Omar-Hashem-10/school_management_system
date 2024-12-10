@@ -31,6 +31,8 @@
                                     <th>#</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Grade</th>
+                                    <th>Full Grade</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,10 +41,38 @@
                                         <td>{{ $student->id }}</td>
                                         <td>{{ $student->user->first_name }} {{ $student->user->last_name }}</td>
                                         <td>{{ $student->user->email }}</td>
+
+                                        @php
+                                            $grade = $student->grades->first()->grade;
+                                            $half_grade = $student->grades->first()->exam->half_grade;
+                                            $badge_class = 'badge bg-info';
+
+                                            if ($grade < $half_grade) {
+                                                $badge_class = 'badge bg-danger';
+                                            } elseif ($grade == $half_grade) {
+                                                $badge_class = 'badge bg-warning';
+                                            } elseif ($grade > $half_grade) {
+                                                $badge_class = 'badge bg-primary';
+                                            }
+                                        @endphp
+
+                                        <td>
+                                            <span class="{{ $badge_class }}">
+                                                {{ $grade }}
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            @if($half_grade)
+                                                {{ $half_grade * 2 }}
+                                            @else
+                                                N/A
+                                            @endif
+                                        </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="4" class="text-center">No students have taken exams yet.</td>
+                                        <td colspan="5" class="text-center">No students have taken exams yet.</td>
                                     </tr>
                                 @endforelse
                             </tbody>

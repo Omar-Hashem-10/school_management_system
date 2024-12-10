@@ -21,6 +21,12 @@
                     </a>
                     <ul id="student-{{ $student->id }}-details" class="nav-content collapse">
                         <li>
+                            <a href="{{ route('dashboard.guardian.certificate.index', ['student_id' => $student->id]) }}">
+                                <i class="bi bi-file-earmark-text"></i>
+                                <span>Certificate</span>
+                            </a>
+                        </li>
+                        <li>
                             <a href="{{ route('dashboard.guardian.exam-grade.show', $student->id) }}">
                                 <i class="bi bi-file-earmark-text"></i>
                                 <span>Grades for Exams</span>

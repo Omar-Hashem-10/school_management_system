@@ -1,8 +1,7 @@
 <?php
 
 
-use App\Models\Feedback;
-use App\Models\Schedule;
+use App\Http\Controllers\Dashboard\Student\CertificateController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Dashboard\Student\ExamController;
@@ -22,12 +21,15 @@ Route::prefix('student')->as('student.')->group(function () {
 
         Route::get('/answer/{exam}', [AnswerController::class, 'show'])->name('answer.show');
 
-        Route::resource('/task', TaskController::class)->except(['create']);
+        Route::resource('/task', TaskController::class)->except(['create', 'edit']);
         Route::get('/tasks/create/{taskId}', [TaskController::class, 'create'])->name('task.create');
+        Route::get('/tasks/edit/{taskId}', [TaskController::class, 'edit'])->name('task.edit');
 
         Route::get('/feedback/{feedbackId}', FeedbackController::class)->name('feedback');
 
         Route::resource('/contact', ContactController::class);
+
+        Route::resource('/certificate', CertificateController::class);
 
     });
 });
