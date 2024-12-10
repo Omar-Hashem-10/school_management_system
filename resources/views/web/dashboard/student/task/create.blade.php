@@ -1,6 +1,6 @@
 @extends('web.dashboard.master')
 
-@section('title','Students')
+@section('title','Tasks')
 
 @section('content')
 <main id="main" class="main">
@@ -10,7 +10,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
             <li class="breadcrumb-item ">Users</li>
-            <li class="breadcrumb-item "><a href="{{ route('dashboard.admin.students.index') }}">@yield('title')</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('dashboard.student.task.index') }}">@yield('title')</a></li>
             <li class="breadcrumb-item active">Create</li>
         </ol>
         </nav>
@@ -37,6 +37,8 @@
                 <label for="task_link">Task Link</label>
                 <input type="url" id="task_link" name="task_link" class="form-control" placeholder="Enter task link" required>
             </div>
+
+            <input type="hidden" name="academic_year_id" value="{{ session('academic_year_id') }}">
 
             <input type="hidden" name="task_id" value="{{ $taskId }}">
             <input type="hidden" name="student_id" value="{{ session('student_id') }}">

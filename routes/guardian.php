@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\Guardian\HomeController;
 use App\Http\Controllers\Dashboard\Guardian\ExamGradeController;
 use App\Http\Controllers\Dashboard\Guardian\TaskGradeController;
 use App\Http\Controllers\Dashboard\Guardian\AttendanceController;
+use App\Http\Controllers\Dashboard\Guardian\CertificateController;
 
 Route::prefix('guardian')->as('guardian.')->group(function () {
     Route::middleware('auth')->group(function () {
@@ -27,7 +28,9 @@ Route::prefix('guardian')->as('guardian.')->group(function () {
         Route::get('/payment/success/{student_id}/{term_id}', [PayPalController::class, 'success'])->name('payment.success');
         Route::get('/cancel/{student_id}/{term_id}', [PayPalController::class, 'cancel'])->name('payment.cancel');
 
-
+        Route::resource('/certificate', CertificateController::class);
+        // Route::get('/certificate', CertificateController::class)->name('certificate.index');
+        // Route::get('/certificate/{certificate}', CertificateController::class)->name('certificate.show');
 
 
         Route::post('/logout', LogoutController::class)->name('logout');

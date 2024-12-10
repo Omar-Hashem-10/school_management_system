@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Student;
 use App\Models\Exam;
 use App\Models\Answer;
 use App\Models\AcademicYear;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
@@ -21,6 +22,14 @@ class ExamController extends Controller
         $course_code_id = $request->query('course_code');
 
         $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+
+        $payments = Payment::where('student_id', auth()->user()->student->id)
+        ->where('academic_year_id', $academicYear->id)
+        ->get();
+
+        if ($payments->isEmpty()) {
+            return redirect()->back()->with('error', 'No payments found for the current academic year.');
+        }
 
         if ($academicYear) {
             session()->put('academic_year_id', $academicYear->id);

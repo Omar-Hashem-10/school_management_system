@@ -6,6 +6,7 @@ use App\Models\Exam;
 use App\Models\Grade;
 use App\Models\Answer;
 use App\Models\Question;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
@@ -58,10 +59,14 @@ class AnswerController extends Controller
         ]);
     }
 
+    $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+
+
     Grade::create([
         'exam_id' => $request->input('exam_id'),
         'student_id' => $request->input('student_id'),
         'grade' => $totalGrade,
+        'academic_year_id' => $academicYear->id
     ]);
 
     session()->forget('examAnswers');

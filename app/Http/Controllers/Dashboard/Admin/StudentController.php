@@ -10,6 +10,7 @@ use App\Models\Guardian;
 use App\Models\ClassRoom;
 use App\Traits\UserTrait;
 use Illuminate\Support\Arr;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use App\Http\Requests\UserRequest;
@@ -62,11 +63,14 @@ class StudentController extends Controller
      */
     public function create()
     {
+        $academicYear = AcademicYear::orderBy('id', 'desc')->first();
         $role = Role::where('role_name', 'student')->first();
         $class_rooms = ClassRoom::get();
         $guardians = Guardian::get()->all();
         $sideData = $this->getSideData();
-        return view('web.dashboard.admin.students.create', $sideData, compact(['class_rooms', 'role', 'guardians']));
+
+        // dd($academicYear->id);
+        return view('web.dashboard.admin.students.create', $sideData, compact(['class_rooms', 'role', 'guardians', 'academicYear']));
     }
 
     /**
@@ -81,6 +85,7 @@ class StudentController extends Controller
             'user_id' => $user['id'],
             'class_room_id' => $request['class_room_id'],
             'relation'=>$data['relation'],
+            'start_academic_year_id'=>$request['start_academic_year_id'],
             'created_at' => now(),
         ];
         Student::create($studentdata);
@@ -112,6 +117,7 @@ class StudentController extends Controller
             'user_id' => $user['id'],
             'class_room_id' => $data['class_room_id'],
             'relation'=>$data['relation'],
+            'start_academic_year_id'=>$data['start_academic_year_id'],
             'created_at' => now(),
         ];
         $student->update($studentdata);

@@ -22,7 +22,7 @@ class UniqueTwice implements Rule
     {
         $this->table = $table;
         $this->column = $column;
-        $this->currentId = $currentId; // ID of the current record
+        $this->currentId = $currentId;
     }
 
     /**
@@ -34,32 +34,28 @@ class UniqueTwice implements Rule
      */
     public function passes($attribute, $value)
     {
-        // إذا لم يتم تمرير المعرف الحالي، افترض أن القاعدة ستعمل للإضافة
         if (!$this->currentId) {
             $count = DB::table($this->table)
                 ->where($this->column, $value)
                 ->count();
 
-            return $count < 2; // السماح بتكرار القيمة مرتين فقط
+            return $count < 2;
         }
 
-        // تحقق من القيمة الحالية للسجل
         $currentValue = DB::table($this->table)
             ->where('id', $this->currentId)
             ->value($this->column);
 
-        // السماح إذا لم تتغير القيمة
         if ($currentValue == $value) {
-            return true;  // السماح بتحديث القيمة الحالية إذا كانت نفس القيمة
+            return true;
         }
 
-        // التحقق من عدد التكرارات مع تجاهل السجل الحالي
         $count = DB::table($this->table)
             ->where($this->column, $value)
             ->where('id', '!=', $this->currentId)
             ->count();
 
-        return $count < 2; // السماح بتكرار القيمة مرتين فقط
+        return $count < 2;
     }
 
     /**

@@ -30,4 +30,24 @@ class AcademicYear extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function grades()
+    {
+        return $this->hasMany(Grade::class);
+    }
+
+    public function taskSends()
+{
+    return $this->hasMany(TaskSend::class);
+}
+
+public function students()
+{
+    return $this->hasMany(Student::class, 'start_academic_year_id');
+}
+
+public function certificates()
+    {
+        return $this->hasMany(Certificate::class);
+    }
 }

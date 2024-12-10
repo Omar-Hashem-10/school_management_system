@@ -1,11 +1,16 @@
 <?php
 
+
 namespace App\Http\Controllers\Api\Admin;
 
 use Exception;
 use App\Models\Student;
 use App\Traits\UserTrait;
 use Illuminate\Http\Request;
+use App\Models\Grade;
+use App\Models\Attend;
+use App\Models\Student;
+use App\Models\Attendance;
 use App\Traits\JsonResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
@@ -14,13 +19,14 @@ use Illuminate\Support\Facades\Storage;
 class StudentController extends Controller
 {
     use JsonResponseTrait , UserTrait;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $students = Student::orderBy('id', 'DESC')->get();
-        return $this->responseSuccess('Data Retrieved Successfully!',$students->toArray());
+       $students = Student::with(['user', 'guardian'])->orderBy('id', 'DESC')->get();
+        return $this->responseSuccess('Data Retrieved Successfully!', $students->toArray());
     }
 
     /**
@@ -41,13 +47,23 @@ class StudentController extends Controller
         return $this->responseSuccess('Added Successfully!',$student->toArray());
     }
 
+
+
     /**
      * Display the specified resource.
      */
     public function show(Student $student)
     {
-        $user=$student->user;
-        return $this->responseSuccess('Data Retrieved Successfully!',$student->toArray());
+        $grades = Grade::where('student_id', $student->id)->get();
+
+        $attendanse = Attend::where('attendable_id', $student->user->id)->get();
+
+        $data = [
+            'grades' => $grades->toArray(),
+            'attendance' => $attendanse->toArray(),
+        ];
+
+        return $this->responseSuccess('Data Retrieved Successfully!', $data);
     }
 
     /**
@@ -89,3 +105,4 @@ class StudentController extends Controller
         }
     }
 }
+

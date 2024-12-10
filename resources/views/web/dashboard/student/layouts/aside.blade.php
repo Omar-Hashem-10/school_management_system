@@ -8,15 +8,24 @@
         </a>
     </li>
     <!-- End Dashboard Nav -->
+<!-- Schedule Link -->
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('dashboard.student.schedule') }}">
+        <i class="bi bi-calendar"></i>
+        <span>Schedule</span>
+    </a>
+</li>
+<!-- End Schedule Nav -->
 
-    <!-- Schedule Link -->
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('dashboard.student.schedule') }}">
-            <i class="bi bi-calendar"></i>
-            <span>Schedule</span>
-        </a>
-    </li>
-    <!-- End Schedule Nav -->
+<!-- Certificate Link -->
+<li class="nav-item">
+    <a class="nav-link" href="{{ route('dashboard.student.certificate.index') }}">
+        <i class="bi bi-file-earmark-text"></i>
+        <span>Certificate</span>
+    </a>
+</li>
+<!-- End Certificate Nav -->
+
 
     <!-- Exam Section -->
     <li class="nav-item">

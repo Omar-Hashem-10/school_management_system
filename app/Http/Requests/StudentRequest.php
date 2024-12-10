@@ -24,7 +24,7 @@ class StudentRequest extends FormRequest
      */
     public function rules()
     {
-        $userRules = UserRequest::rules(); 
+        $userRules = UserRequest::rules();
 
         $studentRules = [
             'class_room_id'       => 'required|integer|exists:class_rooms,id',
@@ -35,6 +35,7 @@ class StudentRequest extends FormRequest
                 'email',
                 Rule::unique('users', 'email')->ignore(($this->student)?$this->student->user:null),
             ],
+            'start_academic_year_id' => 'required|integer|exists:academic_years,id',
         ];
 
         return array_merge($userRules, $studentRules);

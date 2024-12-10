@@ -44,4 +44,9 @@ class Task extends Model
     {
         return $this->belongsTo(AcademicYear::class);
     }
+
+    public function courseCode()
+{
+    return $this->belongsTo(CourseCode::class, 'course_code_id');
+}
 }

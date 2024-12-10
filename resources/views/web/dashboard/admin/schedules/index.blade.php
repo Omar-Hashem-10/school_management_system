@@ -21,9 +21,15 @@
         <div class="col-lg-12">
 
           <div class="card">
-            <div class="card-header border-transparent">
-              <a href="{{ route('dashboard.admin.schedules.create') }}" class="btn btn-sm btn-info float-left">Add New Schedule</a>
+            <div class="card-header border-transparent d-flex">
+                <a href="{{ route('dashboard.admin.schedules.create') }}" class="btn btn-sm btn-info me-2">Add New Schedule</a>
+                <form action="{{ route('dashboard.admin.schedules.deleteAll') }}" method="POST">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="btn btn-sm btn-danger">Delete All Schedules</button>
+                </form>
             </div>
+
             <div class="card-body">
               <!-- Filter form -->
               <form action="{{ route('dashboard.admin.schedules.index') }}" method="GET" class="mb-3">
