@@ -24,7 +24,7 @@ class ScheduleController extends Controller
         $sideData = $this->getSideData();
         $class_id = auth()->user()->student->class_room_id;
 
-        $schedules = Schedule::where('class_room_id', $class_id)
+        $schedules = Schedule::with(['day'])->where('class_room_id', $class_id)
                     ->get();
 
         $time_slots = TimeSlot::get();

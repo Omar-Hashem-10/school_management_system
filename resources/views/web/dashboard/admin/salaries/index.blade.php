@@ -48,24 +48,28 @@
                   <td>{{ ($person->name) }}</td>
                   <td><span class="badge bg-primary">{{ $person->possition }}</span></td>
                   <td>{{ ($person)?$person->salary:0.00 }}</td>
-                  <td>{{ $person->calculateMonthlySalary($date->month, $date->year) }}</td>
+                  <td>{{ $person->calculateMonthlySalary($date->id) }}</td>
                   @else
                   <td>{{ ($person->fullName()) }}</td>
                   @if($person->role['role_name']=='admin')
                   <td><span class="badge bg-danger">{{ $person->role['role_name'] }}</span></td>
                   <td>{{ ($person)?$person->admin->salary:0.00 }}</td>
-                  <td>{{ $person->admin->calculateMonthlySalary($date->month, $date->year) }}</td>
+                  <td>{{ $person->admin->calculateMonthlySalary($date->id) }}</td>
                   @elseif ($person->role['role_name']=='manager')
                   <td><span class="badge bg-warning">{{ $person->role['role_name'] }}</span></td>
                   <td>{{ ($person)?$person->admin->salary:0.00 }}</td>
-                  <td>{{ $person->admin->calculateMonthlySalary($date->month, $date->year) }}</td>
+                  <td>{{ $person->admin->calculateMonthlySalary($date->id) }}</td>
+                  @elseif (($person->role['role_name']=='HR')||($person->role['role_name']=='academic affairs'))
+                  <td><span class="badge bg-info">{{ $person->role['role_name'] }}</span></td>
+                  <td>{{ ($person)?$person->admin->salary:0.00 }}</td>
+                  <td>{{ $person->admin->calculateMonthlySalary($date->id) }}</td>
                   @elseif ($person->role['role_name']=='teacher')
                   <td><span class="badge bg-success">teacher</span></td>
                   <td>{{ ($person)?$person->teacher->salary:0.00 }}</td>
-                  <td>{{ $person->teacher->calculateMonthlySalary($date->month, $date->year) }}</td>
+                  <td>{{ $person->teacher->calculateMonthlySalary($date->id) }}</td>
                   @endif
                   @endif
-                  <td>{{ $person->amounts($date->month, $date->year) }}</td>
+                  <td>{{ $person->amounts($date->id) }}</td>
                   <td>
                     <a class="btn btn-warning"
                       href="{{route('dashboard.admin.salaries.create',[$date->id,$person->id,$type])}}">add amount</a>

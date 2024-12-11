@@ -32,7 +32,7 @@ class ScheduleController extends Controller
             session()->put('class_room_id', $class_room_id);
         }
 
-        $schedulesQuery = Schedule::where('class_room_id', session('class_room_id'));
+        $schedulesQuery = Schedule::with(['classRoom','day','courseCode','timeSlot'])->where('class_room_id', session('class_room_id'));
 
         if ($day_filter) {
             $schedulesQuery->where('day_id', $day_filter);

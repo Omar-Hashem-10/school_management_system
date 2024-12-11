@@ -21,10 +21,6 @@
         <div class="col-lg-12">
 
           <div class="card">
-            <div class="card-header border-transparent d-flex">
-                <a href="{{ route('dashboard.admin.certificates.create') }}" class="btn btn-sm btn-info me-2">Add New Certificate</a>
-            </div>
-
             <div class="card-body">
 
               <!-- Table with stripped rows -->

@@ -82,24 +82,19 @@ class User extends Authenticatable
     {
         return $this->morphMany(Attend::class, 'attendable');
     }
-    public function amounts($month, $year)
+    public function amounts($date)
     {
-        $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
-
         $adjustments = $date
-            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
+            ? $this->salaries()->where('date_id', $date)->sum('amount')
             : 0;
 
         return $adjustments;
     }
-    public function calculateMonthlySalary($month, $year)
+    public function calculateMonthlySalary($date)
     {
         $baseSalary = $this->role->base_salary;
-
-        $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
-
         $adjustments = $date
-            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
+            ? $this->salaries()->where('date_id', $date)->sum('amount')
             : 0;
 
         return $baseSalary + $adjustments;

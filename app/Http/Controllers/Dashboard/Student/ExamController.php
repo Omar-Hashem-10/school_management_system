@@ -42,7 +42,7 @@ class ExamController extends Controller
             }])
             ->get();
 
-        $exam_ids = Answer::where('student_id', auth()->user()->student->id)
+        $exam_ids = Answer::with('question')->where('student_id', auth()->user()->student->id)
             ->distinct()
             ->pluck('exam_id')
             ->toArray();
@@ -58,7 +58,7 @@ class ExamController extends Controller
     public function show(Exam $exam)
     {
         $sideData = $this->getSideData();
-        $questions = $exam->questions()->with('choices')->paginate(2);
+        $questions = $exam->paginate(2);
 
         $totalQuestions = $questions->total();
 

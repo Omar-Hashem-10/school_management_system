@@ -100,10 +100,10 @@
                         Actions
                       </button>
                       <ul class="dropdown-menu" aria-labelledby="dropdownActions">
-                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.task-grade.show', $student->student->id) }}">Show Task Grade</a></li>
-                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.exam-grade.show', $student->student->id) }}">Show Exam Grade</a></li>
-                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.attendance.show', $student->student->id) }}">Show Attendance</a></li>
-                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.certificates.index', ['student_id' => $student->student->id]) }}">Certificate</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.task-grade.show',  ($student->student)?$student->student->id:$student->id) }}">Show Task Grade</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.exam-grade.show',  ($student->student)?$student->student->id:$student->id) }}">Show Exam Grade</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.attendance.show',  ($student->student)?$student->student->id:$student->id) }}">Show Attendance</a></li>
+                        <li><a class="dropdown-item" href="{{ route('dashboard.admin.certificates.index', ['student_id' =>  ($student->student)?$student->student->id:$student->id]) }}">Certificate</a></li>
                         <li><a class="dropdown-item" href="{{ route('dashboard.admin.students.edit', ($student->student)?$student->student->id:$student->id) }}">Edit</a></li>
                         @canany('isAdmin', 'isManager')
                         <li>
