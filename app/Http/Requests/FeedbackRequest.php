@@ -27,6 +27,7 @@ class FeedbackRequest extends FormRequest
             'teacher_id' => 'required|exists:teachers,id',
             'student_id' => 'required|exists:students,id',
             'task_id' => 'required|exists:tasks,id',
+            'academic_year_id' => 'required|exists:academic_years,id',
         ];
     }
 

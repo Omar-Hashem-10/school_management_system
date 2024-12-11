@@ -4,15 +4,16 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\Date;
 use App\Models\Admin;
+use App\Models\Attend;
 use App\Models\Student;
 use App\Models\ClassRoom;
 use App\Models\Attendance;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use App\Models\AttendanceStudent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AttendRequest;
-use App\Models\Attend;
 
 class  AttendController extends Controller
 {
@@ -51,12 +52,18 @@ class  AttendController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Date $date,$person,$type,$status)
-    {      
+    {
+        $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+
+        if ($academicYear) {
+            session()->put('academic_year_id', $academicYear->id);
+        }
         $data=[
             'attendable_id'=>$person,
             'attendable_type'=>$type,
             'date_id'=>$date->id,
             'status'=>$status,
+            'academic_year_id'=>$academicYear->id,
             'created_at'=>now(),
             'updated_at'=>now(),
         ];

@@ -13,6 +13,7 @@ class Attend extends Model
         'attendable_id',
         'attendable_type',
         'status',
+        'academic_year_id',
     ];
     public function attendable()
     {
@@ -21,5 +22,10 @@ class Attend extends Model
     public function date()
     {
         return $this->belongsTo(Date::class, 'date_id');
+    }
+
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class, 'academic_year_id');
     }
 }

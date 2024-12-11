@@ -25,7 +25,7 @@ class ExamController extends Controller
         $academicYear = AcademicYear::orderBy('id', 'desc')->first();
 
         if ($academicYear) {
-            session()->put('academic_year_id', $academicYear->id);
+            session()->put('academic_year_id', $academicYear->id); // session()->put('academic_year', $academicYear); edit
         }
 
         $class_room_id = $request->query('class_room_id');

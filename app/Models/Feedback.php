@@ -14,6 +14,7 @@ class Feedback extends Model
         'teacher_id',
         'student_id',
         'task_id',
+        'academic_year_id',
     ];
 
     public function task()
@@ -28,5 +29,10 @@ class Feedback extends Model
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+
+    public function academicYear()
+    {
+        return $this->belongsTo(AcademicYear::class, 'academic_year_id');
     }
 }

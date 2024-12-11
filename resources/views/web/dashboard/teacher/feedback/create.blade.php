@@ -22,6 +22,7 @@
         </div>
         <div class="card-body">
 
+
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -35,6 +36,7 @@
             <form action="{{ route('dashboard.teacher.feedback.store') }}" method="POST">
                 @csrf
 
+                <input type="hidden" name="academic_year_id" value="{{ session('academic_year_id') }}">
                 <input type="hidden" name="teacher_id" value="{{ session('teacher_id') }}">
                 <input type="hidden" name="student_id" value="{{ $student->id }}">
                 <input type="hidden" name="task_id" value="{{ $task->id }}">

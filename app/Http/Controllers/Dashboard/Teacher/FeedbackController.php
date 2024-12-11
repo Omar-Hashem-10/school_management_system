@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Teacher;
 use App\Models\Task;
 use App\Models\Student;
 use App\Models\Feedback;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
@@ -26,6 +27,11 @@ class FeedbackController extends Controller
      */
     public function create($student_id, $task_id)
     {
+        $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+
+        if ($academicYear) {
+            session()->put('academic_year_id', $academicYear->id);
+        }
         $sideData = $this->getSideData();
         $task = Task::findOrFail($task_id);
         $student = Student::findOrFail($student_id);
@@ -55,6 +61,11 @@ class FeedbackController extends Controller
      */
     public function edit(Feedback $feedback)
     {
+        $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+
+        if ($academicYear) {
+            session()->put('academic_year_id', $academicYear->id);
+        }
         $sideData = $this->getSideData();
         return view('web.dashboard.teacher.feedback.edit', $sideData, compact('feedback'));
     }

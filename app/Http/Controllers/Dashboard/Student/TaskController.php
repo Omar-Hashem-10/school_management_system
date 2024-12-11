@@ -80,7 +80,7 @@ class TaskController extends Controller
 
     public function edit($taskId) {
         $sideData = $this->getSideData();
-        $task = TaskSend::where('task_id', $taskId)->first();  // استخدام first بدلاً من pluck
+        $task = TaskSend::where('task_id', $taskId)->first();
         return view('web.dashboard.student.task.edit', $sideData, compact('taskId', 'task'));
     }
 
