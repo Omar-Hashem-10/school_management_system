@@ -50,4 +50,14 @@ public function certificates()
     {
         return $this->hasMany(Certificate::class);
     }
+
+    public function feedbacks()
+    {
+        return $this->hasMany(Feedback::class, 'academic_year_id');
+    }
+
+    public function attends()
+    {
+        return $this->hasMany(Attend::class, 'academic_year_id');
+    }
 }

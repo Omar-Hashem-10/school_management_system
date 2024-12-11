@@ -1,49 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Admin;
+namespace App\Http\Controllers\Api\Admin;
 
 use Exception;
-use App\Models\Role;
-use App\Models\User;
-use App\Models\course;
 use App\Models\Teacher;
-use App\Models\ClassRoom;
 use App\Traits\UserTrait;
-use App\Enums\SubjectsEnum;
-use Illuminate\Support\Arr;
-use App\Enums\UserTypesEnum;
 use Illuminate\Http\Request;
-use App\Traits\SideDataTraits;
-use Illuminate\Support\Facades\DB;
+use App\Traits\JsonResponseTrait;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\TeacherRequest;
 use Illuminate\Support\Facades\Storage;
 
 class TeacherController extends Controller
 {
-    use SideDataTraits;
-    use UserTrait;
+    use JsonResponseTrait , UserTrait;
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $teachers = Teacher::with(['user.image', 'role'])->orderBy('id', 'desc')->paginate(10);
-        $sideData = $this->getSideData();
-        return view('web.dashboard.admin.teachers.index', $sideData, compact('teachers'));
-    }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $subjects = SubjectsEnum::all();
-        $roles = Role::where('for', 'teachers')->get();
-        $class_rooms = ClassRoom::get();
-        $sideData = $this->getSideData();
-        return view('web.dashboard.admin.teachers.create', $sideData, compact(['subjects', 'roles', 'class_rooms']));
+        $teachers = Teacher::orderBy('id', 'DESC')->get();
+        return $this->responseSuccess('Data Retrieved Successfully!',$teachers->toArray());
     }
 
     /**
@@ -61,19 +39,17 @@ class TeacherController extends Controller
             'created_at' => now(),
         ];
         $teacherdata['user_id'] = $user->id;
-        Teacher::create($teacherdata);
-        return redirect()->back()->with('success',  'Teacher added successfully');
+        $teacher=Teacher::create($teacherdata);
+        return $this->responseSuccess('Added Successfully!',$teacher->toArray());
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Display the specified resource.
      */
-    public function edit(Teacher $teacher)
+    public function show(Teacher $teacher)
     {
-        $subjects = SubjectsEnum::all();
-        $roles = Role::get()->all();
-        $sideData = $this->getSideData();
-        return view('web.dashboard.admin.teachers.edit', $sideData, compact('teacher', "roles", 'subjects'));
+        $user=$teacher->user;
+        return $this->responseSuccess('Data Retrieved Successfully!',$teacher->toArray());
     }
 
     /**
@@ -91,7 +67,7 @@ class TeacherController extends Controller
             'created_at' => now(),
         ];
         $teacher->update($teacherdata);
-        return redirect()->route('dashboard.admin.teachers.index')->with('success',  'Teacher added successfully');
+        return $this->responseSuccess('Updated Successfully!',$teacher->toArray());
     }
 
     /**
@@ -109,9 +85,9 @@ class TeacherController extends Controller
                 $user->image->delete();
             }
             $user->delete();
-            return redirect()->back()->with('success', 'User deleted successfully');
+            return $this->responseSuccess('Deleted Successfully!');
         } catch (Exception $e) {
-            return redirect()->back()->with('errors', 'This User cannot be deleted');
+            return $this->responseFailure("Cannot Delete This Teacher",404);
         }
     }
 }

@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Admin;
 use App\Models\Student;
 use App\Models\Teacher;
+use App\Models\Guardian;
 use App\Models\Classroom;
 use App\Traits\UserTrait;
 use App\Enums\SubjectsEnum;
@@ -29,7 +30,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('id', 'DESC')->paginate(5);
+        $users = User::with(['image', 'role'])->orderBy('id', 'DESC')->paginate(5);
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.users.index', $sideData, compact('users'));
     }
@@ -52,18 +53,18 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-        $validate=$request->validate([
-            'email'=>
+        $validate = $request->validate([
+            'email' =>
             'required|email|unique:users,email',
-            'salary'=>'required|numeric',
+            'salary' => 'required|numeric',
 
         ]);
         $data = $request->validated();
-        $data['email']=$validate['email'];
-        $user=$this->createUser( $request,$data);
+        $user = $this->createUser($request, $data);
+        $data['email'] = $validate['email'];
         if ($data['type'] == 'admin') {
             $admindata = [
-                'salary'=>$validate['salary'],
+                'salary' => $validate['salary'],
                 'created_at' => now(),
                 'role_id' => $data['role_id'],
             ];
@@ -71,7 +72,7 @@ class UserController extends Controller
             Admin::create($admindata);
         } elseif ($data['type'] == 'teacher') {
             $teacherdata = [
-                'salary'=>$validate['salary'],
+                'salary' => $validate['salary'],
                 'role_id' => $data['role_id'],
                 'experience' => $data['experience'],
                 'subject_id' => $data['subject_id'],
@@ -110,11 +111,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(User $user, UserRequest $request)
-    {
-
-
-    }
+    public function update(User $user, UserRequest $request) {}
 
     /**
      * Remove the specified resource from storage.
@@ -136,6 +133,11 @@ class UserController extends Controller
                 $student = Student::find($user->id, 'user_id');
                 if ($student) {
                     $student->delete();
+                }
+            } elseif ($user->type == 'parent') {
+                $guardian = Guardian::find($user->id, 'user_id');
+                if ($guardian) {
+                    $guardian->delete();
                 }
             }
             if ($user->image) {

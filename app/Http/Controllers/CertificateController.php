@@ -96,8 +96,6 @@ class CertificateController extends Controller
 
         $subjects = Subject::with('levels')->get();
 
-        // dd($results);
-
         $sideData = $this->getSideData();
 
         return view('web.dashboard.admin.certificate.show', array_merge($sideData, compact('certificate', 'results', 'subjects')));
