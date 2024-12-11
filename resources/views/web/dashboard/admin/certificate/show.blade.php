@@ -14,16 +14,17 @@
         </nav>
     </div>
 
-    <div class="card">
+    <div class="card shadow mt-4 mx-auto" style="width: 90%; max-width: 800px;">
+        <div class="container mt-5">
         <div class="card-body">
-            <h4>Student: {{ $certificate->student->user->first_name . ' ' . $certificate->student->user->last_name }}</h4>
-            <h4>Total Marks: {{ $certificate->total_marks }}</h4>
-            <h4>Obtained Marks: {{ $certificate->obtained_marks }}</h4>
-            <h4>Percentage: %{{ $certificate->percentage }}</h4>
-            <h4>Grade: {{ $certificate->grade }}</h4>
-            <h4>Academic Year: {{ $certificate->academicYear->year }}</h4>
+            <h4 class="mb-3">Student: <span class="text-primary">{{ $certificate->student->user->first_name . ' ' . $certificate->student->user->last_name }}</span></h4>
+            <h4 class="mb-3">Total Marks: <span class="text-success">{{ $certificate->total_marks }}</span></h4>
+            <h4 class="mb-3">Obtained Marks: <span class="text-info">{{ $certificate->obtained_marks }}</span></h4>
+            <h4 class="mb-3">Percentage: <span class="text-warning">%{{ $certificate->percentage }}</span></h4>
+            <h4 class="mb-3">Grade: <span class="text-danger">{{ $certificate->grade }}</span></h4>
+            <h4 class="mb-4">Academic Year: <span class="text-secondary">{{ $certificate->academicYear->year }}</span></h4>
 
-            <h5>Course Details:</h5>
+            <h5 class="mb-3">Course Details:</h5>
             <table class="table table-bordered table-striped">
                 <thead class="thead-dark">
                     <tr>
@@ -50,5 +51,7 @@
             </table>
         </div>
     </div>
+    </div>
+
 </main>
 @endsection

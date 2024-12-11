@@ -15,9 +15,16 @@ class GradeTaskController extends Controller
      */
     public function index(Request $request)
     {
+        $academic_year_id = $request->query('academic_year_id');
+
         $student_id = $request->query('student_id');
 
-        $grades = Feedback::where('student_id', $student_id)->get();
+        if($academic_year_id)
+        {
+            $grades = Feedback::where('student_id', $student_id)->where('academic_year_id', $academic_year_id)->get();
+        }else{
+            $grades = Feedback::where('student_id', $student_id)->get();
+        }
 
         return $this->responseSuccess('Data Retrieved Successfully!',$grades->toArray());
     }

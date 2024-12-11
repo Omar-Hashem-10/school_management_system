@@ -48,11 +48,11 @@ class CourseTeacherController extends Controller
      */
     public function create()
     {
-        $subjects = Subject::with('levels')->get();
+        $levels = Level::with('subjects')->get();
         $course_codes = CourseCode::get();
         $class_rooms = ClassRoom::get();
         $sideData = $this->getSideData();
-        return view('web.dashboard.admin.course_teachers.create', array_merge($sideData, ['course_codes' => $course_codes], ['class_rooms' => $class_rooms], ['subjects' => $subjects]));
+        return view('web.dashboard.admin.course_teachers.create', array_merge($sideData, ['course_codes' => $course_codes], ['class_rooms' => $class_rooms], ['levels' => $levels]));
     }
 
     /**

@@ -1,7 +1,6 @@
 <?php
 
-use App\Models\Question;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\Admin\SendMailController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Admin\RoleController;
 use App\Http\Controllers\Api\Admin\UserController;
@@ -23,9 +22,12 @@ use App\Http\Controllers\API\Admin\GradeExamController;
 use App\Http\Controllers\API\Admin\GradeTaskController;
 use App\Http\Controllers\API\Admin\AttendanceController;
 use App\Http\Controllers\API\Admin\CourseCodeController;
+use App\Http\Controllers\Api\Admin\CertificateController;
 use App\Http\Controllers\API\Admin\LevelSubjectController;
 use App\Http\Controllers\API\Admin\CourseTeacherController;
 use App\Http\Controllers\API\Admin\PaymentHistoryController;
+use App\Http\Controllers\Api\Admin\CertificateGradeController;
+use App\Http\Controllers\Api\Admin\CertificateSubjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,3 +63,7 @@ Route::apiResource('/grade-exams', GradeExamController::class);
 Route::apiResource('/grade-tasks', GradeTaskController::class);
 Route::apiResource('/attendances', AttendanceController::class);
 Route::apiResource('/payment-histories', PaymentHistoryController::class);
+Route::apiResource('/certificates', CertificateController::class);
+Route::apiResource('/certificate-subjects', CertificateSubjectController::class);
+Route::apiResource('/certificate-grades', CertificateGradeController::class);
+Route::apiResource('/send-mail', SendMailController::class);

@@ -3,13 +3,13 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use Exception;
-use App\Models\Grade;
-use App\Models\Attend;
 use App\Models\Student;
 use App\Traits\UserTrait;
-use App\Models\Attendance;
-use Illuminate\Http\Request;
+use Exception;
+use App\Models\Student;
+use App\Traits\UserTrait;
+use App\Models\Grade;
+use App\Models\Attend;
 use App\Traits\JsonResponseTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;

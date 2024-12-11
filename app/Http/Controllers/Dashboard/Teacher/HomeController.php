@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard\Teacher;
 
-use App\Models\CourseCode;
 use App\Models\Teacher;
 use App\Models\ClassRoom;
+use App\Models\CourseCode;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Models\CourseTeacher;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +31,12 @@ class HomeController extends Controller
 
         $class_room_names = ClassRoom::whereIn('id', $class_rooms)->pluck('name', 'id');
         $course_codes = CourseCode::whereIn('id', $course_code_ids)->pluck('code', 'id');
+
+        $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+
+        if ($academicYear) {
+            session()->put('academic_year', $academicYear);
+        }
 
         session()->put('class_room_names', $class_room_names);
         session()->put('course_codes', $course_codes);
