@@ -27,7 +27,7 @@ class AnswerController extends Controller
     $answers = $request->input('answer', []);
     $totalGrade = 0;
 
-    $questions = Question::whereHas('exams', function ($query) use ($request) {
+    $questions = Question::with('choices')->whereHas('exams', function ($query) use ($request) {
         $query->where('exam_id', $request->input('exam_id'));
     })->get();
 
@@ -83,7 +83,7 @@ class AnswerController extends Controller
     {
         $sideData = $this->getSideData();
 
-        $answers = Answer::where('exam_id', $exam->id)->where('student_id', auth()->user()->student->id)->get();
+        $answers = Answer::with(['question','question.choices'])->where('exam_id', $exam->id)->where('student_id', auth()->user()->student->id)->get();
 
         return view('web.dashboard.student.answer.show', $sideData, compact('answers', 'exam'));
     }

@@ -34,24 +34,19 @@ class Employee extends Model
     {
         return $this->belongsTo(Role::class);
     }
-    public function calculateMonthlySalary($month, $year)
+    public function calculateMonthlySalary($date)
     {
         $baseSalary = $this->salary;
-
-        $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
-
         $adjustments = $date
-            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
+            ? $this->salaries()->with('salaries')->where('date_id', $date)->sum('amount')
             : 0;
 
         return $baseSalary + $adjustments;
     }
-    public function amounts($month, $year)
+    public function amounts($date)
     {
-        $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
-
         $adjustments = $date
-            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
+            ? $this->salaries()->where('date_id', $date)->sum('amount')
             : 0;
 
         return $adjustments;

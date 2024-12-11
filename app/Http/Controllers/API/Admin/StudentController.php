@@ -4,14 +4,14 @@
 namespace App\Http\Controllers\Api\Admin;
 
 use Exception;
-use App\Models\Student;
-use App\Traits\UserTrait;
-use Illuminate\Http\Request;
 use App\Models\Grade;
 use App\Models\Attend;
 use App\Models\Student;
+use App\Traits\UserTrait;
 use App\Models\Attendance;
+use Illuminate\Http\Request;
 use App\Traits\JsonResponseTrait;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StudentRequest;
 use Illuminate\Support\Facades\Storage;
@@ -105,4 +105,3 @@ class StudentController extends Controller
         }
     }
 }
-

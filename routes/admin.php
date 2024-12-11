@@ -45,6 +45,8 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('/teachers', TeacherController::class);
         Route::resource('/guardians', GuardianController::class);
         Route::resource('/students', StudentController::class);
+        Route::get('/students/{id}/gpa', [StudentController::class, 'getGPA']);
+
         Route::resource('/employees', EmployeeController::class);
 
         // Route::group(['middleware' => ['auth']], function () {
