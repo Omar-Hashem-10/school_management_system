@@ -28,7 +28,6 @@
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Subject Name</th>
-                    <th scope="col">Credit Hours</th>
                     <th scope="col">Created at</th>
                     <th scope="col">Updated at</th>
                     <th scope="col">Actions</th>

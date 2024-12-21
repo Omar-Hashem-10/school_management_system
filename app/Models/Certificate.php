@@ -32,7 +32,7 @@ class Certificate extends Model
     public function courseCodes()
     {
         return $this->belongsToMany(CourseCode::class, 'certificate_courses', 'certificate_id', 'course_code_id')
-                    ->withPivot('subject_marks');
+                    ->withPivot('subject_marks', 'id');
     }
 
     public function level()

@@ -78,6 +78,7 @@
                   <th scope="col">Email</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Class Name</th>
+                  <th scope="col">Status</th>
                   <th scope="col">Image</th>
                   <th scope="col">Actions</th>
                 </tr>
@@ -90,6 +91,12 @@
                   <td>{{ $student->email }}</td>
                   <td>{{ $student->phone }}</td>
                   <td>{{ ($student->student)?$student->student->classRoom['name']:null}}</td>
+                  @if ($student->student->graduate)
+                        <td>Graduate</td>
+                    @else
+                        <td>Student</td>
+                    @endif
+
                   <td>
                     <img src="{{ FileHelper::get_file_path($student->image?->path, 'user') }}" class="rounded-circle"
                       width="100" height="100">

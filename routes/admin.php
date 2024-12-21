@@ -142,7 +142,10 @@ Route::prefix('admin')->as('admin.')->group(function () {
         Route::resource('/certificates', CertificateController::class);
 
         // Certificate Subjects
-        Route::resource('/certificate_subjects', CertificateSubjectController::class);
+        Route::resource('/certificate_subjects', CertificateSubjectController::class)->except('update', 'edit');
+        Route::get('/certificate_subjects/{certificate}/edit', [CertificateSubjectController::class, 'edit'])->name('certificate_subjects.edit');
+
+        Route::put('/certificate_subjects/{certificate}', [CertificateSubjectController::class, 'update'])->name('certificate_subjects.update');
 
         Route::post('/logout', LogoutController::class)->name('logout');
     });

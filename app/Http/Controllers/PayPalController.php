@@ -28,7 +28,7 @@ class PayPalController extends Controller
         ];
 
         $data['invoice_id'] = "{$student_id}_term_{$term_id}";
-        $data['invoice_description'] = "Order #{$data['invoice_id']} Invoice";
+        $data['invoice_description'] = "{$data['invoice_id']} Invoice";
         $data['return_url'] = route('dashboard.guardian.payment.success', ['student_id' => $student_id, 'term_id' => $term_id]);
         $data['cancel_url'] = route('dashboard.guardian.payment.cancel', ['student_id' => $student_id, 'term_id' => $term_id]);
         $data['total'] = $totalAmount;

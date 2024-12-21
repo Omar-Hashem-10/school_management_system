@@ -16,6 +16,7 @@ class Student extends Model
         'user_id',
         'relation',
         'start_academic_year_id',
+        'graduate',
     ];
 
     public function classRoom()

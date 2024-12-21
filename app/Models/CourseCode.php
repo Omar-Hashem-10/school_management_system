@@ -48,6 +48,6 @@ public function tasks()
 public function certificates()
 {
     return $this->belongsToMany(Certificate::class, 'certificate_courses', 'course_code_id', 'certificate_id')
-                ->withPivot('subject_marks');
+                ->withPivot('subject_marks', 'id');
 }
 }

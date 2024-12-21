@@ -58,7 +58,9 @@ class ExamController extends Controller
     public function show(Exam $exam)
     {
         $sideData = $this->getSideData();
-        $questions = $exam->paginate(2);
+
+        $questions = $exam->questions()->with('choices')->paginate(2);
+
 
         $totalQuestions = $questions->total();
 
@@ -70,3 +72,4 @@ class ExamController extends Controller
 
 
 }
+
