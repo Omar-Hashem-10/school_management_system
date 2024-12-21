@@ -55,7 +55,11 @@ trait UserTrait
             'gender',
             'type',
         ]);
-        $userData['password'] = Hash::make($userData['password']);
+        if($data['password']===$user->password){
+            $userData['password']=$data['password'];
+        }else{
+            $userData['password'] = Hash::make($userData['password']);
+        }
         if ($request->hasFile('image')) {
             if ($user->image) {
                 Storage::delete('public/' . $user->image->path);

@@ -28,4 +28,4 @@
 @endcan
 
 
-</aside><!-- End Sidebar-->
+</aside>

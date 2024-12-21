@@ -12,6 +12,8 @@ return [
         'secret'           => env('PAYPAL_SANDBOX_API_SECRET', ''),
         'certificate'      => env('PAYPAL_SANDBOX_API_CERTIFICATE', ''),
         'app_id'           => 'APP-80W284485P519543T',
+        'client_id'     => null, 
+        'client_secret' => null, 
     ],
     'live' => [
         'username'         => env('PAYPAL_LIVE_API_USERNAME', ''),
@@ -19,6 +21,8 @@ return [
         'secret'           => env('PAYPAL_LIVE_API_SECRET', ''),
         'certificate'      => env('PAYPAL_LIVE_API_CERTIFICATE', ''),
         'app_id'           => '',
+        'client_id'     => null, 
+        'client_secret' => null, 
     ],
 
     'payment_action' => 'Sale', // Can only be 'Sale', 'Authorization' or 'Order'

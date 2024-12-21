@@ -40,6 +40,10 @@ return [
         'Level_Subjects'            => 'Level Subjects',
         'Classrooms'                => 'Classrooms',
         'Days'                      => 'Days',
+        'Exams'                     =>'Exam',
+        'Certificate'               =>'Certificate',
+        'Tasks'                     =>'Tasks',
+        'Contact'                   =>'Contact'
     ],
     'profile'                       => [
         'Overview'                  =>'Overview',
@@ -62,4 +66,13 @@ return [
         'Home'                      =>'Home',
         'Profile'                   =>'Profile',
     ],
+    'Home'                          =>[
+        'TotalAmount'               =>'Total Amount',        
+        'TotalPaied'                =>'Total Paied',
+        'GPA'                       =>'GPA',        
+    ],
+    'nav'                           =>[
+        'MyProfile'                 =>'My Profile',
+        'LogOut'                    =>'LogOut'
+    ]
 ];

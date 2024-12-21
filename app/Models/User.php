@@ -9,7 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
+
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable ;
 
@@ -45,6 +48,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
 
     public function teacher()
     {
@@ -82,24 +96,19 @@ class User extends Authenticatable
     {
         return $this->morphMany(Attend::class, 'attendable');
     }
-    public function amounts($month, $year)
+    public function amounts($date)
     {
-        $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
-
         $adjustments = $date
-            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
+            ? $this->salaries()->where('date_id', $date)->sum('amount')
             : 0;
 
         return $adjustments;
     }
-    public function calculateMonthlySalary($month, $year)
+    public function calculateMonthlySalary($date)
     {
         $baseSalary = $this->role->base_salary;
-
-        $date = Date::where(['day' => null, 'month' => $month, 'year' => $year])->first();
-
         $adjustments = $date
-            ? $this->salaries()->where('date_id', $date->id)->sum('amount')
+            ? $this->salaries()->where('date_id', $date)->sum('amount')
             : 0;
 
         return $baseSalary + $adjustments;

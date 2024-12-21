@@ -32,8 +32,8 @@ class StudentController extends Controller
         $query = User::query()->where('type', 'student');
         if ($request->has('name') && $request->name != '') {
             $words = explode(' ', trim($request->name));
-            $query->where('first_name', 'like', '%' . $words[0] . '%')
-                ->where('last_name', 'like', '%' . $words[1] . '%')
+            $query->where('first_name', 'like', '%' . ($words[0])??''. '%')
+                ->where('last_name', 'like', '%' .count($words)>1?$words[1]:'' . '%')
                 ->get();
         }
         if ($request->has('class_room_id') && $request->class_room_id != '') {
@@ -143,4 +143,5 @@ class StudentController extends Controller
             return redirect()->back()->with('errors', 'This User cannot be deleted');
         }
     }
+    
 }

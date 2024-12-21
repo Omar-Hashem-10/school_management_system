@@ -23,6 +23,7 @@
             <h4 class="mb-3">Percentage: <span class="text-warning">%{{ $certificate->percentage }}</span></h4>
             <h4 class="mb-3">Grade: <span class="text-danger">{{ $certificate->grade }}</span></h4>
             <h4 class="mb-4">Academic Year: <span class="text-secondary">{{ $certificate->academicYear->year }}</span></h4>
+            <h4 class="mb-4">Semester: <span class="text-secondary">{{ $certificate->academicYear->semester }}</span></h4>
 
             <h5 class="mb-3">Course Details:</h5>
             <table class="table table-bordered table-striped">
