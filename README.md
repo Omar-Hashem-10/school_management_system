@@ -93,3 +93,13 @@ The **School Management System** is a comprehensive solution designed to streaml
 2. Run the following command to reset and seed the database:
    ```bash
    php artisan migrate:fresh --seed
+3.Install the localization package:
+   ```bash
+composer require mcamara/laravel-localization
+
+4. Running the Project
+Start the local development server:
+php artisan serve
+
+ّّّّّذذذذ
+ذذذّّ
