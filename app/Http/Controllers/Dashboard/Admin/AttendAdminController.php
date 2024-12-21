@@ -14,7 +14,7 @@ class AttendAdminController extends Controller
     public function index(Date $date){
 
         $sideData = $this->getSideData();
-        $admins=Admin::orderBy('id','DESC')->paginate(10);
+        $admins=Admin::with(['role','user'])->orderBy('id','DESC')->paginate(10);
         return view('web.dashboard.admin.attend_admins.index',$sideData,compact('admins','date'));
     }
     public function show()

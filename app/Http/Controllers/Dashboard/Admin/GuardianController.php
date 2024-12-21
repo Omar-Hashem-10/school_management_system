@@ -28,7 +28,7 @@ class GuardianController extends Controller
      */
     public function index()
     {
-        $guardians = Guardian::orderBy('id', 'desc')->paginate(10);
+        $guardians = Guardian::with('user','user.image','students.user')->orderBy('id', 'desc')->paginate(10);
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.guardians.index', $sideData, compact('guardians'));
     }

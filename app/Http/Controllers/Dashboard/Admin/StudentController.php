@@ -29,7 +29,7 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::query()->where('type', 'student');
+        $query = User::query()->with(['student','student.classRoom','image'])->where('type', 'student');
         if ($request->has('name') && $request->name != '') {
             $words = explode(' ', trim($request->name));
             $query->where('first_name', 'like', '%' . ($words[0])??''. '%')

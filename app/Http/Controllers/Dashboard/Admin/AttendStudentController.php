@@ -23,7 +23,7 @@ class AttendStudentController extends Controller
     {
         // dd($date,$class_room);
         $sideData = $this->getSideData();
-        $students = Student::where('class_room_id',$class_room->id)->orderBy('id','DESC')->paginate(10);
+        $students = Student::with(['classRoom','classRoom.level','user'])->where('class_room_id',$class_room->id)->orderBy('id','DESC')->paginate(10);
         return view('web.dashboard.admin.attend_students.index',$sideData,compact('students','date','class_room'));
     }
 

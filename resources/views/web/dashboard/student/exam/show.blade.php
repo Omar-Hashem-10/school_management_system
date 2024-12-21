@@ -4,20 +4,18 @@
 @section('title', 'Exam Questions')
 
 @section('content')
-<main id="main" class="main">
-    <div class="pagetitle">
-        <h1>Exam Questions for {{ $exam->name }}</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
-                <li class="breadcrumb-item active">Exams</li>
-                <li class="breadcrumb-item active">Questions</li>
-                <li class="breadcrumb-item active">{{ $exam->name }}</li>
-            </ol>
-        </nav>
-    </div>
-
-    <div class="container">
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Exam Questions for {{ $exam->name }}</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
+                    <li class="breadcrumb-item active">Exams</li>
+                    <li class="breadcrumb-item active">Questions</li>
+                    <li class="breadcrumb-item active">{{ $exam->name }}</li>
+                </ol>
+            </nav>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -29,58 +27,59 @@
                     </div>
                     <div class="card-body">
                         @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
                         @endif
-                        <form id="exam-form" action="{{ route('dashboard.student.answer.store', $exam->id) }}" method="POST">
+                        <form id="exam-form" action="{{ route('dashboard.student.answer.store', $exam->id) }}"
+                            method="POST">
                             @csrf
                             <input type="hidden" name="exam_id" value="{{ $exam->id }}">
                             <input type="hidden" name="student_id" value="{{ auth()->user()->student->id }}">
 
                             @foreach($questions as $question)
-                                <div class="question">
-                                    <p><strong>{{ $question->question_text }}</strong></p>
+                            <div class="question">
+                                <p><strong>{{ $question->question_text }}</strong></p>
 
-                                    @if($question->question_type == 'mcq')
-                                        @foreach($question->choices as $choice)
-                                            <div class="choice-group">
-                                                @foreach(explode(',', $choice->choice_text) as $word)
-                                                    <div class="choice">
-                                                        <label>
-                                                            <input type="radio" name="answer[{{ $question->id }}]" value="{{ $word }}" class="answer-choice"
-                                                                data-question-id="{{ $question->id }}">
-                                                            {{ $word }}
-                                                        </label>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        @endforeach
-                                    @elseif($question->question_type == 'true_false')
-                                        <div class="choice">
-                                            <label>
-                                                <input type="radio" name="answer[{{ $question->id }}]" value="true" class="answer-choice"
-                                                    data-question-id="{{ $question->id }}">
-                                                True
-                                            </label>
-                                        </div>
-                                        <div class="choice">
-                                            <label>
-                                                <input type="radio" name="answer[{{ $question->id }}]" value="false" class="answer-choice"
-                                                    data-question-id="{{ $question->id }}">
-                                                False
-                                            </label>
-                                        </div>
-                                    @endif
+                                @if($question->question_type == 'mcq')
+                                @foreach($question->choices as $choice)
+                                <div class="choice-group">
+                                    @foreach(explode(',', $choice->choice_text) as $word)
+                                    <div class="choice">
+                                        <label>
+                                            <input type="radio" name="answer[{{ $question->id }}]" value="{{ $word }}"
+                                                class="answer-choice" data-question-id="{{ $question->id }}">
+                                            {{ $word }}
+                                        </label>
+                                    </div>
+                                    @endforeach
                                 </div>
+                                @endforeach
+                                @elseif($question->question_type == 'true_false')
+                                <div class="choice">
+                                    <label>
+                                        <input type="radio" name="answer[{{ $question->id }}]" value="true"
+                                            class="answer-choice" data-question-id="{{ $question->id }}">
+                                        True
+                                    </label>
+                                </div>
+                                <div class="choice">
+                                    <label>
+                                        <input type="radio" name="answer[{{ $question->id }}]" value="false"
+                                            class="answer-choice" data-question-id="{{ $question->id }}">
+                                        False
+                                    </label>
+                                </div>
+                                @endif
+                            </div>
                             @endforeach
 
                             @if (!$questions->hasMorePages())
-                                <button type="submit" class="btn btn-primary">Submit Answers</button>
+                            <button type="submit" class="btn btn-primary">Submit Answers</button>
                             @endif
                         </form>
 
@@ -91,13 +90,12 @@
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 @endsection
 
 @section('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
 
 // التحقق من وجود عنصر الوقت المتبقي
 const timerDisplay = document.getElementById('time-remaining');

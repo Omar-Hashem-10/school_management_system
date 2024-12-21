@@ -30,7 +30,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['image', 'role'])->orderBy('id', 'DESC')->paginate(5);
+        $users = User::with(['image', 'role','student'])->orderBy('id', 'DESC')->paginate(5);
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.users.index', $sideData, compact('users'));
     }

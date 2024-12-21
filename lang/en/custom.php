@@ -9,10 +9,9 @@ return [
         ],
         'currentPassword'           => [
             'required'              => 'Current Password is required',
-            // 'confirmed'     => 'كلمتا السر ليست متطابقه',
         ],
         'password_confirmation'    => [
-            'required'             => 'يجب تأكيد كلمة السر',
+            'required'             => 'required'
         ],
     ],
     'aside' => [
@@ -69,10 +68,53 @@ return [
     'Home'                          =>[
         'TotalAmount'               =>'Total Amount',        
         'TotalPaied'                =>'Total Paied',
-        'GPA'                       =>'GPA',        
+        'GPA'                       =>'GPA',
+        'TotalUsers'                =>'Total Users',
+        'StudentsWhoPaied'          =>'Students Who Paied',
+        'StudentDoesntPaied'        =>'Student Doesnt Paied',
+        'UsersTraffic'              =>'Users Traffic',
     ],
     'nav'                           =>[
         'MyProfile'                 =>'My Profile',
         'LogOut'                    =>'LogOut'
-    ]
+    ],
+    'table'                         =>[
+        'Image'                     =>'Image',
+        'Name'                      =>'Name',
+        'Level'                     =>'Level',
+        'ClassRoom'                 =>'ClassRoom',
+        'Actions'                   =>'Actions',
+        'Possition'                 =>'Possition',
+        'Email'                     =>'Email',
+        'Phone'                     =>'Phone',
+        'Salary'                    =>'Salary',
+        'Gender'                    =>'Gender',
+        'Subject'                   =>'Subject',
+        'Role'                      =>'Role',
+        'For'                       =>'For',
+        'StudentName'               =>'Student Name',
+        'GuardianName'              =>'Guardian Name',
+        'Relation'                  =>'Relation',
+        'Date'                      =>'Date',
+        'AcademicYear'              =>'Academic Year',
+        'Semester'                  =>'Semester',
+        'CreatedAt'                 =>'Created At',
+        'UpdatedAt'                 =>'Updated At',
+        'StartDate'                 =>'Start Date',
+        'EndDate'                   =>'End Date',
+        'Status'                    =>'Status',
+        'Amount'                    =>'Amount',
+        'Day'                       =>'Day' ,
+        'LectureNumber'             =>'Lecture Number',
+        'Create'                    =>'Create New',
+                  
+    ],
+    'actions'                       =>[
+        'Edit'                      =>'Edit',
+        'Delete'                    =>'Delete',
+        'View'                      =>'View',
+        'SendMail'                  =>'Send Mail',
+        'AddAmount'                 =>'Add Amount',
+        
+    ],
 ];

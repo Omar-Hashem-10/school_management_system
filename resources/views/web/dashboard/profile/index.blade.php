@@ -4,6 +4,9 @@
 @section('title',__('custom.pages.Profile'))
 
 @section('content')
+@if(app()->getLocale()=='ar')
+<div class="container">
+    @endif
 <main id="main" class="main">
   <div class="pagetitle">
     <h1>{{ __('custom.aside.Dashboard') }}</h1>
@@ -245,4 +248,7 @@
     </div>
   </section>
 </main>
+@if(app()->getLocale()=='ar')
+</div>
+    @endif
 @endsection

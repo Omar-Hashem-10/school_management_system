@@ -1,5 +1,5 @@
 @extends('web.dashboard.master')
-@section('title', 'Edit Academic Year')
+@section('title', __('custom.actions.Edit').' '.__('custom.table.AcademicYear'))
 
 @section('content')
 <main id="main" class="main">
@@ -7,8 +7,8 @@
         <h1>Dashboard</h1>
         <nav>
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
-            <li class="breadcrumb-item active">Academic Years</li>
+            <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">{{ __('custom.pages.Home') }}</a></li>
+            <li class="breadcrumb-item active">{{ __('custom.aside.AcademicYears') }}</li>
             <li class="breadcrumb-item active">@yield('title')</li>
           </ol>
         </nav>
@@ -19,7 +19,7 @@
 
           <div class="card">
             <div class="card-header border-transparent">
-              <h4>Edit Academic Year</h4>
+              <h4>{{  __('custom.actions.Edit').' '.__('custom.table.AcademicYear') }}</h4>
             </div>
             <div class="card-body">
               <!-- Form to edit an existing academic year -->
@@ -28,7 +28,7 @@
                 @method('PUT') <!-- This is necessary for PUT requests to update an existing record -->
 
                 <div class="form-group">
-                  <label for="year">Academic Year</label>
+                  <label for="year">{{ __('custom.table.AcademicYear') }}</label>
                   <input type="text" name="year" id="year" class="form-control @error('year') is-invalid @enderror" value="{{ old('year', $academicYear->year) }}" required>
                   @error('year')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="semester">Academic Semester</label>
+                  <label for="semester">{{ __('custom.table.Semester  ') }}</label>
                   <select name="semester" id="semester" class="form-control @error('semester') is-invalid @enderror" required>
                     <option value="" disabled>Select Semester</option>
                     <option value="Term 1" {{ old('semester', $academicYear->semester) == 'Term 1' ? 'selected' : '' }}>Term 1</option>

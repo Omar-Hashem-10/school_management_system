@@ -1,0 +1,32 @@
+body {
+    direction: rtl;
+    text-align: right;
+}
+
+.navbar {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.header-nav {
+    margin: 0 !important;
+}
+
+.container {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+aside {
+    order: 1;
+    right: 0;
+    margin-left: 0;
+    margin-right: 20px;
+}
+.content {
+    flex: 1;
+    order: 2;
+}
+.wrapper {
+    flex-direction: row-reverse;
+}

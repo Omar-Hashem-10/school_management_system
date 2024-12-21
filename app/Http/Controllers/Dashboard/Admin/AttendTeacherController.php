@@ -17,7 +17,7 @@ class AttendTeacherController extends Controller
     public function index(Date $date)
     {
         $sideData = $this->getSideData();
-        $teachers = Teacher::orderBy('id','DESC')->paginate(10);
+        $teachers = Teacher::with(['role','user'])->orderBy('id','DESC')->paginate(10);
         return view('web.dashboard.admin.attend_teachers.index',$sideData,compact('teachers','date'));
     }
 

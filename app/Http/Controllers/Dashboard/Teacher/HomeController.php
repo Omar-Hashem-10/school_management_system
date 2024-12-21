@@ -42,6 +42,6 @@ class HomeController extends Controller
         session()->put('class_room_names', $class_room_names);
         session()->put('course_codes', $course_codes);
 
-        return view('web.dashboard.teacher.home.index', compact('class_room_names', 'course_codes'));
+        return view('web.dashboard.teacher.home.index', compact('class_room_names', 'course_codes','teacher'));
     }
 }

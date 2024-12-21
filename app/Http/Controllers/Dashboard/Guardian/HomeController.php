@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Dashboard\Guardian;
 use App\Models\Student;
 use App\Models\Guardian;
 use App\Traits\DataTraits;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class HomeController extends Controller
 {
@@ -30,7 +31,8 @@ class HomeController extends Controller
         {
             session()->put('students_guardian', $students_guardian);
         }
-
+        $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+        session()->put('academic_year', $academicYear);
         return view('web.dashboard.guardian.home.index', compact('students_guardian'));
     }
 }

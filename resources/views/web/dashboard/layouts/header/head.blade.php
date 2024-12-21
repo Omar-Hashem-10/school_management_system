@@ -23,8 +23,12 @@
     <link href="{{ asset('admin/vendor/quill/quill.bubble.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/vendor/remixicon/remixicon.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/vendor/simple-datatables/style.css') }}" rel="stylesheet">
+    {{-- <link rel="stylesheet" href="{{ app()->getLocale() == 'ar' ? asset('css/bootstrap.rtl.min.css') : asset('css/bootstrap.min.css') }}"> --}}
+
 
     <link href="{{ asset('admin/css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ app()->getLocale() == 'ar' ? asset('admin/css/rtl.css') : asset('admin/css/ltr.css') }}">
+
 
 
 </head>

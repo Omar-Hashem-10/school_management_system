@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Dashboard\Student;
 
+use App\Models\Grade;
 use App\Models\Student;
 use App\Models\Schedule;
 use App\Models\CourseCode;
 use App\Traits\DataTraits;
+use App\Models\AcademicYear;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Type\Decimal;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\Grade;
 use Illuminate\Support\Facades\Gate;
-use Ramsey\Uuid\Type\Decimal;
 
 class HomeController extends Controller
 {
@@ -23,9 +24,10 @@ class HomeController extends Controller
         session()->put('allowdFromStudent', 1);
 
         session()->put('student_id', auth()->user()->student->id);
-
+        
         $this->getProfileData(Student::class);
-
+        $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+        session()->put('academic_year', $academicYear);
         $student=Student::with(['user','payments','classRoom','classRoom.courseCodes','grades','grades.exam','classRoom.level','certificates'])->where('user_id',auth()->user()->id)->first();
         session()->put('student', $student);
         $gradeStudent=0;

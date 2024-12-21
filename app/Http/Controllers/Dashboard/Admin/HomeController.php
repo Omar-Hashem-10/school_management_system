@@ -4,15 +4,16 @@ namespace App\Http\Controllers\Dashboard\Admin;
 
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Level;
+use App\Models\Payment;
 use App\Models\Student;
 use App\Models\Teacher;
 use App\Models\Employee;
+use App\Models\Guardian;
 use App\Models\ClassRoom;
+use App\Models\AcademicYear;
 use App\Traits\SideDataTraits;
 use App\Http\Controllers\Controller;
-use App\Models\AcademicYear;
-use App\Models\Level;
-use App\Models\Payment;
 use Illuminate\Support\Facades\Gate;
 
 class HomeController extends Controller
@@ -29,7 +30,11 @@ class HomeController extends Controller
 
         session()->put('academic_year',AcademicYear::orderBy('id','DESC')->first());
             $totalStudents=Student::count();
+            $studentsPaied=Student::whereHas('payments')->count();
+            $studentsDoesntPaied=Student::whereDoesntHave('payments')->get();
+            $totalAdmins=Admin::count();
             $totalTeachers=Teacher::count();
+            $totalGuardians=Guardian::count();
             $totalEmployees=Employee::count();
             $totalUsers=User::count();
 
@@ -39,15 +44,16 @@ class HomeController extends Controller
             }else{
                 $totalPaied = 0;
             }
-      
-            $totalAmounts=Level::sum('amount');
-            $amountsRemaining=$totalAmounts-$totalPaied;
+
             $data=['totalEmployees'=>$totalEmployees
             ,'totalStudents'=>$totalStudents
             ,'totalTeachers'=>$totalTeachers
             ,'totalUsers'=>$totalUsers
             ,'totalPaied'=>$totalPaied
-            ,'amountsRemaining'=>$amountsRemaining
+            ,'totalAdmins'=>$totalAdmins
+            ,'totalGuardians'=>$totalGuardians
+            ,'studentsPaied'=>$studentsPaied
+            ,'studentsDoesntPaied'=>$studentsDoesntPaied
             ];
             $sideData = $this->getSideData();
             return view('web.dashboard.admin.home.index',$sideData,$data);
