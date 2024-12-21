@@ -1,15 +1,15 @@
 @extends('web.dashboard.master')
 
-@section('title','Attends')
+@section('title',__('custom.aside.Attendance.Attendance'))
 
 @section('content')
 <main id="main" class="main">
   <div class="pagetitle">
-    <h1>Dashboard</h1>
+    <h1>{{ __('custom.aside.Dashboard') }}</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">Home</a></li>
-        <li class="breadcrumb-item active">Users</li>
+        <li class="breadcrumb-item"><a href="{{ route('dashboard.admin.home.index') }}">{{ __('custom.pages.Home') }}</a></li>
+        <li class="breadcrumb-item active">{{ __('custom.aside.Users') }}</li>
         <li class="breadcrumb-item active"><a href="{{ route('dashboard.admin.attend_admins.show') }}">Dates</a></li>
         <li class="breadcrumb-item active">@yield('title')</li>
       </ol>
@@ -30,10 +30,10 @@
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Possition</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col">{{ __('custom.table.Name') }}</th>
+                  <th scope="col">{{ __('custom.table.Possition') }}</th>
+                  <th scope="col">{{ __('custom.table.Status') }}</th>
+                  <th scope="col">{{ __('custom.table.Actions') }}</th>
                 </tr>
               </thead>
               <tbody>

@@ -3,6 +3,9 @@
 @section('title','Tasks')
 
 @section('content')
+@if(app()->getLocale()=='ar')
+<div class="container">
+    @endif
 <main id="main" class="main">
     <div class="pagetitle">
         <h1>Dashboard</h1>
@@ -51,4 +54,7 @@
         </div>
     </div>
 </main>
+@if(app()->getLocale()=='ar')
+</div>
+    @endif
 @endsection

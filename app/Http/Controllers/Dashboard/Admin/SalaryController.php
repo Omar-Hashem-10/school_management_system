@@ -45,6 +45,7 @@ class SalaryController extends Controller
     public function showDates()
     {
         session()->put('previous_url', url()->current());
+        session()->put('page_previos', 'salary');
         $dates = Date::where('day', null)->get();
         $sideData = $this->getSideData();
         return view('web.dashboard.admin.salaries.dates', $sideData, compact('dates'));

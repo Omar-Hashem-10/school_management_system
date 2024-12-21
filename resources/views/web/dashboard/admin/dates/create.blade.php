@@ -22,6 +22,7 @@
       <form action="{{route('dashboard.admin.dates.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card-body">
+          @if (session('page_previos')!='salary')     
           <div class="form-group">
             <label for="day">Day</label>
             <input type="number" name="day" class="form-control" id="day" placeholder="Enter day">
@@ -29,6 +30,7 @@
             <span class="text-danger">{{$message}}</span>
             @enderror
           </div>
+          @endif
           <div class="form-group">
             <label for="month">Month</label>
             <input type="number" name="month" class="form-control" id="month" placeholder="Enter month">

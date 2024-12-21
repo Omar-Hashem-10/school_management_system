@@ -6,8 +6,6 @@ namespace App\Http\Controllers\Api\Admin;
 use App\Models\Student;
 use App\Traits\UserTrait;
 use Exception;
-use App\Models\Student;
-use App\Traits\UserTrait;
 use App\Models\Grade;
 use App\Models\Attend;
 use App\Traits\JsonResponseTrait;

@@ -1,33 +1,39 @@
-<header id="header" class="header fixed-top d-flex align-items-center">
+<header id="header" class="header fixed-top d-flex align-items-center justify-content-between">
 
-    <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">{{ env('APP_NAME') }}</span>
-        </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+    <div class="d-flex gap-3 align-items-center">
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center">
+                <img src="assets/img/logo.png" alt="">
+                <span class="d-none d-lg-block">{{ env('APP_NAME') }}</span>
+            </a>
+        </div>
+        <div class="search-bar">
+            @if( LaravelLocalization::getCurrentLocale() === 'en')
+            <a class="nav-link nav-icon" id="locale-toggle" href="#">
+                <img src="{{ asset('uploads/egypt-icon.png') }}" alt="">
+            </a>
+            @else
+            <a class="nav-link nav-icon" id="locale-toggle" href="#">
+                <img src="{{ asset('uploads/usa-icon.png') }}" alt="">
+            </a>
+            @endif
+            <script>
+                document.getElementById('locale-toggle').addEventListener('click', function () {
+                    window.location.href = "{{ route('dashboard.toggle-locale') }}";
+                });
+            </script>
+        </div>
+    </div>
+    <!-- End Logo -->
 
-    <div class="search-bar">
-        @if( LaravelLocalization::getCurrentLocale() === 'en')
-        <a class="nav-link nav-icon" id="locale-toggle"  href="#" >
-            <img src="{{ asset('uploads/usa-icon.png') }}" alt="">
-        </a>
-        @else
-       <a class="nav-link nav-icon" id="locale-toggle" href="#" >
-             <img src="{{ asset('uploads/egypt-icon.png') }}" alt="">
-        </a>
-        @endif
-        <script>
-            document.getElementById('locale-toggle').addEventListener('click', function () {
-                window.location.href = "{{ route('dashboard.toggle-locale') }}";
-            });
-        </script>
-    </div><!-- End Search Bar -->
 
-    <nav class="header-nav ms-auto">
+    <!-- End Search Bar -->
+
+    <nav class="header-nav" style="order: 1; left: 0;">
         <ul class="d-flex align-items-center">
-
+            <li class="nav-item pe-3 align-center">
+                <h5 class="text-success mb-3">{{ session('academic_year')['year'] }}</h5>
+            </li>
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
