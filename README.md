@@ -1,66 +1,162 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+School Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Project Overview
 
-## About Laravel
+The School Management System is a comprehensive solution designed to streamline school operations by managing users and their roles, class schedules, attendance, and more. The system provides distinct access levels and functionalities for different roles, ensuring an efficient and organized workflow.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Key Roles in the System
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Admin: Full access to all sections and functionalities.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Manager: Restricted access; cannot add or remove Admin users.
 
-## Learning Laravel
+HR: Access to employee-related functionalities.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Academic Affairs: Access to student and academic-related functionalities.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Students: Limited to personal schedules, tasks, and grades.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Teachers: Can manage exams, tasks, and provide feedback to students.
 
-## Laravel Sponsors
+Features
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Section: Management
 
-### Premium Partners
+Levels and Subjects
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Define levels taught in the school.
 
-## Contributing
+Assign subjects to specific levels via level_subjects.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Manage subject codes (course_code).
 
-## Code of Conduct
+Classrooms and Scheduling
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Add classrooms per academic year.
 
-## Security Vulnerabilities
+Define school days and time slots.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Create schedules for each class.
 
-## License
+Section: Users
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Manage all user types:
+
+Admin, Employees, Teachers, Guardians, Students.
+
+Manage roles and salaries.
+
+View student grades, attendance, and yearly results.
+
+Section: Attendance
+
+Record attendance for:
+
+Students.
+
+Employees (including teachers and admins).
+
+Access Levels
+
+Admin
+
+Complete access to all sections.
+
+Manager
+
+Restricted access:
+
+Cannot add or remove Admins.
+
+HR
+
+Access to:
+
+Section: Users: Manage Teachers, Employees, Salaries.
+
+Section: Attendance: Manage attendance for Employees, Teachers, Admins.
+
+Academic Affairs
+
+Access to:
+
+Section: Management: Manage Levels, Subjects, Classrooms, etc.
+
+Section: Users: Manage Students, Guardians.
+
+Section: Attendance: Record student attendance.
+
+Students
+
+View personal schedules and exams.
+
+Submit tasks and receive feedback.
+
+Access grades and send contact messages to the manager.
+
+Restricted access if fees are unpaid.
+
+Teachers
+
+Create exams and questions (MCQs, True/False).
+
+Assign tasks to students and provide feedback.
+
+Send contact messages to the manager.
+
+Technologies Used
+
+Backend Framework: PHP, Laravel.
+
+Payment Integration.
+
+Email Services: Mailtrap.
+
+Localization: Laravel Localization.
+
+API Development.
+
+Getting Started
+
+Prerequisites
+
+Install Composer.
+
+Install PHP.
+
+Installation
+
+Clone the repository to your local machine.
+
+Run the following command to reset and seed the database:
+
+php artisan migrate:fresh --seed
+
+Install the localization package:
+
+composer require mcamara/laravel-localization
+
+Running the Project
+
+Start the local development server:
+
+php artisan serve
+
+Access the application via http://localhost:8000.
+
+Notes
+
+Ensure all environment configurations are set correctly in the .env file.
+
+Payment integration and email configurations should be tested before deployment.
+
+Future Enhancements
+
+Add reporting and analytics features.
+
+Integrate with third-party educational platforms.
+
+Enhance UI/UX for better accessibility.
+
+Feel free to reach out if you have any questions or need further assistance with the project. Happy coding! 😊
+
