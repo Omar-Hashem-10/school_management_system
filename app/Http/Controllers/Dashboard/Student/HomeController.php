@@ -21,6 +21,8 @@ class HomeController extends Controller
     {
         abort_if(!Gate::allows('isStudent'), 403);
 
+        session()->put('allowdFromStudent', 1);
+
         session()->put('student_id', auth()->user()->student->id);
         
         $this->getProfileData(Student::class);
@@ -34,11 +36,15 @@ class HomeController extends Controller
             $gradeStudent=$gradeStudent+$grade->grade;
             $totalGrade=$totalGrade+($grade->exam->half_grade)*2;
         }
-        // dd($student->certificates[0]);
-        $gradeStudent=$gradeStudent+$student->certificates[0]->obtained_marks;
-        $totalGrade=$totalGrade+$student->certificates[0]->total_marks;
         $gpaPercentage = ($totalGrade>0)?($gradeStudent/$totalGrade)*100 : 0;
-        
+        // dd($student->certificates[0]);
+        if(isset($student->certificates[0]))
+        {
+            $gradeStudent=$gradeStudent+$student->certificates[0]->obtained_marks;
+            $totalGrade=$totalGrade+$student->certificates[0]->total_marks;
+            $gpaPercentage = ($totalGrade>0)?($gradeStudent/$totalGrade)*100 : 0;
+        }
+
 
         return view('web.dashboard.student.home.index', compact(['student','gpaPercentage']));
     }

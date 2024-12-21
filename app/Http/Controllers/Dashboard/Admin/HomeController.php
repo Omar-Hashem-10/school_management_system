@@ -26,6 +26,8 @@ class HomeController extends Controller
     public function __invoke()
     {
         abort_if(!(Gate::allows('isAdmin') || Gate::allows('isManager')|| Gate::allows('isHR')|| Gate::allows('isAcademicAffairs')),403) ;
+        session()->put('allowdFromAdmin', 1);
+
         session()->put('academic_year',AcademicYear::orderBy('id','DESC')->first());
             $totalStudents=Student::count();
             $studentsPaied=Student::whereHas('payments')->count();
@@ -35,7 +37,14 @@ class HomeController extends Controller
             $totalGuardians=Guardian::count();
             $totalEmployees=Employee::count();
             $totalUsers=User::count();
-            $totalPaied=Payment::where('academic_year_id',session('academic_year')['id'])->sum('total');
+
+            if(session('academic_year'))
+            {
+                $totalPaied=Payment::where('academic_year_id',session('academic_year')['id'])->sum('total');
+            }else{
+                $totalPaied = 0;
+            }
+
             $data=['totalEmployees'=>$totalEmployees
             ,'totalStudents'=>$totalStudents
             ,'totalTeachers'=>$totalTeachers

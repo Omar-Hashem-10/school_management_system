@@ -84,7 +84,7 @@ class ExamController extends Controller
 
     public function show(Exam $exam)
     {
-        $questions = $exam->questions()->paginate(5);
+        $questions = $exam->questions()->with('choices')->paginate(5);
 
         $questions->getCollection()->transform(function ($question) {
             $question->pivot->question_grade;
@@ -92,8 +92,10 @@ class ExamController extends Controller
         });
 
         $sideData = $this->getSideData();
+
         return view('web.dashboard.teacher.exams.show', $sideData, compact('exam', 'questions'));
     }
+
 
 
     public function showStudents(Exam $exam)

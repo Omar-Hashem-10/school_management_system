@@ -22,6 +22,26 @@ class CertificateController extends Controller
     {
         $sideData = $this->getSideData();
 
+            $previousUrl = url()->previous();
+
+            if (preg_match('/\/certificate_subjects\/\d+\/edit/', $previousUrl) || str_contains($previousUrl, '/certificate_subjects/create')) {
+                $maxMarks = session('maxMarks');
+                $newTotalMarks = session('newTotalMarks');
+
+                if ($maxMarks && $newTotalMarks) {
+                    if ($newTotalMarks < $maxMarks) {
+                        return redirect()->back()->with('error', "The total marks are less than the allowed limit ($maxMarks).");
+                    }
+                }
+
+                if (session('currentCourseCount') != session('count')) {
+                    // dd(session('count'));
+                    return redirect()->back()->with('error', 'The number of subjects does not match the expected value.');
+                }
+            }
+
+
+
         $student_id = $request->query('student_id');
 
         if($student_id)
@@ -44,7 +64,7 @@ class CertificateController extends Controller
             session()->put('academic_year_id', $academicYear->id);
         }
 
-        $certificates = Certificate::where('student_id', $student->id)->get();
+        $certificates = Certificate::with('student', 'level')->where('student_id', $student->id)->get();
 
         return view('web.dashboard.admin.certificate.index', $sideData, compact('certificates'));
     }
@@ -54,16 +74,8 @@ class CertificateController extends Controller
      */
     public function create()
     {
-        $sideData = $this->getSideData();
-        return view('web.dashboard.admin.certificate.create', $sideData);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(CertificateRequest $request)
-    {
         $student = Student::findOrFail(session('student_id'));
+
         $academicYear = AcademicYear::orderBy('id', 'desc')->first();
 
         $certificateCheck = Certificate::where('student_id', $student->id)
@@ -73,7 +85,15 @@ class CertificateController extends Controller
         if ($certificateCheck) {
             return redirect()->route('dashboard.admin.certificates.index')->with('error', 'There is already a certificate for this semester.');
         }
+        $sideData = $this->getSideData();
+        return view('web.dashboard.admin.certificate.create', $sideData);
+    }
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(CertificateRequest $request)
+    {
 
         $certificate = Certificate::create($request->validated());
 
@@ -82,8 +102,7 @@ class CertificateController extends Controller
             session()->put('certificateId', $certificateId);
         }
 
-        return redirect()->route('dashboard.admin.certificate_subjects.create')
-                            ->with('success', 'Created certificate Now Add courses');
+        return redirect()->route('dashboard.admin.certificate_subjects.create')->with('success', 'Created certificate Now Add courses');
     }
 
 
@@ -107,17 +126,20 @@ class CertificateController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Certificate $certificate)
     {
-        //
+        $sideData = $this->getSideData();
+
+        return view('web.dashboard.admin.certificate.edit', $sideData, compact('certificate'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CertificateRequest $request, Certificate $certificate)
     {
-        //
+        $certificate->update($request->validated());
+        return redirect()->route('dashboard.admin.certificates.index')->with('success', 'Updated Certificate Successfully');
     }
 
     /**

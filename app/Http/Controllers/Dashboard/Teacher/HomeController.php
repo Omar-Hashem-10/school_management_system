@@ -17,6 +17,7 @@ class HomeController extends Controller
     public function __invoke()
     {
         abort_if(!Gate::allows('isTeacher'), 403);
+        session()->put('allowdFromTeacher', 1);
         $user = auth()->user();
         $teacher = $user->teacher;
         session()->put('teacher_id', $teacher->id);

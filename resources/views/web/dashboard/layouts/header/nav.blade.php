@@ -25,6 +25,23 @@
         </div>
     </div>
     <!-- End Logo -->
+    <div class="d-flex align-items-center justify-content-between">
+        <a
+        @if (session('allowdFromAdmin') == 1)
+        href="{{ route('dashboard.admin.home.index') }}"
+        @elseif (session('allowdFromStudent') == 1)
+        href="{{ route('dashboard.student.home') }}"
+        @elseif (session('allowdFromTeacher') == 1)
+        href="{{ route('dashboard.teacher.home') }}"
+        @elseif (session('allowdFromGuardian') == 1)
+        href="{{ route('dashboard.guardian.home.index') }}"
+        @endif
+         class="logo d-flex align-items-center">
+            <img src="assets/img/logo.png" alt="">
+            <span class="d-none d-lg-block">{{ env('APP_NAME') }}</span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+    </div><!-- End Logo -->
 
 
     <!-- End Search Bar -->

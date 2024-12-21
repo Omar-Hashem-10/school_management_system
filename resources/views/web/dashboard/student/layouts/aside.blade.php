@@ -1,4 +1,4 @@
-<ul class="sidebar-nav" id="sidebar-nav">
+a<ul class="sidebar-nav" id="sidebar-nav">
 
     <!-- Dashboard Link -->
     <li class="nav-item">

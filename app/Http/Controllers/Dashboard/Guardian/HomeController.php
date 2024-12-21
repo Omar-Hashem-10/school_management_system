@@ -21,6 +21,8 @@ class HomeController extends Controller
     {
         abort_if(!Gate::allows('isGuardian'), 403);
 
+        session()->put('allowdFromGuardian', 1);
+
         $this->getProfileData(Guardian::class);
 
         $students_guardian = Student::where('guardian_id', auth()->user()->guardian->id)->get();

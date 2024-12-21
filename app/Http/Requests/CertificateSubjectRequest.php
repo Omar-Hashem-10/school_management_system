@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CertificateSubjectRequest extends FormRequest
@@ -22,9 +23,17 @@ class CertificateSubjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subject_marks' => 'required|numeric|min:0|max:100',
-            'course_code_id' => 'required|exists:course_codes,id',
+            'subject_marks' => 'required|min:0|max:100',
+            'course_code_id' => [
+                'required',
+                'exists:course_codes,id',
+                Rule::unique('certificate_courses', 'course_code_id')
+                    ->ignore($this->route('course_code_id'))
+                    ->where('certificate_id', $this->route('certificate_subjects')),
+            ],
             'certificate_id' => 'required|exists:certificates,id',
         ];
     }
+
+
 }

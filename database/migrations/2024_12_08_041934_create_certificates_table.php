@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('total_marks');
             $table->integer('obtained_marks');
             $table->decimal('percentage', 5, 2);
-            $table->enum('grade', ['A+', 'A', 'A-', 'B+','B', 'B-', 'C+','C', 'C-', 'D+', 'D', 'D-']);
+            $table->enum('grade', ['A+', 'A', 'A-', 'B+','B', 'B-', 'C+','C', 'C-', 'D+', 'D', 'D-', 'F']);
             $table->timestamps();
 
             $table->foreignId('level_id')->constrained('levels')->cascadeOnDelete();

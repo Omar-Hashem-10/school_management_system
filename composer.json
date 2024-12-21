@@ -15,6 +15,7 @@
         "spatie/laravel-permission": "^6.10",
         "srmklive/paypal": "~1.0",
         "stichoza/google-translate-php": "^5.2",
+        "tymon/jwt-auth": "^2.1",
         "yoeunes/toastr": "^2.3"
     },
     "require-dev": {
