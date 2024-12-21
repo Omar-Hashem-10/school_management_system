@@ -96,7 +96,20 @@ The **School Management System** is a comprehensive solution designed to streaml
 3.Install the localization package:
    ```bash
 composer require mcamara/laravel-localization
+```
 
+## Running the Project
+1. Start the local development server:
+```bash
+php artisan serve
+Access the application via http://localhost:8000.
+```
 
-ّّّّّذذذذ
-ذذذّّ
+## Notes
+1. Ensure all environment configurations are set correctly in the .env file.
+2. Payment integration and email configurations should be tested before deployment.
+
+## Future Enhancements
+1. Add reporting and analytics features.
+2. Integrate with third-party educational platforms.
+3. Enhance UI/UX for better accessibility.
