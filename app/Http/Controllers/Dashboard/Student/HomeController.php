@@ -46,5 +46,5 @@ class HomeController extends Controller
 
         return view('web.dashboard.student.home.index', compact(['student','gpaPercentage']));
     }
-
+    
 }

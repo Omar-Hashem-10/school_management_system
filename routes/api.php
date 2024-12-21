@@ -2,18 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\Admin\DayController;
-use App\Http\Controllers\API\Admin\ExamController;
 use App\Http\Controllers\Api\Admin\RoleController;
-use App\Http\Controllers\API\Admin\TaskController;
 use App\Http\Controllers\Api\Admin\UserController;
 use App\Http\Controllers\Api\Admin\AdminController;
-use App\Http\Controllers\API\Admin\LevelController;
 use App\Http\Controllers\Api\Admin\StudentController;
-use App\Http\Controllers\API\Admin\SubjectController;
 use App\Http\Controllers\Api\Admin\TeacherController;
 use App\Http\Controllers\Api\Admin\EmployeeController;
 use App\Http\Controllers\Api\Admin\GuardianController;
+use App\Http\Controllers\API\Admin\DayController;
+use App\Http\Controllers\API\Admin\ExamController;
+use App\Http\Controllers\API\Admin\TaskController;
+use App\Http\Controllers\API\Admin\LevelController;
+use App\Http\Controllers\API\Admin\SubjectController;
 use App\Http\Controllers\API\Admin\QuestionController;
 use App\Http\Controllers\API\Admin\ScheduleController;
 use App\Http\Controllers\Api\Admin\SendMailController;

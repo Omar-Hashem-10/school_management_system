@@ -61,6 +61,7 @@ class ExamController extends Controller
 
         $questions = $exam->questions()->with('choices')->paginate(2);
 
+
         $totalQuestions = $questions->total();
 
         session()->put('total_questions', $totalQuestions);
@@ -70,5 +71,5 @@ class ExamController extends Controller
 
 
 
-
 }
+

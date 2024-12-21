@@ -102,4 +102,3 @@ class StudentController extends Controller
             return $this->responseFailure("Cannot Delete This Student",404);
         }
     }
-}
