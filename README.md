@@ -97,9 +97,6 @@ The **School Management System** is a comprehensive solution designed to streaml
    ```bash
 composer require mcamara/laravel-localization
 
-4. Running the Project
-Start the local development server:
-php artisan serve
 
 ّّّّّذذذذ
 ذذذّّ
