@@ -18,12 +18,10 @@ class SalaryController extends Controller
     use  SideDataTraits;
     public function index(Date $date)
     {
-        $teachers = User::with(['role','salaries','salaries.date','teacher'])->where('type', 'teacher')->get();
-        $admins =  User::with(['role','salaries','admin','admin.user'])->where('type', 'admin')->get();
+        $users = User::with(['teacher','admin','admin.user','salaries','role','salaries.date'])->get();
         $employees =  Employee::with(['role','salaries'])->get();
         $people = [
-            'Teacher' => $teachers,
-            'Admin' => $admins,
+            'users' => $users,
             'Employee' => $employees,
         ];
         $sideData = $this->getSideData();

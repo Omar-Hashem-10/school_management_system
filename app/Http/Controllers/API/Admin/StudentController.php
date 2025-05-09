@@ -3,11 +3,11 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Models\Student;
-use App\Traits\UserTrait;
 use Exception;
 use App\Models\Grade;
 use App\Models\Attend;
+use App\Models\Student;
+use App\Traits\UserTrait;
 use App\Traits\JsonResponseTrait;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -102,3 +102,4 @@ class StudentController extends Controller
             return $this->responseFailure("Cannot Delete This Student",404);
         }
     }
+}

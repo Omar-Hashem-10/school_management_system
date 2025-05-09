@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard\Admin;
 
-use App\Models\ClassRoom;
 use App\Models\Level;
 use App\Models\Student;
+use App\Models\ClassRoom;
 use App\Models\Certificate;
 use App\Models\AcademicYear;
 use Illuminate\Http\Request;
@@ -40,6 +40,10 @@ class AcademicYearController extends Controller
     public function store(AcademicYearRequest $request)
     {
         $academicYear = AcademicYear::orderBy('id', 'desc')->first();
+        if(!$academicYear){
+            AcademicYear::create($request->validated());
+            return redirect()->route('dashboard.admin.academic-years.index')->with('success', 'Academic Year created successfully.');
+        }
 
         $certificates = Certificate::where('academic_year_id', $academicYear->id)->get();
 

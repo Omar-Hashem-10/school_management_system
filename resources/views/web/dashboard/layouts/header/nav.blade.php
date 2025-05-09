@@ -2,10 +2,21 @@
 
     <div class="d-flex gap-3 align-items-center">
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a
+            @if (session('allowdFromAdmin') == 1)
+            href="{{ route('dashboard.admin.home.index') }}"
+            @elseif (session('allowdFromStudent') == 1)
+            href="{{ route('dashboard.student.home') }}"
+            @elseif (session('allowdFromTeacher') == 1)
+            href="{{ route('dashboard.teacher.home') }}"
+            @elseif (session('allowdFromGuardian') == 1)
+            href="{{ route('dashboard.guardian.home.index') }}"
+            @endif
+             class="logo d-flex align-items-center">
                 <img src="assets/img/logo.png" alt="">
                 <span class="d-none d-lg-block">{{ env('APP_NAME') }}</span>
             </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
         </div>
         <div class="search-bar">
             @if( LaravelLocalization::getCurrentLocale() === 'en')
@@ -25,31 +36,13 @@
         </div>
     </div>
     <!-- End Logo -->
-    <div class="d-flex align-items-center justify-content-between">
-        <a
-        @if (session('allowdFromAdmin') == 1)
-        href="{{ route('dashboard.admin.home.index') }}"
-        @elseif (session('allowdFromStudent') == 1)
-        href="{{ route('dashboard.student.home') }}"
-        @elseif (session('allowdFromTeacher') == 1)
-        href="{{ route('dashboard.teacher.home') }}"
-        @elseif (session('allowdFromGuardian') == 1)
-        href="{{ route('dashboard.guardian.home.index') }}"
-        @endif
-         class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">{{ env('APP_NAME') }}</span>
-        </a>
-        <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
-
 
     <!-- End Search Bar -->
 
     <nav class="header-nav" style="order: 1; left: 0;">
         <ul class="d-flex align-items-center">
             <li class="nav-item pe-3 align-center">
-                <h5 class="text-success mb-3">{{ session('academic_year')['year'] }}</h5>
+                <h5 class="text-success mb-3">{{ session('academic_year')['year']?? '' }}</h5>
             </li>
             <li class="nav-item dropdown pe-3">
 
