@@ -55,7 +55,7 @@
                   <td><span class="badge bg-danger">{{ $person->role['role_name'] }}</span></td>
                   <td>{{ ($person)?$person->admin->salary:0.00 }}</td>
                   <td>{{ $person->admin->calculateMonthlySalary($date->id) }}</td>
-                  @elseif ($person->role['role_name']=='manager')
+                  @elseif ($person->role['role_name']=='manager') 
                   <td><span class="badge bg-warning">{{ $person->role['role_name'] }}</span></td>
                   <td>{{ ($person)?$person->admin->salary:0.00 }}</td>
                   <td>{{ $person->admin->calculateMonthlySalary($date->id) }}</td>
